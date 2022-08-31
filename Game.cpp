@@ -7,9 +7,16 @@ void Game::framebuffer_size_callback(GLFWwindow* window, int width, int height)
 }
 void Game::RenderChunksInFrustum()
 {
-	if (chunk == nullptr) return;
+	
 
-	chunk->Draw(*shaderProgram);
+
+	for (int i = 0; i < 16; i++)
+	{
+		if (chunk[i] == nullptr) continue;
+		chunk[i]->Draw(*shaderProgram);
+
+
+	}
 }
 void Game::tickEntities()
 {
@@ -17,10 +24,34 @@ void Game::tickEntities()
 }
 void Game::PlaygroundForExperiments()
 {
+	chunk[0] = new Chunk(glm::vec2(0, 0));
+	chunk[1] = new Chunk(glm::vec2(0, 1));
+	chunk[2] = new Chunk(glm::vec2(0, 2));
+	chunk[3] = new Chunk(glm::vec2(0, 3));
+	chunk[4] = new Chunk(glm::vec2(1, 0));
+	chunk[5] = new Chunk(glm::vec2(1, 1));
+	chunk[6] = new Chunk(glm::vec2(1, 2));
+	chunk[7] = new Chunk(glm::vec2(1, 3));
+	chunk[8] = new Chunk(glm::vec2(2, 0));
+	chunk[9] = new Chunk(glm::vec2(2, 1));
+	chunk[10] = new Chunk(glm::vec2(2, 2));
+	chunk[11] = new Chunk(glm::vec2(2, 3));
+	chunk[12] = new Chunk(glm::vec2(3, 0));
+	chunk[13] = new Chunk(glm::vec2(3, 1));
+	chunk[14] = new Chunk(glm::vec2(3, 2));
+	chunk[15] = new Chunk(glm::vec2(3, 3));
 
-	chunk = new Chunk(glm::vec2(1, 0));
-	chunk->Generate(2);
-	chunk->UpdateMesh();
+
+
+
+	for (int i = 0; i < 16; i++)
+	{
+		if (chunk[i] == nullptr) continue;
+
+		chunk[i]->Generate(i);
+		chunk[i]->UpdateMesh();
+	}
+
 }
 Game::Game()
 {

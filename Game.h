@@ -29,7 +29,7 @@ public:
 	Texture* TextureAtlas;
 	Texture* PlayerTxt;
 	Player player;
-	Chunk* chunk;
+	Chunk* chunk[16];
 		Game();
 		void ShaderAndTextureStuff();
 		static void framebuffer_size_callback(GLFWwindow* window, int width, int height);

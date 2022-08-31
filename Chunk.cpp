@@ -8,7 +8,7 @@ Chunk::Chunk(glm::vec2 ChunkCoords)
 void Chunk::Generate(int height_)
 {
 	std::cout << "Generating chunk Pos:" << ChunkPos.x << ' ' << ChunkPos.y << std::endl;
-	int height = 2;
+	int height = height_;
 
 	for (int i = 0; i < ChunkSize; i++) //i = X coordinate
 	{
