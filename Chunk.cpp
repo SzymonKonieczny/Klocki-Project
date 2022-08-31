@@ -34,7 +34,14 @@ void Chunk::Generate(int height_)
 			for (int k = 0; k <= column_height; k++) // k = Y coordinate
 			{
 
-				if(k == column_height)setblock(glm::vec3(j, k, i), BlockTypes::Grass);
+				if (k == column_height)
+				{
+					if (Util::GetInstance()->random(0, 100) > 2) GenerateTree(glm::vec3(j, k, i));
+					else setblock(glm::vec3(j, k, i), BlockTypes::Grass);
+					
+					
+				
+				}
 				else setblock(glm::vec3(j, k, i), BlockTypes::Stone);
 				
 				//setblock(glm::vec3(j, k, i), Util::GetInstance()->random(0,9));
@@ -43,8 +50,8 @@ void Chunk::Generate(int height_)
 
 		}
 	}
-
-
+	UpdateBlocksFromBlockQueueMap(false);
+	
 }
 
 void Chunk::UpdateMesh()
@@ -100,7 +107,22 @@ void Chunk::Draw(Shader& shader)
 		{
 			//std::cout << "Not a viable position. Block requested at " << LocPos.x << " " << LocPos.y + '\n';
 			glm::vec3 WorldPos = glm::vec3(LocPos.x + ChunkPos.x * ChunkSize, LocPos.y, LocPos.z + ChunkPos.y /*<- because chunkPos is a vec2*/ * ChunkSize);
-		
+			glm::vec2 ChunkPos = Util::WorldPosToChunkPos(WorldPos);
+			glm::vec3 LocalPos = glm::vec3(WorldPos.x - ChunkPos.x * ChunkSize, WorldPos.y, WorldPos.z - ChunkPos.y * ChunkSize);
+			auto it = Chunk::BlockQueuesMap.find(WorldPos);
+			if (it != Chunk::BlockQueuesMap.end())
+			{
+				it->second.push_back(Block(LocalPos,ID));
+					//Add updating meshes to those chunks
+
+			}
+			else
+			{
+				std::vector<Block> b;
+				b.push_back(Block(LocalPos, ID));
+				Chunk::BlockQueuesMap.emplace(std::make_pair<>(ChunkPos,b ));
+
+			}
 		}
 	
 		if (block_map.find(glm::vec3(LocPos.x, LocPos.y, LocPos.z)) != block_map.end())
@@ -120,7 +142,13 @@ void Chunk::Draw(Shader& shader)
 
 
 
-bool Chunk::isPositionViable(glm::vec3 LocPos)
+	void Chunk::GenerateTree(glm::vec3 LocPos)
+	{
+
+	}
+
+
+	bool Chunk::isPositionViable(glm::vec3 LocPos)
 {
 	return !(LocPos.x > ChunkSize - 1 || LocPos.x < 0 || LocPos.y < 0 || LocPos.y > ChunkHeight - 1 
 		|| LocPos.z > ChunkSize - 1 || LocPos.z < 0);
