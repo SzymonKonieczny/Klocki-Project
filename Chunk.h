@@ -35,6 +35,7 @@ public:
 	void setWorldBlock(glm::vec3 LocPos);
 	bool isPositionViable(glm::vec3 LocPos);
 	Block* vec3ToBlock(glm::vec3 LocPos);
+	~Chunk();
 
 };
 #endif // !CHUNK_H

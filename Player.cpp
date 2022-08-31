@@ -8,10 +8,14 @@ Player::Player(): Cam(Position)
 
 void Player::Update()
 {
+
 	HandleInput();
+
 	Cam.UpdateView(*UsedShader);
 	Cam.Position = Position;
 	Cam.LookingAtDir = LookingAtDir;
+	
+
 }
 
 void Player::SetShader(Shader* shader)

@@ -8,23 +8,38 @@ void Game::framebuffer_size_callback(GLFWwindow* window, int width, int height)
 void Game::RenderChunksInFrustum()
 {
 	
-
-
-	for (int i = 0; i < 16; i++)
+	for (std::unordered_map<glm::vec2, Chunk*>::iterator it = World.begin(); it !=World.end(); it++)
 	{
-		if (chunk[i] == nullptr) continue;
-		chunk[i]->Draw(*shaderProgram);
-
-
+		it->second->Draw(*shaderProgram);
 	}
 }
 void Game::tickEntities()
 {
 	player.Update();
+	HandleWorldLoading();
+	GenChunksFromQueue(4);
+}
+void Game::GenChunksFromQueue(int amount)
+{
+	
+	for (int i = 0; i < amount; i++)
+	{
+		if (ChunkGenQueue.empty()) return;
+		glm::vec2 GenChunkOnPos = ChunkGenQueue.front();
+		ChunkGenQueue.pop();
+		auto it = World.find(GenChunkOnPos);
+		if (it != World.end())
+		{
+			it->second->Generate(1);
+			it->second->UpdateMesh();
+
+		}
+		
+	}
 }
 void Game::PlaygroundForExperiments()
 {
-	chunk[0] = new Chunk(glm::vec2(0, 0));
+	/*chunk[0] = new Chunk(glm::vec2(0, 0));
 	chunk[1] = new Chunk(glm::vec2(0, 1));
 	chunk[2] = new Chunk(glm::vec2(0, 2));
 	chunk[3] = new Chunk(glm::vec2(0, 3));
@@ -50,6 +65,34 @@ void Game::PlaygroundForExperiments()
 
 		chunk[i]->Generate(i);
 		chunk[i]->UpdateMesh();
+	}*/
+
+}
+void Game::HandleWorldLoading()
+{
+	if (player.LastFrameChunkPos != Util::GetInstance()->WorldPosToChunkPos(player.Position))
+	{
+		glm::vec2 Dir =   Util::GetInstance()->WorldPosToChunkPos(player.Position) - player.LastFrameChunkPos;
+		glm::vec2 toGenerate = glm::vec2(Dir.x * RenderDistance, Dir.y * RenderDistance);
+		glm::vec2 toDelete = - glm::vec2(Dir.x * RenderDistance, Dir.y * RenderDistance) - Dir;
+		glm::vec2 CurrentCenter = Util::GetInstance()->WorldPosToChunkPos(player.Position);
+		for (int i = -RenderDistance; i <= RenderDistance; i++)
+		{
+			glm::vec2 NewChunkPos = (toGenerate + CurrentCenter) + glm::vec2(Dir.y * i, Dir.x * i);//swap is important here AND CORRECT
+			Chunk* newChunk = new Chunk(NewChunkPos) ;
+			World.insert(std::make_pair<>(NewChunkPos,newChunk)); 
+			ChunkGenQueue.push(NewChunkPos);
+		}
+		for (int i = -RenderDistance; i <= RenderDistance; i++)
+		{
+			glm::vec2 DeleteChunkPos = (toDelete + CurrentCenter) + glm::vec2(Dir.y * i, Dir.x * i);//swap is important here AND CORRECT
+			World.find(DeleteChunkPos);
+
+		}
+
+
+		player.LastFrameChunkPos = CurrentCenter;
+		
 	}
 
 }

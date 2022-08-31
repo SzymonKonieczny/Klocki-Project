@@ -8,7 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <future>
-
+#include <queue>
 
 #include "Util.h"
 #include"shaderClass.h"
@@ -29,16 +29,19 @@ public:
 	Texture* TextureAtlas;
 	Texture* PlayerTxt;
 	Player player;
-	Chunk* chunk[16];
+	std::queue<glm::vec2> ChunkGenQueue;
+	//std::vector<Chunk*> ChunkList;
+	std::unordered_map<glm::vec2, Chunk*> World;
 		Game();
 		void ShaderAndTextureStuff();
 		static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 		void RenderChunksInFrustum();
 		void tickEntities();
 		void DrawEntities();
-
+		void GenChunksFromQueue(int amount);
 		void ClearScreen();
 
 private:
 	void PlaygroundForExperiments();
+	void HandleWorldLoading();
 };

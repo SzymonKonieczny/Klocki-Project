@@ -21,6 +21,12 @@ Util::Util():gen(rd())
 
 
 
+glm::vec2 Util::WorldPosToChunkPos(glm::vec3 WorldPos)
+{
+
+	return glm::vec2(int(WorldPos.x/ChunkSize),int(WorldPos.z / ChunkSize));
+}
+
 void Util::LoadBlocks()
 {
 

@@ -7,7 +7,7 @@ Chunk::Chunk(glm::vec2 ChunkCoords)
 
 void Chunk::Generate(int height_)
 {
-	std::cout << "Generating chunk Pos:" << ChunkPos.x << ' ' << ChunkPos.y << std::endl;
+	//std::cout << "Generating chunk Pos:" << ChunkPos.x << ' ' << ChunkPos.y << std::endl;
 	int height = height_;
 	FastNoise::SmartNode<FastNoise::Simplex> fnSimplex;
 	FastNoise::SmartNode<FastNoise::FractalFBm>  fnFractal;
@@ -113,5 +113,11 @@ Block* Chunk::vec3ToBlock(glm::vec3 LocPos)
 		return &Blocks[(*search_result).second];
 	}
 	else return nullptr;
+
+}
+
+Chunk::~Chunk()
+{
+	std::cout << "Yeeting chunk Pos:" << ChunkPos.x << ' ' << ChunkPos.y << std::endl;
 
 }

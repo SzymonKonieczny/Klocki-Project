@@ -5,6 +5,7 @@
 #include <random>
 #include <vector>
 #include <FastNoise/FastNoise.h>
+extern const int RenderDistance;
 
 extern const int ChunkSize;
 extern const int ChunkHeight;
