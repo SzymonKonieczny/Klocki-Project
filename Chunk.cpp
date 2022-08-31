@@ -1,5 +1,5 @@
 #include "Chunk.h"
-
+std::unordered_map<glm::vec2, std::vector<Block>> Chunk::BlockQueuesMap = std::unordered_map<glm::vec2, std::vector<Block>>();
 Chunk::Chunk(glm::vec2 ChunkCoords)
 {
 	ChunkPos = ChunkCoords;
@@ -16,7 +16,7 @@ void Chunk::Generate(int height_)
 	fnFractal = FastNoise::New<FastNoise::FractalFBm>();
 
 	fnFractal->SetSource(fnSimplex);
-	fnFractal->SetOctaveCount(5);
+	fnFractal->SetOctaveCount(1);
 	fnGenerator = FastNoise::NewFromEncodedNodeTree("DQAFAAAAAAAAQAgAAAAAAD8AAAAAAA==");
 
 	std::vector<float> noiseOutput(ChunkSize* ChunkSize);
@@ -36,13 +36,15 @@ void Chunk::Generate(int height_)
 
 				if(k == column_height)setblock(glm::vec3(j, k, i), BlockTypes::Grass);
 				else setblock(glm::vec3(j, k, i), BlockTypes::Stone);
-
-
+				
+				//setblock(glm::vec3(j, k, i), Util::GetInstance()->random(0,9));
 			}
 
 
 		}
 	}
+
+
 }
 
 void Chunk::UpdateMesh()
@@ -67,6 +69,24 @@ void Chunk::UpdateMesh()
 
 }
 
+void Chunk::UpdateMeshOnlyAdd(std::vector<Block>& BlocksToAdd)
+{
+	for (std::vector<Block>::iterator it = BlocksToAdd.begin(); it != BlocksToAdd.end(); ++it)
+	{
+		glm::vec3 Pos((ChunkPos.x * ChunkSize) + it->LocalPos.x,
+			it->LocalPos.y,
+			(ChunkPos.y * ChunkSize) + it->LocalPos.z);
+		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, 1.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh.vertices, Faces::Up, Pos, (BlockTypes)it->ID);
+		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, -1.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh.vertices, Faces::Down, Pos, (BlockTypes)it->ID);
+		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, 0.0f, 1.0f)) == nullptr) FaceBuilder::BuildFace(mesh.vertices, Faces::North, Pos, (BlockTypes)it->ID);
+		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, 0.0f, -1.0f)) == nullptr) FaceBuilder::BuildFace(mesh.vertices, Faces::South, Pos, (BlockTypes)it->ID);
+		if (vec3ToBlock(it->LocalPos + glm::vec3(-1.0f, 0.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh.vertices, Faces::West, Pos, (BlockTypes)it->ID);
+		if (vec3ToBlock(it->LocalPos + glm::vec3(1.0f, 0.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh.vertices, Faces::East, Pos, (BlockTypes)it->ID);
+
+
+	}
+}
+
 void Chunk::Draw(Shader& shader)
 {
 	mesh.Draw(shader, glm::vec3(0,0,0));
@@ -78,8 +98,9 @@ void Chunk::Draw(Shader& shader)
 {// returns true if the placement was succesful
 		if (!isPositionViable(LocPos))
 		{
-			std::cout << "Not a viable position. Block requested at " << LocPos.x << " " << LocPos.y + '\n';
-			return false;
+			//std::cout << "Not a viable position. Block requested at " << LocPos.x << " " << LocPos.y + '\n';
+			glm::vec3 WorldPos = glm::vec3(LocPos.x + ChunkPos.x * ChunkSize, LocPos.y, LocPos.z + ChunkPos.y /*<- because chunkPos is a vec2*/ * ChunkSize);
+		
 		}
 	
 		if (block_map.find(glm::vec3(LocPos.x, LocPos.y, LocPos.z)) != block_map.end())
@@ -97,11 +118,24 @@ void Chunk::Draw(Shader& shader)
 	return true;
 }
 
+
+
 bool Chunk::isPositionViable(glm::vec3 LocPos)
 {
 	return !(LocPos.x > ChunkSize - 1 || LocPos.x < 0 || LocPos.y < 0 || LocPos.y > ChunkHeight - 1 
 		|| LocPos.z > ChunkSize - 1 || LocPos.z < 0);
 
+}
+
+void Chunk::UpdateBlocksFromBlockQueueMap(bool JustNewBlocks)
+{
+	auto it = BlockQueuesMap.find(ChunkPos);
+	if (it != BlockQueuesMap.end())
+	{
+		Blocks.insert(Blocks.end(), it->second.begin(), it->second.end());
+		if (JustNewBlocks)	UpdateMeshOnlyAdd(it->second);
+		else UpdateMesh();
+	}
 }
 
 Block* Chunk::vec3ToBlock(glm::vec3 LocPos)

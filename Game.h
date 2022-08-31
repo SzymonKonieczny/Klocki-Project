@@ -30,7 +30,7 @@ public:
 	Texture* PlayerTxt;
 	Player player;
 	std::queue<glm::vec2> ChunkGenQueue;
-	//std::vector<Chunk*> ChunkList;
+
 	std::unordered_map<glm::vec2, Chunk> World;
 		Game();
 		void ShaderAndTextureStuff();
