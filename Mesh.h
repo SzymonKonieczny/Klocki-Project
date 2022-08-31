@@ -28,7 +28,7 @@ public:
 	void Draw(Shader& shader, glm::vec3 Position);
 	VAO VAO;
 	VBO VBO1;
-	//EBO* EBO1;
+
 
 };
 

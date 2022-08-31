@@ -89,7 +89,7 @@ void Chunk::Draw(Shader& shader)
 		else
 		{
 			//Blocks.push_back(ID);
-			Blocks.push_back(Block{ glm::vec3(LocPos.x, LocPos.y, LocPos.z), ID }); //from terraria project
+			Blocks.push_back(Block{ glm::vec3(LocPos.x, LocPos.y, LocPos.z), ID });
 			block_map.insert(std::make_pair(glm::vec3(LocPos.x, LocPos.y, LocPos.z), Blocks.size() - 1));
 		}
 
@@ -119,5 +119,12 @@ Block* Chunk::vec3ToBlock(glm::vec3 LocPos)
 Chunk::~Chunk()
 {
 	std::cout << "Yeeting chunk Pos:" << ChunkPos.x << ' ' << ChunkPos.y << std::endl;
+	
+	
 
+	/*for (int i = 0; i < 16; i++)
+		delete[] column_heights[i];
+	
+	delete[] column_heights;*/
+	
 }

@@ -8,16 +8,16 @@ void Game::framebuffer_size_callback(GLFWwindow* window, int width, int height)
 void Game::RenderChunksInFrustum()
 {
 	
-	for (std::unordered_map<glm::vec2, Chunk*>::iterator it = World.begin(); it !=World.end(); it++)
+	for (std::unordered_map<glm::vec2, Chunk>::iterator it = World.begin(); it !=World.end(); it++)
 	{
-		it->second->Draw(*shaderProgram);
+		it->second.Draw(*shaderProgram);
 	}
 }
 void Game::tickEntities()
 {
 	player.Update();
 	HandleWorldLoading();
-	GenChunksFromQueue(4);
+	GenChunksFromQueue(1);
 }
 void Game::GenChunksFromQueue(int amount)
 {
@@ -30,8 +30,8 @@ void Game::GenChunksFromQueue(int amount)
 		auto it = World.find(GenChunkOnPos);
 		if (it != World.end())
 		{
-			it->second->Generate(1);
-			it->second->UpdateMesh();
+			it->second.Generate(1);
+			it->second.UpdateMesh();
 
 		}
 		
@@ -39,33 +39,7 @@ void Game::GenChunksFromQueue(int amount)
 }
 void Game::PlaygroundForExperiments()
 {
-	/*chunk[0] = new Chunk(glm::vec2(0, 0));
-	chunk[1] = new Chunk(glm::vec2(0, 1));
-	chunk[2] = new Chunk(glm::vec2(0, 2));
-	chunk[3] = new Chunk(glm::vec2(0, 3));
-	chunk[4] = new Chunk(glm::vec2(1, 0));
-	chunk[5] = new Chunk(glm::vec2(1, 1));
-	chunk[6] = new Chunk(glm::vec2(1, 2));
-	chunk[7] = new Chunk(glm::vec2(1, 3));
-	chunk[8] = new Chunk(glm::vec2(2, 0));
-	chunk[9] = new Chunk(glm::vec2(2, 1));
-	chunk[10] = new Chunk(glm::vec2(2, 2));
-	chunk[11] = new Chunk(glm::vec2(2, 3));
-	chunk[12] = new Chunk(glm::vec2(3, 0));
-	chunk[13] = new Chunk(glm::vec2(3, 1));
-	chunk[14] = new Chunk(glm::vec2(3, 2));
-	chunk[15] = new Chunk(glm::vec2(3, 3));
-
-
-
-
-	for (int i = 0; i < 16; i++)
-	{
-		if (chunk[i] == nullptr) continue;
-
-		chunk[i]->Generate(i);
-		chunk[i]->UpdateMesh();
-	}*/
+	
 
 }
 void Game::HandleWorldLoading()
@@ -79,15 +53,21 @@ void Game::HandleWorldLoading()
 		for (int i = -RenderDistance; i <= RenderDistance; i++)
 		{
 			glm::vec2 NewChunkPos = (toGenerate + CurrentCenter) + glm::vec2(Dir.y * i, Dir.x * i);//swap is important here AND CORRECT
-			Chunk* newChunk = new Chunk(NewChunkPos) ;
-			World.insert(std::make_pair<>(NewChunkPos,newChunk)); 
+			//Chunk* newChunk = new Chunk(NewChunkPos) ;
+			//World.emplace(std::make_pair<>(NewChunkPos,newChunk)); 
+			World.emplace(std::make_pair<>(NewChunkPos, Chunk(NewChunkPos)));
+
 			ChunkGenQueue.push(NewChunkPos);
 		}
 		for (int i = -RenderDistance; i <= RenderDistance; i++)
 		{
 			glm::vec2 DeleteChunkPos = (toDelete + CurrentCenter) + glm::vec2(Dir.y * i, Dir.x * i);//swap is important here AND CORRECT
-			World.find(DeleteChunkPos);
-
+			auto it = World.find(DeleteChunkPos);
+			if (it != World.end())
+			{
+				World.erase(DeleteChunkPos);
+				//delete it->second;
+			}
 		}
 
 

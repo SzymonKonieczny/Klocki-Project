@@ -3,7 +3,7 @@
 const int ChunkSize = 16;
 const int WATERLEVEL = 50;
 const int ChunkHeight = 256;
-const int RenderDistance = 5;
+const int RenderDistance = 2;
 int map_seed = 73425352;
 
 
