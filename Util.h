@@ -18,7 +18,7 @@ class Util
 	static Util* Instance;
 
 	public:
-		glm::vec2 WorldPosToChunkPos(glm::vec3 WorldPos);
+		static glm::vec2 WorldPosToChunkPos(glm::vec3 WorldPos);
 		void LoadBlocks();
 		Util(Util& other) = delete;
 		void operator=(const Util&) = delete;

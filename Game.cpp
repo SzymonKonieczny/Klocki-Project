@@ -39,7 +39,17 @@ void Game::GenChunksFromQueue(int amount)
 }
 void Game::PlaygroundForExperiments()
 {
-	
+	glm::vec2 CurrentPos = Util::WorldPosToChunkPos(player.Position);
+	for (int i = -RenderDistance; i <= RenderDistance; i++)
+	{
+
+		for (int k = -RenderDistance; k <= RenderDistance; k++)
+		{
+			glm::vec2 ChunkPos= glm::vec2(i,k)+ CurrentPos;
+			World.emplace(std::make_pair<>(ChunkPos, Chunk(ChunkPos)));
+			ChunkGenQueue.push(ChunkPos);
+		}
+	}
 
 }
 void Game::HandleWorldLoading()
