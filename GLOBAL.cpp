@@ -4,7 +4,7 @@ const int ChunkSize = 16;
 const int WATERLEVEL = 50;
 const int ChunkHeight = 256;
 
-int map_seed = 0;
+int map_seed = 73425352;
 
 
 const float texturedimention = 0.2f;

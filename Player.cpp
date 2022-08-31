@@ -48,7 +48,10 @@ void Player::HandleInput()
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
-		glfwSetWindowShouldClose(Window::GetInstance()->window, 1);
+		glfwSetCursorPos(Window::GetInstance()->window, (Window::GetInstance()->WinHeight / 2), (Window::GetInstance()->WinWidth / 2));
+		firstClick = true;
+		glfwSetInputMode(Window::GetInstance()->window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
 	{
@@ -59,30 +62,40 @@ void Player::HandleInput()
 		speed = 0.1f;
 	}
 
-	if (firstClick)
+	if (firstClick && glfwGetMouseButton(Window::GetInstance()->window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
 	{
 		glfwSetCursorPos(Window::GetInstance()->window, (Window::GetInstance()->WinHeight / 2), (Window::GetInstance()->WinWidth / 2));
 		firstClick = false;
+		glfwSetInputMode(Window::GetInstance()->window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 	}
 
 
-	double mouseX;
-	double mouseY;
-
-	glfwGetCursorPos(Window::GetInstance()->window, &mouseX, &mouseY);
+	
 
 
-	float rotX = sensitivity * (float)(mouseY - (Window::GetInstance()->WinHeight / 2)) / Window::GetInstance()->WinHeight;
-	float rotY = sensitivity * (float)(mouseX - (Window::GetInstance()->WinWidth / 2)) / Window::GetInstance()->WinWidth;
 
-	glm::vec3 newOrientation = glm::rotate(LookingAtDir, glm::radians(-rotX), glm::normalize(glm::cross(LookingAtDir, glm::vec3(0.0f,1.0f,0.0f))));
-
-	if (abs(glm::angle(newOrientation, glm::vec3(0.0f, 1.0f, 0.0f)) - glm::radians(90.0f)) <= glm::radians(85.0f))
+	if (!firstClick)
 	{
-		LookingAtDir = newOrientation;
+		double mouseX;
+		double mouseY;
+
+		glfwGetCursorPos(Window::GetInstance()->window, &mouseX, &mouseY);
+
+
+		float rotX = sensitivity * (float)(mouseY - (Window::GetInstance()->WinHeight / 2)) / Window::GetInstance()->WinHeight;
+		float rotY = sensitivity * (float)(mouseX - (Window::GetInstance()->WinWidth / 2)) / Window::GetInstance()->WinWidth;
+
+		glm::vec3 newOrientation = glm::rotate(LookingAtDir, glm::radians(-rotX), glm::normalize(glm::cross(LookingAtDir, glm::vec3(0.0f, 1.0f, 0.0f))));
+
+		if (abs(glm::angle(newOrientation, glm::vec3(0.0f, 1.0f, 0.0f)) - glm::radians(90.0f)) <= glm::radians(85.0f))
+		{
+			LookingAtDir = newOrientation;
+		}
+
+
+		LookingAtDir = glm::rotate(LookingAtDir, glm::radians(-rotY), glm::vec3(0.0f, 1.0f, 0.0f));
+
+		glfwSetCursorPos(Window::GetInstance()->window, (Window::GetInstance()->WinWidth / 2), (Window::GetInstance()->WinHeight / 2));
+	
 	}
-
-	LookingAtDir = glm::rotate(LookingAtDir, glm::radians(-rotY), glm::vec3(0.0f, 1.0f, 0.0f));
-
-	glfwSetCursorPos(Window::GetInstance()->window, (Window::GetInstance()->WinWidth / 2), (Window::GetInstance()->WinHeight / 2));
 }
