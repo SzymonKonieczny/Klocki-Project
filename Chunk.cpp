@@ -9,17 +9,33 @@ void Chunk::Generate(int height_)
 {
 	std::cout << "Generating chunk Pos:" << ChunkPos.x << ' ' << ChunkPos.y << std::endl;
 	int height = height_;
+	FastNoise::SmartNode<FastNoise::Simplex> fnSimplex;
+	FastNoise::SmartNode<FastNoise::FractalFBm>  fnFractal;
+	FastNoise::SmartNode<> fnGenerator;
+	fnSimplex = FastNoise::New<FastNoise::Simplex>();
+	fnFractal = FastNoise::New<FastNoise::FractalFBm>();
 
-	for (int i = 0; i < ChunkSize; i++) //i = X coordinate
+	fnFractal->SetSource(fnSimplex);
+	fnFractal->SetOctaveCount(5);
+	fnGenerator = FastNoise::NewFromEncodedNodeTree("DQAFAAAAAAAAQAgAAAAAAD8AAAAAAA==");
+
+	std::vector<float> noiseOutput(ChunkSize* ChunkSize);
+	fnGenerator->GenUniformGrid2D(noiseOutput.data(), ChunkPos.x * ChunkSize, ChunkPos.y * ChunkSize, ChunkSize, ChunkSize,  0.02,map_seed);
+
+
+	int index = 0;
+	for (int i = 0; i < ChunkSize; i++) //i = Z coordinate
 	{
 
 
-		for (int j = 0; j < ChunkSize; j++) // j = Z coordinate
+		for (int j = 0; j < ChunkSize; j++) // j = X coordinate
 		{
-			for (int k = 0; k < height; k++) // k = Y coordinate
+			int column_height = ((noiseOutput[index++] + 1) / 2) * 20 + 5;
+			for (int k = 0; k <= column_height; k++) // k = Y coordinate
 			{
 
-				setblock(glm::vec3(i, k, j), Util::GetInstance()->random(1,9));
+				if(k == column_height)setblock(glm::vec3(j, k, i), BlockTypes::Grass);
+				else setblock(glm::vec3(j, k, i), BlockTypes::Stone);
 
 
 			}
