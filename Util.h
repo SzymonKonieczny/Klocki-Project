@@ -2,8 +2,12 @@
 #ifndef UTIL_H
 #define UTIL_H
 #include <random>
-#include "BlockTemplate.h"
+#include <glad/glad.h>
+#include <glm/glm.hpp>
 #include "GLOBAL.h"
+#include "BlockTypes.h"
+#include "BlockTemplate.h"
+
 class Util
 {
 	std::random_device rd;

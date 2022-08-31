@@ -19,7 +19,7 @@ void Chunk::Generate(int height_)
 			for (int k = 0; k < height; k++) // k = Y coordinate
 			{
 
-				setblock(glm::vec3(i, k, j), 0);
+				setblock(glm::vec3(i, k, j), Util::GetInstance()->random(0,9));
 
 
 			}
@@ -39,12 +39,12 @@ void Chunk::UpdateMesh()
 		glm::vec3 Pos((ChunkPos.x*ChunkSize) + it->LocalPos.x, 
 			 it->LocalPos.y,
 			(ChunkPos.y * ChunkSize) + it->LocalPos.z);
-		if (vec3ToBlock(it->LocalPos +  glm::vec3(0.0f, 1.0f, 0.0f)) ==nullptr) BlockTemplate::BuildFace(mesh.vertices, Faces::Up, Pos);
-		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, -1.0f, 0.0f)) == nullptr) BlockTemplate::BuildFace(mesh.vertices, Faces::Down, Pos);
-		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, 0.0f, 1.0f)) == nullptr) BlockTemplate::BuildFace(mesh.vertices, Faces::North, Pos);
-		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, 0.0f, -1.0f)) == nullptr) BlockTemplate::BuildFace(mesh.vertices, Faces::South, Pos);
-		if (vec3ToBlock(it->LocalPos + glm::vec3(-1.0f, 0.0f, 0.0f)) == nullptr) BlockTemplate::BuildFace(mesh.vertices, Faces::West, Pos);
-		if (vec3ToBlock(it->LocalPos + glm::vec3(1.0f, 0.0f, 0.0f)) == nullptr) BlockTemplate::BuildFace(mesh.vertices, Faces::East, Pos);
+		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, 1.0f, 0.0f)) == nullptr) FaceBuilder ::BuildFace(mesh.vertices, Faces::Up, Pos,(BlockTypes)it->ID);
+		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, -1.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh.vertices, Faces::Down, Pos, (BlockTypes)it->ID);
+		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, 0.0f, 1.0f)) == nullptr) FaceBuilder::BuildFace(mesh.vertices, Faces::North, Pos, (BlockTypes)it->ID);
+		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, 0.0f, -1.0f)) == nullptr) FaceBuilder::BuildFace(mesh.vertices, Faces::South, Pos, (BlockTypes)it->ID);
+		if (vec3ToBlock(it->LocalPos + glm::vec3(-1.0f, 0.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh.vertices, Faces::West, Pos, (BlockTypes)it->ID);
+		if (vec3ToBlock(it->LocalPos + glm::vec3(1.0f, 0.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh.vertices, Faces::East, Pos, (BlockTypes)it->ID);
 
 
 	}

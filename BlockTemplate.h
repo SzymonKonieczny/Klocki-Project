@@ -5,24 +5,15 @@
 #include <glm/glm.hpp>
 #include <string>
 #include <vector>
-#include "VBO.h" //For Vertex struct
-struct BlockType
-{
-	enum BlockTypes
-	{
-		Grass,
-		ShubiumOre,
-		Stone,
-		Dirt,
-		Log,
-		Leaves,
-		Sand,
-		Water,
-		Air,
-		ShubiumCrystal
-	};
+#include "GLOBAL.h"
 
-};
+#include "BlockTypes.h"
+#include "VBO.h" //For Vertex struct
+
+
+
+
+
 enum Faces
 {
 	Up, //+y
@@ -36,12 +27,11 @@ struct BlockTemplate
 {
 
 	glm::vec2 textureCoordinatesX;  //x mininmum, y maximim 
-	glm::vec2 textureCoordinatesY;
+	glm::vec2 textureCoordinatesY; //x mininmum, y maximim 
 	bool Collidable;
 	std::string name;
-	BlockType::BlockTypes drops;
+	BlockTypes drops;
 
-	static void BuildFace(std::vector<Vertex>& vertices, Faces Direction, glm::vec3 Pos);
 };
 
 #endif // !BLOCK_TEMPLATE_H

@@ -90,13 +90,15 @@ Game::Game()
 	ShaderAndTextureStuff();
 
 
+	Util::GetInstance()->LoadBlocks();
+
 	PlaygroundForExperiments();
 }
 
 void Game::ShaderAndTextureStuff()
 {
 	shaderProgram = new Shader("default.vert", "default.frag");
-	 TextureAtlas = new Texture("textures/grass.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	 TextureAtlas = new Texture("textures/textureatlas.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 	 PlayerTxt = new Texture("textures/Player.png", GL_TEXTURE_2D, GL_TEXTURE1, GL_RGBA, GL_UNSIGNED_BYTE);
 
 	TextureAtlas->texUnit(*shaderProgram, "tex0", 0);

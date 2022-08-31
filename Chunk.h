@@ -7,6 +7,9 @@
 #include <unordered_map>
 #include <glm/gtx/hash.hpp>
 
+#include "BlockTypes.h"
+#include "BlockTemplate.h"
+#include "FaceBuilder.h"
 
 #include "Block.h"
 #include "ChunkMesh.h"

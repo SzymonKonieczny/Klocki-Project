@@ -34,33 +34,33 @@ void Util::LoadBlocks()
 			glm::vec2 testingX = glm::vec2(texturedimention * k, texturedimention * k + texturedimention);
 			glm::vec2 testingY = glm::vec2(texturedimention * i, texturedimention * i + texturedimention);
 
-			BLOCKS.push_back(BlockTemplate({ testingX,testingY ,true , "Unnamed", BlockType::Air }));
+			BLOCKS.push_back(BlockTemplate({ testingX,testingY ,true , "Unnamed", BlockTypes::Air }));
 			loadedAmout++;
 			if (loadedAmout >= amoutOfBlocks) break;
 		}
 	}
 	//Here load properties of every block.
-	BLOCKS[BlockType::Air].Collidable = false;
-	BLOCKS[BlockType::Water].Collidable = false;
+	BLOCKS[BlockTypes::Air].Collidable = false;
+	BLOCKS[BlockTypes::Water].Collidable = false;
 
-	BLOCKS[BlockType::Grass].name = "Grass Block";
-	BLOCKS[BlockType::ShubiumOre].name = "Shubium Ore";
-	BLOCKS[BlockType::Stone].name = "Stone";
-	BLOCKS[BlockType::Dirt].name = "Dirt";
-	BLOCKS[BlockType::Log].name = "Wood";
-	BLOCKS[BlockType::Leaves].name = "Leaves";
-	BLOCKS[BlockType::Sand].name = "Sand";
-	BLOCKS[BlockType::Water].name = "Water";
-	BLOCKS[BlockType::ShubiumCrystal].name = "Shubium Crystal";
-
-	BLOCKS[BlockType::Grass].drops = BlockType::Dirt;
-	BLOCKS[BlockType::ShubiumOre].drops = BlockType::ShubiumCrystal;
-	BLOCKS[BlockType::Stone].drops = BlockType::Stone;
-	BLOCKS[BlockType::Dirt].drops = BlockType::Dirt;
-	BLOCKS[BlockType::Log].drops = BlockType::Log;
-	BLOCKS[BlockType::Leaves].drops = BlockType::Air;
-	BLOCKS[BlockType::Sand].drops = BlockType::Sand;
-	BLOCKS[BlockType::Water].drops = BlockType::Air;
+	BLOCKS[BlockTypes::Grass].name = "Grass Block";
+	BLOCKS[BlockTypes::ShubiumOre].name = "Shubium Ore";
+	BLOCKS[BlockTypes::Stone].name = "Stone";
+	BLOCKS[BlockTypes::Dirt].name = "Dirt";
+	BLOCKS[BlockTypes::Log].name = "Wood";
+	BLOCKS[BlockTypes::Leaves].name = "Leaves";
+	BLOCKS[BlockTypes::Sand].name = "Sand";
+	BLOCKS[BlockTypes::Water].name = "Water";
+	BLOCKS[BlockTypes::ShubiumCrystal].name = "Shubium Crystal";
+					
+	BLOCKS[BlockTypes::Grass].drops = BlockTypes::Dirt;
+	BLOCKS[BlockTypes::ShubiumOre].drops = BlockTypes::ShubiumCrystal;
+	BLOCKS[BlockTypes::Stone].drops = BlockTypes::Stone;
+	BLOCKS[BlockTypes::Dirt].drops = BlockTypes::Dirt;
+	BLOCKS[BlockTypes::Log].drops = BlockTypes::Log;
+	BLOCKS[BlockTypes::Leaves].drops = BlockTypes::Air;
+	BLOCKS[BlockTypes::Sand].drops = BlockTypes::Sand;
+	BLOCKS[BlockTypes::Water].drops = BlockTypes::Air;
 	
 }
 

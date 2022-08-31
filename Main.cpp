@@ -35,10 +35,10 @@ int main()
 	Chunk chunk(glm::vec2(1, 0));
 	Mesh Orienterbackandup;
 	Mesh Orienterfrontanddown;
-	BlockTemplate::BuildFace(Orienterbackandup.vertices, Faces::Up, glm::vec3(0, 0, 0));
-	BlockTemplate::BuildFace(Orienterbackandup.vertices, Faces::Down, glm::vec3(0, 0, 0));
-	BlockTemplate::BuildFace(Orienterfrontanddown.vertices, Faces::Up, glm::vec3(0, -1, -1));
-	BlockTemplate::BuildFace(Orienterfrontanddown.vertices, Faces::Down, glm::vec3(0, -1, -1));
+	FaceBuilder::BuildFace(Orienterbackandup.vertices, Faces::Up, glm::vec3(0, 0, 0));
+	FaceBuilder::BuildFace(Orienterbackandup.vertices, Faces::Down, glm::vec3(0, 0, 0));
+	FaceBuilder::BuildFace(Orienterfrontanddown.vertices, Faces::Up, glm::vec3(0, -1, -1));
+	FaceBuilder::BuildFace(Orienterfrontanddown.vertices, Faces::Down, glm::vec3(0, -1, -1));
 
 
 	glm::mat4 Rotation = glm::mat4(1.0);
