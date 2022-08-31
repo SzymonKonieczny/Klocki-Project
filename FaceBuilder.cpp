@@ -35,158 +35,158 @@ void FaceBuilder::BuildFace(std::vector<Vertex>& vertices, Faces Direction, glm:
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(0.0f, 1.0, 0.0f),
 				glm::vec3(1.0f, 1.0f, 1.0f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesX.x)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.x)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(1.0f, 1.0, 0.0f),
 				glm::vec3(1.0f, 1.0f, 1.0f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesX.x)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesY.x)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(1.0f, 1.0, 1.0f),
 				glm::vec3(1.0f, 1.0f, 1.0f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesX.y)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesY.y)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(1.0f, 1.0, 1.0f),
 				glm::vec3(1.0f, 1.0f, 1.0f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesX.y)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesY.y)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(0.0f, 1.0, 1.0f),
 				glm::vec3(1.0f, 1.0f, 1.0f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesX.y)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.y)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(0.0f, 1.0, 0.0f),
 				glm::vec3(1.0f, 1.0f, 1.0f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesX.x)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.x)));
 		break;
 	case Down:
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(0.0f, 0.0, 0.0f),
 				glm::vec3(0.5f, 0.5f, 0.5f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesX.x)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.x)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(1.0f, 0.0, 0.0f),
 				glm::vec3(0.5f, 0.5f, 0.5f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesX.x)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesY.x)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(1.0f, 0.0, 1.0f),
 				glm::vec3(0.5f, 0.5f, 0.5f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesX.y)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesY.y)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(1.0f, 0.0, 1.0f),
 				glm::vec3(0.5f, 0.5f, 0.5f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesX.y)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesY.y)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(0.0f, 0.0, 1.0f),
 				glm::vec3(0.5f, 0.5f, 0.5f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesX.y)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.y)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(0.0f, 0.0, 0.0f),
 				glm::vec3(0.5f, 0.5f, 0.5f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesX.x)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.x)));
 		break;
 	case North:
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(0.0f, 0.0, 1.0f),
 				glm::vec3(0.7f, 0.7f, 0.7f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesX.x)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.x)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(1.0f, 0.0, 1.0f),
 				glm::vec3(0.7f, 0.7f, 0.7f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesX.x)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesY.x)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(1.0f, 1.0, 1.0f),
 				glm::vec3(0.7f, 0.7f, 0.7f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesX.y)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesY.y)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(1.0f, 1.0, 1.0f),
 				glm::vec3(0.7f, 0.7f, 0.7f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesX.y)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesY.y)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(0.0f, 1.0, 1.0f),
 				glm::vec3(0.7f, 0.7f, 0.7f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesX.y)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.y)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(0.0f, 0.0, 1.0f),
 				glm::vec3(0.7f, 0.7f, 0.7f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesX.x)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.x)));
 		break;
 	case East:
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(1.0f, 0.0, 0.0f),
 				glm::vec3(0.6f, 0.6f, 0.6f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesX.x)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.x)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(1.0f, 0.0, 1.0f),
 				glm::vec3(0.6f, 0.6f, 0.6f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesX.x)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesY.x)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(1.0f, 1.0, 1.0f),
 				glm::vec3(0.6f, 0.6f, 0.6f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesX.y)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesY.y)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(1.0f, 1.0, 1.0f),
 				glm::vec3(0.6f, 0.6f, 0.6f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesX.y)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesY.y)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(1.0f, 1.0, 0.0f),
 				glm::vec3(0.6f, 0.6f, 0.6f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesX.y)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.y)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(1.0f, 0.0, 0.0f),
 				glm::vec3(0.6f, 0.6f, 0.6f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesX.x)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.x)));
 		break;
 	case South:
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(0.0f, 0.0, 0.0f),
 				glm::vec3(0.7f, 0.7f, 0.7f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesX.x)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.x)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(1.0f, 0.0, 0.0f),
 				glm::vec3(0.7f, 0.7f, 0.7f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesX.x)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesY.x)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(1.0f, 1.0, 0.0f),
 				glm::vec3(0.7f, 0.7f, 0.7f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesX.y)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesY.y)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(1.0f, 1.0, 0.0f),
 				glm::vec3(0.7f, 0.7f, 0.7f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesX.y)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesY.y)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(0.0f, 1.0, 0.0f),
 				glm::vec3(0.7f, 0.7f, 0.7f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesX.y)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.y)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(0.0f, 0.0, 0.0f),
 				glm::vec3(0.7f, 0.7f, 0.7f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesX.x)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.x)));
 
 		break;
 	case West:
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(0.0f, 0.0, 1.0f),
 				glm::vec3(0.7f, 0.7f, 0.7f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesX.x)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.x)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(0.0f, 0.0, 0.0f),
 				glm::vec3(0.7f, 0.7f, 0.7f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesX.x)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesY.x)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(0.0f, 1.0, 0.0f),
 				glm::vec3(0.7f, 0.7f, 0.7f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesX.y)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesY.y)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(0.0f, 1.0, 0.0f),
 				glm::vec3(0.7f, 0.7f, 0.7f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesX.y)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.y, instance->BLOCKS[block].textureCoordinatesY.y)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(0.0f, 1.0, 1.0f),
 				glm::vec3(0.7f, 0.7f, 0.7f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesX.y)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.y)));
 		vertices.push_back(
 			Vertex(Pos + glm::vec3(0.0f, 0.0, 1.0f),
 				glm::vec3(0.7f, 0.7f, 0.7f),
-				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesX.x)));
+				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.x)));
 		break;
 	default:
 		break;

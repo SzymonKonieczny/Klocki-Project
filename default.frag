@@ -12,7 +12,7 @@ void main()
 {
 	vec4 pixel = texture(tex0 , texCoord);
 	if(pixel.w < 0.1) discard;
-	FragColor = vec4(pixel * vec4(color, 1.0f));
+	FragColor = vec4( vec4(color, 1.0f)*pixel );
 	
 
 	//FragColor = vec4((color, 1.0f)*  pixel);

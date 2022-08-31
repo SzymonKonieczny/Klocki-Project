@@ -19,7 +19,7 @@ void Chunk::Generate(int height_)
 			for (int k = 0; k < height; k++) // k = Y coordinate
 			{
 
-				setblock(glm::vec3(i, k, j), Util::GetInstance()->random(0,9));
+				setblock(glm::vec3(i, k, j), Util::GetInstance()->random(1,9));
 
 
 			}
