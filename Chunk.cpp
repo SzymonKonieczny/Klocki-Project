@@ -36,7 +36,7 @@ void Chunk::Generate(int height_)
 
 				if (k == column_height)
 				{
-					if (Util::GetInstance()->random(0, 100) > 2) GenerateTree(glm::vec3(j, k, i));
+					if (Util::GetInstance()->random(0, 100) < 2) GenerateTree(glm::vec3(j, k, i));
 					else setblock(glm::vec3(j, k, i), BlockTypes::Grass);
 					
 					
@@ -73,7 +73,29 @@ void Chunk::UpdateMesh()
 
 
 	}
+	/*glm::vec3(0.0f, 0.0, 0.0f),
+		glm::vec3(1.0f, 1.0f, 1.0f),
+		glm::vec2(0, 1)*/
+	mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 0.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
+		glm::vec3(0.5f, 0.5f, 0.5f) ,
+		glm::vec2(0, 0)));
+	mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 255.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
+		glm::vec3(0.5f, 0.5f, 0.5f) ,
+		glm::vec2(0, 0)));
+	mesh.vertices.push_back(Vertex(glm::vec3(1.0f, 0.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
+		glm::vec3(1.0f, 1.0f, 1.0f),
+		glm::vec2(0, 0)));
 
+
+	mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 0.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
+		glm::vec3(0.5f, 0.5f, 0.5f),
+		glm::vec2(0, 0)));
+	mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 255.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
+		glm::vec3(0.5f, 0.5f, 0.5f),
+		glm::vec2(0, 0)));
+	mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 0.0f, 1.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
+		glm::vec3(1.0f, 1.0f, 1.0f),
+		glm::vec2(0, 0)));
 }
 
 void Chunk::UpdateMeshOnlyAdd(std::vector<Block>& BlocksToAdd)
@@ -144,6 +166,21 @@ void Chunk::Draw(Shader& shader)
 
 	void Chunk::GenerateTree(glm::vec3 LocPos)
 	{
+		glm::vec3 Up(0, 1, 0);
+		glm::vec3 North(0, 0, 1);
+		setblock(LocPos+Up+North, 4);
+		for (int i = 0; i < 4; i++)
+		{
+			LocPos += Up + North;
+			setblock(LocPos , 4);
+		}
+		for (int i = 0; i < 3; i++)
+		{
+			LocPos += Up;
+			setblock(LocPos, 4);
+		}
+
+
 
 	}
 
