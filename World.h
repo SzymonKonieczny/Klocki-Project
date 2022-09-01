@@ -25,8 +25,6 @@
 class World
 {
 public:
-	std::unordered_map<glm::vec2, Chunk> ChunkList;
 	std::queue<glm::vec2> ChunkGenQueue;
-	void HandleWorldLoadingPositionChangeBased();
-	void HandleWorldLoadingDistanceBased();
+
 };

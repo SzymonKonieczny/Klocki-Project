@@ -43,7 +43,7 @@ public:
 	~Chunk();
 
 
-	static std::unordered_map<glm::vec2, Chunk> BlockQueuesMap;
+	static std::unordered_map<glm::vec2, std::vector<Block>> BlockQueuesMap;
 
 };
 #endif // !CHUNK_H
