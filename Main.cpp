@@ -62,8 +62,8 @@ int main()
 		game.RenderChunksInFrustum();
 
 		
-		Orienterbackandup.Draw(*game.shaderProgram, glm::vec3(0, 0, 0));
-		Orienterfrontanddown.Draw(*game.shaderProgram, glm::vec3(0, 0, 0));
+		//Orienterbackandup.Draw(*game.shaderProgram, glm::vec3(0, 0, 0));
+		//Orienterfrontanddown.Draw(*game.shaderProgram, glm::vec3(0, 0, 0));
 		glfwSwapBuffers(Window::GetInstance()->window);
 		glfwPollEvents();
 	}

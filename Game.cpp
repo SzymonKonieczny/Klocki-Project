@@ -16,7 +16,7 @@ void Game::RenderChunksInFrustum()
 void Game::tickEntities()
 {
 	player.Update();
-	HandleWorldLoading();
+	HandleWorldLoadingPositionChangeBased();
 	GenChunksFromQueue(1);
 }
 void Game::GenChunksFromQueue(int amount)
@@ -40,10 +40,10 @@ void Game::GenChunksFromQueue(int amount)
 void Game::PlaygroundForExperiments()
 {
 	glm::vec2 CurrentPos = Util::WorldPosToChunkPos(player.Position);
-	for (int i = -RenderDistance; i <= RenderDistance; i++)
+	for (int i = -RenderDistance*2; i <= RenderDistance*2; i++)
 	{
 
-		for (int k = -RenderDistance; k <= RenderDistance; k++)
+		for (int k = -RenderDistance * 2; k <= RenderDistance * 2; k++)
 		{
 			glm::vec2 ChunkPos= glm::vec2(i,k)+ CurrentPos;
 			World.emplace(std::make_pair<>(ChunkPos, Chunk(ChunkPos)));
@@ -52,39 +52,47 @@ void Game::PlaygroundForExperiments()
 	}
 
 }
-void Game::HandleWorldLoading()
+void Game::HandleWorldLoadingPositionChangeBased()
 {
 
 	 if (FramesTillResetQueue <= 0)
 	 {
-		 Chunk::BlockQueuesMap.clear();
-		 FramesTillResetQueue = 800;
-		 std::cout << "Clearing the Q" << std::endl;
+		// Chunk::BlockQueuesMap.clear();
+		 FramesTillResetQueue = 1000;
+		 std::cout << "Clearing the Q cycle (currently disabled)" << std::endl;
 	 }
 	 FramesTillResetQueue--;
+
+
 	if (player.LastFrameChunkPos != Util::GetInstance()->WorldPosToChunkPos(player.Position))
 	{
 		glm::vec2 Dir =   Util::GetInstance()->WorldPosToChunkPos(player.Position) - player.LastFrameChunkPos;
 		glm::vec2 toGenerate = glm::vec2(Dir.x * RenderDistance, Dir.y * RenderDistance);
-		glm::vec2 toDelete = - glm::vec2(Dir.x * RenderDistance, Dir.y * RenderDistance) - Dir;
+		glm::vec2 toDelete = - glm::vec2(Dir.x * RenderDistance*2, Dir.y * RenderDistance*2) - Dir;
 		glm::vec2 CurrentCenter = Util::GetInstance()->WorldPosToChunkPos(player.Position);
 		for (int i = -RenderDistance; i <= RenderDistance; i++)
 		{
 			glm::vec2 NewChunkPos = (toGenerate + CurrentCenter) + glm::vec2(Dir.y * i, Dir.x * i);//swap is important here AND CORRECT
-			//Chunk* newChunk = new Chunk(NewChunkPos) ;
-			//World.emplace(std::make_pair<>(NewChunkPos,newChunk)); 
-			World.emplace(std::make_pair<>(NewChunkPos, Chunk(NewChunkPos)));
 
-			ChunkGenQueue.push(NewChunkPos);
+			auto it = World.find(NewChunkPos);
+			if (it == World.end()) // if NOT in the world already
+			{
+				//Chunk* newChunk = new Chunk(NewChunkPos) ;
+				//World.emplace(std::make_pair<>(NewChunkPos,newChunk)); 
+				World.emplace(std::make_pair<>(NewChunkPos, Chunk(NewChunkPos)));
+
+				ChunkGenQueue.push(NewChunkPos);
+			}
+
 		}
-		for (int i = -RenderDistance; i <= RenderDistance; i++)
+		for (int i = -RenderDistance*2; i <= RenderDistance*2; i++)
 		{
 			glm::vec2 DeleteChunkPos = (toDelete + CurrentCenter) + glm::vec2(Dir.y * i, Dir.x * i);//swap is important here AND CORRECT
 			auto it = World.find(DeleteChunkPos);
 			if (it != World.end())
 			{
 				World.erase(DeleteChunkPos);
-				//delete it->second;
+
 			}
 		}
 

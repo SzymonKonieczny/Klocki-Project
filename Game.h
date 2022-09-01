@@ -44,5 +44,6 @@ public:
 
 private:
 	void PlaygroundForExperiments();
-	void HandleWorldLoading();
+	void HandleWorldLoadingPositionChangeBased();
+	void HandleWorldLoadingDistanceBased();
 };

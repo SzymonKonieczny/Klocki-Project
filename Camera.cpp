@@ -8,7 +8,7 @@ void Camera::UpdateView(Shader& shaderProgram)
 {
 	view = glm::lookAt(Position, Position + LookingAtDir, glm::vec3(0.0f, 1.0f, 0.0f));
 	
-	proj = glm::perspective(90.0f, float(Window::GetInstance()->WinWidth)/ Window::GetInstance()->WinHeight,0.01f, 100.0f);
+	proj = glm::perspective(90.0f, float(Window::GetInstance()->WinWidth)/ Window::GetInstance()->WinHeight,0.01f, 500.0f);
 
 
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
