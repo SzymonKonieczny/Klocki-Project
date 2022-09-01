@@ -16,8 +16,8 @@ void Game::RenderChunksInFrustum()
 void Game::tickEntities()
 {
 	player.Update();
-	//HandleWorldLoadingPositionChangeBased();
-	HandleWorldLoadingDistanceBased();
+	HandleWorldLoadingPositionChangeBased();
+	//HandleWorldLoadingDistanceBased();
 	GenChunksFromQueue(1);
 }
 void Game::GenChunksFromQueue(int amount)

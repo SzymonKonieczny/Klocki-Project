@@ -26,9 +26,11 @@ class Chunk
 	//std::vector<Block> QueuedBlocks;
 	int column_heights[16][16];
 public:
+	bool isDirty = false;
 	Chunk(glm::vec2 ChunkCoords);
 	void Generate(int height_);
 	void UpdateMesh(); //clear the mesh, and rebuild
+	bool CheckIfSolidBlock(glm::vec3 Pos);
 	void UpdateMeshOnlyAdd(std::vector<Block>& BlocksToAdd); //only add to the existing mesh
 	void Draw(Shader& shader);
 	bool setblock(glm::vec3 LocPos, int ID);
@@ -41,7 +43,7 @@ public:
 	~Chunk();
 
 
-	static std::unordered_map<glm::vec2, std::vector<Block>> BlockQueuesMap;
+	static std::unordered_map<glm::vec2, Chunk> BlockQueuesMap;
 
 };
 #endif // !CHUNK_H

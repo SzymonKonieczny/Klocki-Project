@@ -9,7 +9,6 @@
 #include <future>
 
 
-
 #include"shaderClass.h"
 #include"VAO.h"
 #include"VBO.h"

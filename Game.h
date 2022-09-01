@@ -10,26 +10,15 @@
 #include <future>
 #include <queue>
 
-#include "Util.h"
-#include"shaderClass.h"
-#include"VAO.h"
-#include"VBO.h"
-#include"EBO.h"
-#include"Texture.h"
-#include"Camera.h"
-#include "Window.h"
-#include "ChunkMesh.h"
-#include "GLOBAL.h"
-#include "SimplexNoise.h"
-#include "Player.h"
-#include "Chunk.h"
+#include "World.h" //has all the includes, idgaf 
+
+
 class Game {
 public:
 	Shader* shaderProgram;
 	Texture* TextureAtlas;
 	Texture* PlayerTxt;
 	Player player;
-	std::queue<glm::vec2> ChunkGenQueue;
 	int FramesTillResetQueue = 800;
 
 	std::unordered_map<glm::vec2, Chunk> World;

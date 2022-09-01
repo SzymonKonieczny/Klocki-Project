@@ -1,5 +1,5 @@
 #include "Chunk.h"
-std::unordered_map<glm::vec2, std::vector<Block>> Chunk::BlockQueuesMap = std::unordered_map<glm::vec2, std::vector<Block>>();
+std::unordered_map<glm::vec2, Chunk> Chunk::BlockQueuesMap = std::unordered_map<glm::vec2, std::vector<Block>>();
 Chunk::Chunk(glm::vec2 ChunkCoords)
 {
 	ChunkPos = ChunkCoords;
@@ -95,6 +95,11 @@ void Chunk::UpdateMesh()
 		glm::vec2(0, 0)));*/
 }
 
+bool Chunk::CheckIfSolidBlock(glm::vec3 Pos)
+{
+	return false;
+}
+
 void Chunk::UpdateMeshOnlyAdd(std::vector<Block>& BlocksToAdd)
 {
 	for (std::vector<Block>::iterator it = BlocksToAdd.begin(); it != BlocksToAdd.end(); ++it)
@@ -131,7 +136,7 @@ void Chunk::Draw(Shader& shader)
 			auto it = Chunk::BlockQueuesMap.find(WorldPos);
 			if (it != Chunk::BlockQueuesMap.end())
 			{
-				it->second.push_back(Block(LocalPos,ID));
+				it->second.Blocks.push_back(Block(LocalPos,ID));
 					//Add updating meshes to those chunks
 
 			}
@@ -230,8 +235,8 @@ void Chunk::UpdateBlocksFromBlockQueueMap(bool JustNewBlocks)
 	auto it = BlockQueuesMap.find(ChunkPos);
 	if (it != BlockQueuesMap.end())
 	{
-		Blocks.insert(Blocks.end(), it->second.begin(), it->second.end());
-		if (JustNewBlocks)	UpdateMeshOnlyAdd(it->second);
+		Blocks.insert(Blocks.end(), it->second.Blocks.begin(), it->second.Blocks.end());
+		if (JustNewBlocks)	UpdateMeshOnlyAdd(it->second.Blocks);
 		else UpdateMesh();
 	}
 }
