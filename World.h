@@ -20,11 +20,15 @@
 #include "SimplexNoise.h"
 #include "Player.h"
 #include "Chunk.h"
-
+#include "ChunkMenager.h"
 
 class World
 {
+
 public:
+	TerrainGenerator Generator;
+	ChunkMenager ChunkMenager;
 	std::queue<glm::vec2> ChunkGenQueue;
+	void NewChunk(glm::vec2 ChunkPos);
 
 };

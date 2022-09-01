@@ -14,20 +14,27 @@
 #include "Block.h"
 #include "ChunkMesh.h"
 #include "GLOBAL.h"
-
 #include "SimplexNoise.h"
+
+
+#include "TerrainGenerator.h"
+#include "ChunkMenager.h"
+
+class ChunkMenager;
+
+
 class Chunk
 {
-	
+	ChunkMenager* chunkMenager;
 	std::vector<Block> Blocks; //Vector of block IDs that make up teh chunk
 	glm::ivec2 ChunkPos; // ChunkPos.y = Z coordinate in the world
 	ChunkMesh mesh;
 	std::unordered_map<glm::vec3, int> block_map;
-	//std::vector<Block> QueuedBlocks;
+	std::vector<Block> QueuedBlocks;
 	int column_heights[16][16];
 public:
 	bool isDirty = false;
-	Chunk(glm::vec2 ChunkCoords);
+	Chunk(glm::vec2 ChunkCoords, ChunkMenager* ChunkMenager_);
 	void Generate(int height_);
 	void UpdateMesh(); //clear the mesh, and rebuild
 	bool CheckIfSolidBlock(glm::vec3 Pos);
@@ -43,7 +50,6 @@ public:
 	~Chunk();
 
 
-	static std::unordered_map<glm::vec2, std::vector<Block>> BlockQueuesMap;
 
 };
 #endif // !CHUNK_H

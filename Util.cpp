@@ -27,6 +27,20 @@ glm::vec2 Util::WorldPosToChunkPos(glm::vec3 WorldPos)
 	return glm::vec2(int(WorldPos.x/ChunkSize),int(WorldPos.z / ChunkSize));
 }
 
+glm::vec3 Util::LocPosAndChunkPosToWorldPos(glm::vec3 LocPos, glm::vec2 ChunkPos)
+{
+
+	return glm::vec3(LocPos.x + ChunkPos.x * ChunkSize, LocPos.y, LocPos.z + ChunkPos.y /*<- because chunkPos is a vec2*/ * ChunkSize);
+
+}
+
+glm::vec3 Util::WorldPosToLocalPos(glm::vec3 WorldPos)
+{
+	glm::vec2 ChunkPos = Util::WorldPosToChunkPos(WorldPos);
+	return glm::vec3(WorldPos.x - ChunkPos.x * ChunkSize, WorldPos.y, WorldPos.z - ChunkPos.y * ChunkSize);
+
+}
+
 void Util::LoadBlocks()
 {
 

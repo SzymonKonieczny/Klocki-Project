@@ -1,8 +1,10 @@
 #include "Chunk.h"
-std::unordered_map<glm::vec2, std::vector<Block>> Chunk::BlockQueuesMap = std::unordered_map<glm::vec2, std::vector<Block>>();
-Chunk::Chunk(glm::vec2 ChunkCoords)
+#include "ChunkMenager.h"
+
+Chunk::Chunk(glm::vec2 ChunkCoords, ChunkMenager* ChunkMenager_)
 {
 	ChunkPos = ChunkCoords;
+	chunkMenager = ChunkMenager_;
 }
 
 void Chunk::Generate(int height_)
@@ -125,16 +127,19 @@ void Chunk::Draw(Shader& shader)
 
 	
 
-	bool Chunk::setblock(glm::vec3 LocPos, int ID)
+bool Chunk::setblock(glm::vec3 LocPos, int ID)
 {// returns true if the placement was succesful
 		if (!isPositionViable(LocPos))
 		{
-			//std::cout << "Not a viable position. Block requested at " << LocPos.x << " " << LocPos.y + '\n';
-			glm::vec3 WorldPos = glm::vec3(LocPos.x + ChunkPos.x * ChunkSize, LocPos.y, LocPos.z + ChunkPos.y /*<- because chunkPos is a vec2*/ * ChunkSize);
+			std::cout << "Not a viable position. Block requested at " << LocPos.x << " " << LocPos.y + '\n';
+			return false;
+
+
+			glm::vec3 WorldPos = Util::LocPosAndChunkPosToWorldPos(LocPos,ChunkPos);
 			glm::vec2 ChunkPos = Util::WorldPosToChunkPos(WorldPos);
-			glm::vec3 LocalPos = glm::vec3(WorldPos.x - ChunkPos.x * ChunkSize, WorldPos.y, WorldPos.z - ChunkPos.y * ChunkSize);
-			auto it = Chunk::BlockQueuesMap.find(WorldPos);
-			if (it != Chunk::BlockQueuesMap.end())
+			glm::vec3 LocalPos = Util::WorldPosToLocalPos(WorldPos);
+			auto it = chunkMenager->BlockQueuesMap.find(WorldPos);
+			if (it != chunkMenager->BlockQueuesMap.end())
 			{
 				it->second.push_back(Block(LocalPos,ID));
 					//Add updating meshes to those chunks
@@ -144,8 +149,8 @@ void Chunk::Draw(Shader& shader)
 			{
 				std::vector<Block> b;
 				b.push_back(Block(LocalPos, ID));
-				Chunk::BlockQueuesMap.emplace(std::make_pair<>(ChunkPos,b ));
-
+				chunkMenager->BlockQueuesMap.emplace(std::make_pair<>(ChunkPos,b ));
+	
 			}
 		}
 	
@@ -232,8 +237,8 @@ void Chunk::Draw(Shader& shader)
 
 void Chunk::UpdateBlocksFromBlockQueueMap(bool JustNewBlocks)
 {
-	auto it = BlockQueuesMap.find(ChunkPos);
-	if (it != BlockQueuesMap.end())
+	auto it = chunkMenager->BlockQueuesMap.find(ChunkPos);
+	if (it != chunkMenager->BlockQueuesMap.end())
 	{
 		Blocks.insert(Blocks.end(), it->second.begin(), it->second.end());
 		if (JustNewBlocks)	UpdateMeshOnlyAdd(it->second);
