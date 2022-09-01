@@ -16,7 +16,8 @@ void Game::RenderChunksInFrustum()
 void Game::tickEntities()
 {
 	player.Update();
-	HandleWorldLoadingPositionChangeBased();
+	//HandleWorldLoadingPositionChangeBased();
+	HandleWorldLoadingDistanceBased();
 	GenChunksFromQueue(1);
 }
 void Game::GenChunksFromQueue(int amount)
@@ -101,6 +102,23 @@ void Game::HandleWorldLoadingPositionChangeBased()
 		
 	}
 
+}
+void Game::HandleWorldLoadingDistanceBased() // ADD GENERATION OF NEW CHUNKS
+{
+	std::queue< glm::vec2> ToDelete;
+	for (std::unordered_map<glm::vec2, Chunk>::iterator it = World.begin(); it != World.end(); it++)
+	{
+		if (glm::distance(it->first, Util::WorldPosToChunkPos(player.Position)) > RenderDistance*2)
+		{
+			
+			ToDelete.push(it->first);
+		}
+	}
+	for (int i = 0; i < ToDelete.size(); i++)
+	{
+		World.erase(ToDelete.front());
+		ToDelete.pop();
+	}
 }
 Game::Game()
 {
