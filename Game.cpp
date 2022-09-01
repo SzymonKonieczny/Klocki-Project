@@ -54,6 +54,14 @@ void Game::PlaygroundForExperiments()
 }
 void Game::HandleWorldLoading()
 {
+
+	 if (FramesTillResetQueue <= 0)
+	 {
+		 Chunk::BlockQueuesMap.clear();
+		 FramesTillResetQueue = 800;
+		 std::cout << "Clearing the Q" << std::endl;
+	 }
+	 FramesTillResetQueue--;
 	if (player.LastFrameChunkPos != Util::GetInstance()->WorldPosToChunkPos(player.Position))
 	{
 		glm::vec2 Dir =   Util::GetInstance()->WorldPosToChunkPos(player.Position) - player.LastFrameChunkPos;

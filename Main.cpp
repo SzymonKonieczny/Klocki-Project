@@ -28,7 +28,8 @@
 int main()
 {
 
-
+	std::cout << " Enter the seed and then the renderdistance " << std::endl;
+	std::cin >> map_seed >> RenderDistance; 
 
 
 	Game game;

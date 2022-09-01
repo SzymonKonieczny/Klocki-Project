@@ -37,14 +37,13 @@ void Chunk::Generate(int height_)
 				if (k == column_height)
 				{
 					if (Util::GetInstance()->random(0, 1000) < 2) GenerateTree(glm::vec3(j, k, i));
-					else setblock(glm::vec3(j, k, i), BlockTypes::Grass);
-					
+					else setblock(glm::vec3(j, k, i), BlockTypes::Leaves);
+						//setblock(glm::vec3(j, k, i), Util::GetInstance()->random(0, 9));
 					
 				
 				}
 				else setblock(glm::vec3(j, k, i), BlockTypes::Stone);
 				
-				//setblock(glm::vec3(j, k, i), Util::GetInstance()->random(0,9));
 			}
 
 
@@ -73,8 +72,8 @@ void Chunk::UpdateMesh()
 
 
 	}
-	/*
-	mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 0.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
+	
+	/*mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 0.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
 		glm::vec3(0.5f, 0.5f, 0.5f) ,
 		glm::vec2(0, 0)));
 	mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 255.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
@@ -171,6 +170,8 @@ void Chunk::Draw(Shader& shader)
 		{
 			LocPos += Up;
 			setblock(LocPos, 4);
+
+
 		}
 		GenerateTree(LocPos, glm::vec3(Util::GetInstance()->random(-1, 1), 0, Util::GetInstance()->random(-1, 1)), branches-2);
 		int rand = Util::GetInstance()->random(1, 3);
@@ -182,6 +183,11 @@ void Chunk::Draw(Shader& shader)
 		{
 			LocPos += Up + Dir;
 			setblock(LocPos, 4);
+
+			setblock(LocPos + glm::vec3(1, 0, 0), 5);
+			setblock(LocPos + glm::vec3(0, 0, 1), 5);
+			setblock(LocPos + glm::vec3(-1, 0, 0), 5);
+			setblock(LocPos + glm::vec3(0, 0, -1), 5);
 		}
 		GenerateTree(LocPos, glm::vec3(Util::GetInstance()->random(-1, 1), 0, Util::GetInstance()->random(-1, 1)), branches - 1);
 		 rand = Util::GetInstance()->random(1, 3);
@@ -189,6 +195,26 @@ void Chunk::Draw(Shader& shader)
 		{
 			GenerateTree(LocPos, glm::vec3(Util::GetInstance()->random(-1, 1), 0, Util::GetInstance()->random(-1, 1)), branches - 2);
 		}
+
+		/*for (int y = 0; y < 3; y++)
+		{
+			glm::vec3 LeavesPos = LocPos;
+
+			for (int i = -3; i <= 3; i++)
+			{
+
+				for (int k = -3; k <= 3; k++)
+				{
+					if (k == 0 && i == 0) continue;
+					LeavesPos += glm::vec3(i, y, k);
+					setblock(LeavesPos, 5);
+
+				}
+
+			}
+
+		}*/
+		
 	}
 
 

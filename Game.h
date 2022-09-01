@@ -30,6 +30,7 @@ public:
 	Texture* PlayerTxt;
 	Player player;
 	std::queue<glm::vec2> ChunkGenQueue;
+	int FramesTillResetQueue = 800;
 
 	std::unordered_map<glm::vec2, Chunk> World;
 		Game();
