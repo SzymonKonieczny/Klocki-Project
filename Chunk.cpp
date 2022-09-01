@@ -1,5 +1,5 @@
 #include "Chunk.h"
-std::unordered_map<glm::vec2, Chunk> Chunk::BlockQueuesMap = std::unordered_map<glm::vec2, std::vector<Block>>();
+std::unordered_map<glm::vec2, Chunk> Chunk::BlockQueuesMap = std::unordered_map<glm::vec2, Chunk>();
 Chunk::Chunk(glm::vec2 ChunkCoords)
 {
 	ChunkPos = ChunkCoords;

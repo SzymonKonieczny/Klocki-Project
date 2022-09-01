@@ -21,6 +21,7 @@ public:
 	Player player;
 	int FramesTillResetQueue = 800;
 
+	std::queue<glm::vec2> ChunkGenQueue;
 	std::unordered_map<glm::vec2, Chunk> World;
 		Game();
 		void ShaderAndTextureStuff();
