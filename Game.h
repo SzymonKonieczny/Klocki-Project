@@ -7,7 +7,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <future>
 #include <queue>
 
 #include "World.h" //has all the includes, idgaf 
@@ -35,8 +34,8 @@ private:
 	void PlaygroundForExperiments();
 	void HandleWorldLoadingPositionChangeBased();
 	void HandleWorldLoadingDistanceBased();
-	int crntTime;
-	int timeDiff;
+	double crntTime;
+	double timeDiff;
 	int counter;
-	int prevTime;
+	double prevTime;
 };

@@ -6,6 +6,8 @@
 #include <vector>
 #include <unordered_map>
 #include <glm/gtx/hash.hpp>
+#include <thread>
+#include <mutex>
 
 #include "BlockTypes.h"
 #include "BlockTemplate.h"
@@ -25,6 +27,7 @@ class ChunkMenager;
 
 class Chunk
 {
+
 	ChunkMenager* chunkMenager;
 	std::vector<Block> Blocks; //Vector of block IDs that make up teh chunk
 	glm::ivec2 ChunkPos; // ChunkPos.y = Z coordinate in the world
@@ -32,7 +35,9 @@ class Chunk
 	std::unordered_map<glm::vec3, int> block_map;
 	std::vector<Block> QueuedBlocks;
 	int column_heights[16][16];
+	std::mutex Mutex = std::mutex();
 public:
+
 	bool isDirty = false;
 	Chunk(glm::vec2 ChunkCoords, ChunkMenager* ChunkMenager_);
 	void Generate(int height_);

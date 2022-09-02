@@ -21,14 +21,16 @@
 #include "Player.h"
 #include "Chunk.h"
 #include "ChunkMenager.h"
+#include <thread>
 
 class World
 {
 
 public:
+	//void AsyncMesh(std::vector< std::unordered_map<glm::vec2, Chunk>::iterator> vec);
 	bool wasShaderSet=false;
 	void SetShader(Shader* prog);
-	World();
+	World(); 
 	Shader* shaderProgram;
 	TerrainGenerator terrainGenerator;
 	ChunkMenager chunkMenager;

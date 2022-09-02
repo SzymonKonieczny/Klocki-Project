@@ -9,6 +9,7 @@ Chunk::Chunk(glm::vec2 ChunkCoords, ChunkMenager* ChunkMenager_)
 
 void Chunk::Generate(int height_)
 {
+
 	//std::cout << "Generating chunk Pos:" << ChunkPos.x << ' ' << ChunkPos.y << std::endl;
 	int height = height_;
 	FastNoise::SmartNode<FastNoise::Simplex> fnSimplex;
@@ -57,13 +58,13 @@ void Chunk::Generate(int height_)
 
 void Chunk::UpdateMesh()
 {
+	Mutex.lock();
 	mesh.ClearVerticies();
-	//for (int i = 0; i < Blocks.size(); i++)
 
 	for (std::vector<Block>::iterator it = Blocks.begin(); it != Blocks.end(); ++it)
 	{
 		glm::vec3 Pos((ChunkPos.x*ChunkSize) + it->LocalPos.x, 
-			 it->LocalPos.y,
+			 it->LocalPos.y, 
 			(ChunkPos.y * ChunkSize) + it->LocalPos.z);
 		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, 1.0f, 0.0f)) == nullptr) FaceBuilder ::BuildFace(mesh.GetVertexVector(), Faces::Up, Pos,(BlockTypes)it->ID);
 		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, -1.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh.GetVertexVector(), Faces::Down, Pos, (BlockTypes)it->ID);
@@ -95,6 +96,8 @@ void Chunk::UpdateMesh()
 	mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 0.0f, 15.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
 		glm::vec3(1.0f, 1.0f, 1.0f),
 		glm::vec2(0.6f, 0.2f)));*/
+	Mutex.unlock();
+
 }
 
 bool Chunk::CheckIfSolidBlock(glm::vec3 Pos)
@@ -136,7 +139,12 @@ void Chunk::UpdateMeshOnlyAddSingleBlock(Block block)
 
 void Chunk::Draw(Shader& shader)
 {
-	mesh.Draw(shader, glm::vec3(0,0,0));
+	if (Mutex.try_lock())
+	{
+		mesh.Draw(shader, glm::vec3(0, 0, 0));
+		Mutex.unlock();
+	}
+
 }
 
 	
@@ -157,10 +165,11 @@ bool Chunk::setblock(glm::vec3 LocPos, int ID)
 			|-------------------------------------------------------------------|
 			*/
 
-			//chunkMenager->SetBlockInWorld(Util::LocPosAndChunkPosToWorldPos(LocPos, ChunkPos), Block(LocPos, ID));
+			chunkMenager->SetBlockInWorld(Util::LocPosAndChunkPosToWorldPos(LocPos, ChunkPos), Block(LocPos, ID));
 			
 
-			//return false;
+			return false;
+
 
 			glm::vec3 WorldPos = Util::LocPosAndChunkPosToWorldPos(LocPos,ChunkPos);
 			glm::vec2 ChunkPos = Util::WorldPosToChunkPos(WorldPos);

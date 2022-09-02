@@ -1,5 +1,13 @@
 #include "World.h"
 
+
+void AsyncMesh(std::vector< std::unordered_map<glm::vec2, Chunk>::iterator> vec)
+{
+	for (std::unordered_map<glm::vec2, Chunk>::iterator it : vec)
+	{
+		it->second.UpdateMesh();
+	}
+}
 World::World() :chunkMenager(this)
 {
 	
@@ -18,22 +26,31 @@ void World::NewChunk(glm::vec2 ChunkPos)
 
 void World::GenChunksFromQueue(int amount)
 {
-
+	std::vector< std::unordered_map<glm::vec2, Chunk>::iterator> GenChunkOnPosVec;
 	for (int i = 0; i < amount; i++)
 	{
 		if (ChunkGenQueue.empty()) return;
 		glm::vec2 GenChunkOnPos = ChunkGenQueue.front();
+		
 		ChunkGenQueue.pop();
 		auto it = chunkMenager.ChunkMap.find(GenChunkOnPos);
 		if (it != chunkMenager.ChunkMap.end())
 		{
 			it->second.Generate(1);
-			it->second.UpdateMesh();
+
+			GenChunkOnPosVec.push_back(it);
+	
+			//it->second.UpdateMesh();
 
 		}
 
 	}
+	
+	auto fut = std::async(std::launch::async, AsyncMesh, GenChunkOnPosVec);
+
 }
+
+
 
 void World::IdkWhatToCallThatForNow(Player& player)
 {
