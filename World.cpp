@@ -42,11 +42,13 @@ void World::IdkWhatToCallThatForNow(Player& player)
 		std::cout << "THE SHADER FOR THE WORLD HAS TO BE SET!!!!!!!!!!";
 		return;
 	}
+
 	chunkMenager.HandleWorldLoadingPositionChangeBased(player);
 	for (std::unordered_map<glm::vec2, Chunk>::iterator it = chunkMenager.ChunkMap.begin(); it != chunkMenager.ChunkMap.end(); it++)
 	{
 		it->second.Draw(*shaderProgram);
 	}
+
 	GenChunksFromQueue(1);
 
 }

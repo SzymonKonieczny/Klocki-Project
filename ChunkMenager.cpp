@@ -9,7 +9,7 @@ void ChunkMenager::HandleWorldLoadingPositionChangeBased(Player& player)
 {
 	if (FramesTillResetQueue <= 0)
 	{
-		// Chunk::BlockQueuesMap.clear();
+		// BlockQueuesMap.clear();
 		FramesTillResetQueue = 1000;
 		std::cout << "Clearing the Q cycle (currently disabled)" << std::endl;
 	}
@@ -29,8 +29,6 @@ void ChunkMenager::HandleWorldLoadingPositionChangeBased(Player& player)
 			auto it = ChunkMap.find(NewChunkPos);
 			if (it == ChunkMap.end()) // if NOT in the world already
 			{
-				//Chunk* newChunk = new Chunk(NewChunkPos) ;
-				//World.emplace(std::make_pair<>(NewChunkPos,newChunk)); 
 				NewChunk(NewChunkPos);
 				world->ChunkGenQueue.push(NewChunkPos);
 			}
@@ -56,13 +54,13 @@ void ChunkMenager::HandleWorldLoadingPositionChangeBased(Player& player)
 void ChunkMenager::SetBlockInWorld(glm::vec3 WorldPos, Block block)
 {
 	glm::vec2 ChunkPos = Util::WorldPosToChunkPos(WorldPos);
-	glm::vec3 LocalPos = glm::vec3();
+	glm::vec3 LocalPos = Util::WorldPosToLocalPos(WorldPos);
 	auto existingChunksIterator = ChunkMap.find(ChunkPos);
 	if (existingChunksIterator != ChunkMap.end())
 	{
-		existingChunksIterator->second.setblock(LocalPos, block.ID);
-		std::cout << "Adding to an existing chunk" << std::endl;
-		existingChunksIterator->second.UpdateMeshOnlyAddSingleBlock(block);
+		//existingChunksIterator->second.setblock(block.LocalPos, block.ID);
+		//std::cout << "Adding to an existing chunk" << std::endl;
+		//existingChunksIterator->second.UpdateMeshOnlyAddSingleBlock(block);
 		//existingChunksIterator->second.isDirty = true;
 
 	}

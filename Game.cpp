@@ -15,7 +15,6 @@ void Game::tickEntities()
 	player.Update();
 	
 
-	//HandleWorldLoadingDistanceBased();
 
 }
 void Game::WorldUpdate()

@@ -159,13 +159,13 @@ bool Chunk::setblock(glm::vec3 LocPos, int ID)
 
 			chunkMenager->SetBlockInWorld(Util::LocPosAndChunkPosToWorldPos(LocPos, ChunkPos), Block(LocPos, ID));
 			
-			return false;
 
+			return false;
 
 			glm::vec3 WorldPos = Util::LocPosAndChunkPosToWorldPos(LocPos,ChunkPos);
 			glm::vec2 ChunkPos = Util::WorldPosToChunkPos(WorldPos);
 			glm::vec3 LocalPos = Util::WorldPosToLocalPos(WorldPos);
-			auto it = chunkMenager->BlockQueuesMap.find(WorldPos);
+			auto it = chunkMenager->BlockQueuesMap.find(ChunkPos);
 			if (it != chunkMenager->BlockQueuesMap.end())
 			{
 				it->second.push_back(Block(LocalPos,ID));

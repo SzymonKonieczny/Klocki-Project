@@ -25,7 +25,11 @@ void Player::SetShader(Shader* shader)
 
 void Player::HandleInput()
 {
+	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_B) == GLFW_PRESS)
+	{
+		std::cout << "breaking..." << std::endl;
 
+	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_W) == GLFW_PRESS)
 	{
 		Position += speed * LookingAtDir;
