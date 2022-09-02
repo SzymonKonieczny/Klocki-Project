@@ -27,11 +27,17 @@
 int main()
 {
 	
+	glm::vec2 res2 = Util::WorldPosToChunkPos(glm::vec3(-17,2,-32));
+	glm::vec3 res3 = Util::WorldPosToLocalPos(glm::vec3(-17, 2, -32));
+
+	std::cout << " WorldPosToChunkPos " << res2.x <<':' << res2.y<< std::endl;
+	std::cout << " WorldPosToLocalPos " << res3.x << ':' << res3.y << ':' << res3.z << std::endl;
+
 
 
 	std::cout << " Enter the seed and then the renderdistance " << std::endl;
 	std::cin >> map_seed >> RenderDistance; 
-
+	
 
 	Game game;
 	Mesh Orienterbackandup;

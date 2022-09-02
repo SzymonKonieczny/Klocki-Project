@@ -75,27 +75,32 @@ void ChunkMenager::SetBlockInWorld(glm::vec3 WorldPos, Block block)
 	auto existingChunksIterator = ChunkMap.find(ChunkPos);
 	if (existingChunksIterator != ChunkMap.end())
 	{
-		//existingChunksIterator->second.setblock(block.LocalPos, block.ID);
+		existingChunksIterator->second.setblock(LocalPos, block.ID);
 		//std::cout << "Adding to an existing chunk" << std::endl;
-		//existingChunksIterator->second.UpdateMeshOnlyAddSingleBlock(block);
+		existingChunksIterator->second.UpdateMeshOnlyAddSingleBlock(Block(LocalPos, block.ID));
 		//existingChunksIterator->second.isDirty = true;
-
-	}
-
-
-	auto it = BlockQueuesMap.find(ChunkPos);
-	if (it != BlockQueuesMap.end())
-	{
-		it->second.push_back(block);
 
 	}
 	else
 	{
-		std::vector<Block> b;
-		b.push_back(Block(block.LocalPos, block.ID));
-		BlockQueuesMap.emplace(std::make_pair<>(ChunkPos, b));
 
+
+		auto it = BlockQueuesMap.find(ChunkPos);
+		if (it != BlockQueuesMap.end())
+		{
+			it->second.push_back(block);
+
+		}
+		else
+		{
+			std::vector<Block> b;
+			b.push_back(Block(LocalPos, block.ID));
+			BlockQueuesMap.emplace(std::make_pair<>(ChunkPos, b));
+
+		}
 	}
+
+
 }
 
 void ChunkMenager::NewChunk(glm::vec2 ChunkPos)

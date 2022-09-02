@@ -38,7 +38,7 @@ void Chunk::Generate(int height_)
 
 				if (k == column_height)
 				{
-					if (Util::GetInstance()->random(0, 1000) < 200) GenerateTree(glm::vec3(j, k, i));
+					if (Util::GetInstance()->random(0, 1000) < 2) GenerateTree(glm::vec3(j, k, i));
 					else setblock(glm::vec3(j, k, i), BlockTypes::Grass);
 						//setblock(glm::vec3(j, k, i), Util::GetInstance()->random(0, 9));
 					

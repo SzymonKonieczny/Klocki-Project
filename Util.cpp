@@ -24,7 +24,15 @@ Util::Util():gen(rd())
 glm::vec2 Util::WorldPosToChunkPos(glm::vec3 WorldPos)
 {
 
-	return glm::vec2(int(WorldPos.x/ChunkSize),int(WorldPos.z / ChunkSize));
+	//return glm::vec2(int(WorldPos.x/ChunkSize),int(WorldPos.z / ChunkSize));
+
+
+	return glm::vec2(
+		static_cast<int>(WorldPos.x < 0 ? ((WorldPos.x - ChunkSize) / ChunkSize) : (WorldPos.x / ChunkSize)),
+		static_cast<int>(WorldPos.z < 0 ? ((WorldPos.z - ChunkSize) / ChunkSize) : (WorldPos.z / ChunkSize))
+	);
+
+
 }
 
 glm::vec3 Util::LocPosAndChunkPosToWorldPos(glm::vec3 LocPos, glm::vec2 ChunkPos)
