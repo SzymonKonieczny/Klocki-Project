@@ -25,7 +25,7 @@ public:
 	Mesh();
 	~Mesh();
 	//void Generate(const std::vector<std::vector<Block>>& BlockColumns,const glm::ivec2 ChunkPos );
-	void Draw(Shader& shader, glm::vec3 Position);
+	void Draw(Shader& shader, glm::vec3 Position, bool UseModelMatrix = false);
 	VAO VAO;
 	VBO VBO1;
 

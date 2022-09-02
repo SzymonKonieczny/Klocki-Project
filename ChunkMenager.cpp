@@ -4,6 +4,23 @@
 ChunkMenager::ChunkMenager(World* wrld)
 {
 	world = wrld;
+
+
+
+}
+void ChunkMenager::SpawnChunks()
+{
+	glm::vec2 CurrentPos = Util::WorldPosToChunkPos(glm::vec3(0));
+	for (int i = -RenderDistance ; i <= RenderDistance ; i++)
+	{
+
+		for (int k = -RenderDistance ; k <= RenderDistance ; k++)
+		{
+			glm::vec2 ChunkPos = glm::vec2(i, k) + CurrentPos;
+			NewChunk(ChunkPos);
+			world->ChunkGenQueue.push(ChunkPos);
+		}
+	}
 }
 void ChunkMenager::HandleWorldLoadingPositionChangeBased(Player& player)
 {
@@ -75,7 +92,7 @@ void ChunkMenager::SetBlockInWorld(glm::vec3 WorldPos, Block block)
 	else
 	{
 		std::vector<Block> b;
-		b.push_back(Block(LocalPos, block.ID));
+		b.push_back(Block(block.LocalPos, block.ID));
 		BlockQueuesMap.emplace(std::make_pair<>(ChunkPos, b));
 
 	}

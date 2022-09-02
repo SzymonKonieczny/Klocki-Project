@@ -3,11 +3,15 @@
 #define PLAYER_H
 
 #include "Camera.h"
-
+#include "Mesh.h"
+#include "FaceBuilder.h"
 class Player
 {
-
+	Mesh* Compass;
+	float crntTime;
+	float F3Cooldown=0;
 	bool firstClick = true;
+	bool isCompassOn = false;
 	float speed = 0.1f;
 	float sensitivity = 100.0f;
 	Shader* UsedShader;
@@ -19,6 +23,7 @@ public:
 	Camera Cam;
 	Player();
 	void Update();
+	void SwitchCompassOnOff();
 	void SetShader(Shader* shader);
 	void HandleInput();
 };

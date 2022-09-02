@@ -4,4 +4,6 @@ class TerrainGenerator
 {
 	int fedhm;
 	void XDDD();
+	public:
+	~TerrainGenerator();
 };

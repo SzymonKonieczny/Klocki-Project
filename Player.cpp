@@ -1,8 +1,9 @@
 #include "Player.h"
-
+/*glm::vec3(0.0f, 0.0, 0.0f),
+		glm::vec3(1.0f, 1.0f, 1.0f),
+		glm::vec2(0, 1)*/
 Player::Player(): Cam(Position)
 {
-
 
 }
 
@@ -14,8 +15,70 @@ void Player::Update()
 	Cam.UpdateView(*UsedShader);
 	Cam.Position = Position;
 	Cam.LookingAtDir = LookingAtDir;
+
+	if (isCompassOn)
+	{
+		
+		Compass->Draw(*UsedShader,Position+(LookingAtDir),true);
+
+	}
 	
 
+}
+
+void Player::SwitchCompassOnOff()
+{
+	if (Compass == nullptr)
+	{
+		Compass = new Mesh();
+		
+		Compass->vertices.push_back(
+			Vertex(glm::vec3(0.0f, 0.0, 0.0f),
+				glm::vec3(1.0f, 1.0f, 1.0f),
+				glm::vec2(1, 0.99)));
+		Compass->vertices.push_back(
+			Vertex(glm::vec3(0.0, 0.1, 0.0f),
+				glm::vec3(1.0f, 1.0f, 1.0f),
+				glm::vec2(0.99, 1)));
+		Compass->vertices.push_back(
+			Vertex(glm::vec3(0.3, 0, 0.0f),
+				glm::vec3(0.6f, 0.0f, 0.0f),
+				glm::vec2(1, 1)));
+
+
+
+
+		Compass->vertices.push_back(
+			Vertex(glm::vec3(0.0f, 0.0, 0.0f),
+				glm::vec3(1.0f, 1.0f, 1.0f),
+				glm::vec2(1, 0.99)));
+		Compass->vertices.push_back(
+			Vertex(glm::vec3(0.0, 0.3, 0.0f),
+				glm::vec3(1.0f, 1.0f, 1.0f),
+				glm::vec2(0.99, 1)));
+		Compass->vertices.push_back(
+			Vertex(glm::vec3(0.1, 0, 0.0f),
+				glm::vec3(0.0f, 0.6f, 0.0f),
+				glm::vec2(1, 1)));
+
+
+
+		Compass->vertices.push_back(
+			Vertex(glm::vec3(0.0f, 0.0, 0.0f),
+				glm::vec3(1.0f, 1.0f, 1.0f),
+				glm::vec2(1, 0.99)));
+		Compass->vertices.push_back(
+			Vertex(glm::vec3(0.0, 0.1, 0.0f),
+				glm::vec3(1.0f, 1.0f, 1.0f),
+				glm::vec2(0.99, 1)));
+		Compass->vertices.push_back(
+			Vertex(glm::vec3(0.0, 0, 0.3f),
+				glm::vec3(0.0f, 0.0f, 0.6f),
+				glm::vec2(1, 1)));
+
+
+	}
+	isCompassOn = !isCompassOn;
 }
 
 void Player::SetShader(Shader* shader)
@@ -25,9 +88,21 @@ void Player::SetShader(Shader* shader)
 
 void Player::HandleInput()
 {
+	crntTime = glfwGetTime();
+
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_B) == GLFW_PRESS)
 	{
 		std::cout << "breaking..." << std::endl;
+
+	}
+	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_F3) == GLFW_PRESS)
+	{
+		if (crntTime - F3Cooldown > 0.5f)
+		{
+				SwitchCompassOnOff();
+				F3Cooldown = glfwGetTime();
+		}
+	
 
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_W) == GLFW_PRESS)

@@ -38,8 +38,8 @@ void Chunk::Generate(int height_)
 
 				if (k == column_height)
 				{
-					if (Util::GetInstance()->random(0, 1000) < 2) GenerateTree(glm::vec3(j, k, i));
-					else setblock(glm::vec3(j, k, i), BlockTypes::Leaves);
+					if (Util::GetInstance()->random(0, 1000) < 200) GenerateTree(glm::vec3(j, k, i));
+					else setblock(glm::vec3(j, k, i), BlockTypes::Grass);
 						//setblock(glm::vec3(j, k, i), Util::GetInstance()->random(0, 9));
 					
 				
@@ -75,26 +75,26 @@ void Chunk::UpdateMesh()
 
 	}
 	
-	/*mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 0.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
+	mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 0.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
 		glm::vec3(0.5f, 0.5f, 0.5f) ,
-		glm::vec2(0, 0)));
+		glm::vec2(0.8f, 0.2f)));
 	mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 255.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
 		glm::vec3(0.5f, 0.5f, 0.5f) ,
-		glm::vec2(0, 0)));
-	mesh.vertices.push_back(Vertex(glm::vec3(1.0f, 0.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
+		glm::vec2(0.7f, 0.4f)));
+	mesh.vertices.push_back(Vertex(glm::vec3(15.0f, 0.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
 		glm::vec3(1.0f, 1.0f, 1.0f),
-		glm::vec2(0, 0)));
+		glm::vec2(0.6f, 0.2f)));
 
 
 	mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 0.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
 		glm::vec3(0.5f, 0.5f, 0.5f),
-		glm::vec2(0, 0)));
+		glm::vec2(0.8f, 0.2f)));
 	mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 255.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
 		glm::vec3(0.5f, 0.5f, 0.5f),
-		glm::vec2(0, 0)));
-	mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 0.0f, 1.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
+		glm::vec2(0.7f, 0.4f)));
+	mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 0.0f, 15.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
 		glm::vec3(1.0f, 1.0f, 1.0f),
-		glm::vec2(0, 0)));*/
+		glm::vec2(0.6f, 0.2f)));
 }
 
 bool Chunk::CheckIfSolidBlock(glm::vec3 Pos)

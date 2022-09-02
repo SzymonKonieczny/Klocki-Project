@@ -16,7 +16,7 @@ class ChunkMenager
 	int FramesTillResetQueue = 800;
 public:
 	ChunkMenager(World* wrld);
-
+	void SpawnChunks();
 	std::unordered_map<glm::vec2, std::vector<Block>> BlockQueuesMap;
 	World* world;
 	std::unordered_map<glm::vec2, Chunk> ChunkMap;

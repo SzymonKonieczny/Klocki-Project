@@ -47,15 +47,25 @@ Mesh::~Mesh()
 {
 
 }
-void Mesh::Draw(Shader& shader, glm::vec3 Position)  {
+void Mesh::Draw(Shader& shader, glm::vec3 Position, bool UseModelMatrix)  {
 
 	shader.Activate();
 	VBO1.Rebuffer(vertices);
 	//EBO1->Rebuffer(indices);
 	VAO.Bind();
-	glm::mat4 PosAndRot = model * glm::translate(glm::vec3(Position));
-	//model =   glm::translate(glm::vec3(Position)) ;
-	glUniformMatrix4fv(glGetUniformLocation(shader.ID, "model"), 1, GL_FALSE, glm::value_ptr(PosAndRot));
+	
+	if (UseModelMatrix)
+	{
+		
+		//model = model * glm::translate(glm::vec3(Position));
+		glUniformMatrix4fv(glGetUniformLocation(shader.ID, "model"), 1, GL_FALSE, glm::value_ptr(glm::translate(glm::vec3(Position))));
+
+	}
+	else glUniformMatrix4fv(glGetUniformLocation(shader.ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
+
+
+	
+
 
 
 

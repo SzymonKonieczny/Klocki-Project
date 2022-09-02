@@ -36,8 +36,13 @@ glm::vec3 Util::LocPosAndChunkPosToWorldPos(glm::vec3 LocPos, glm::vec2 ChunkPos
 
 glm::vec3 Util::WorldPosToLocalPos(glm::vec3 WorldPos)
 {
+
+	int x = static_cast<int>(WorldPos.x);
+
+	int z = static_cast<int>(WorldPos.z);
 	glm::vec2 ChunkPos = Util::WorldPosToChunkPos(WorldPos);
-	return glm::vec3(WorldPos.x - ChunkPos.x * ChunkSize, WorldPos.y, WorldPos.z - ChunkPos.y * ChunkSize);
+	//return glm::vec3(WorldPos.x - ChunkPos.x * ChunkSize, WorldPos.y, WorldPos.z - ChunkPos.y * ChunkSize);
+	return glm::vec3( (ChunkSize+(x%ChunkSize))%ChunkSize , WorldPos.y, (ChunkSize + (z % ChunkSize)) % ChunkSize); //hopson?
 
 }
 

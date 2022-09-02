@@ -43,7 +43,7 @@ void World::IdkWhatToCallThatForNow(Player& player)
 		return;
 	}
 
-	chunkMenager.HandleWorldLoadingPositionChangeBased(player);
+	//chunkMenager.HandleWorldLoadingPositionChangeBased(player);
 	for (std::unordered_map<glm::vec2, Chunk>::iterator it = chunkMenager.ChunkMap.begin(); it != chunkMenager.ChunkMap.end(); it++)
 	{
 		it->second.Draw(*shaderProgram);
