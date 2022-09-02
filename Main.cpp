@@ -42,10 +42,10 @@ int main()
 	Game game;
 	Mesh Orienterbackandup;
 	Mesh Orienterfrontanddown;
-	FaceBuilder::BuildFace(Orienterbackandup.vertices, Faces::Up, glm::vec3(0, 0, 0));
-	FaceBuilder::BuildFace(Orienterbackandup.vertices, Faces::Down, glm::vec3(0, 0, 0));
-	FaceBuilder::BuildFace(Orienterfrontanddown.vertices, Faces::Up, glm::vec3(0, -1, -1));
-	FaceBuilder::BuildFace(Orienterfrontanddown.vertices, Faces::Down, glm::vec3(0, -1, -1));
+	FaceBuilder::BuildFace(Orienterbackandup.GetVertexVector(), Faces::Up, glm::vec3(0, 0, 0));
+	FaceBuilder::BuildFace(Orienterbackandup.GetVertexVector(), Faces::Down, glm::vec3(0, 0, 0));
+	FaceBuilder::BuildFace(Orienterfrontanddown.GetVertexVector(), Faces::Up, glm::vec3(0, -1, -1));
+	FaceBuilder::BuildFace(Orienterfrontanddown.GetVertexVector(), Faces::Down, glm::vec3(0, -1, -1));
 
 
 	glm::mat4 Rotation = glm::mat4(1.0);

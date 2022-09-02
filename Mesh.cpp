@@ -50,7 +50,12 @@ Mesh::~Mesh()
 void Mesh::Draw(Shader& shader, glm::vec3 Position, bool UseModelMatrix)  {
 
 	shader.Activate();
-	VBO1.Rebuffer(vertices);
+	if (mingledWith)
+	{
+		VBO1.Rebuffer(vertices);
+		mingledWith = false;
+	}
+
 	//EBO1->Rebuffer(indices);
 	VAO.Bind();
 	
@@ -74,4 +79,22 @@ void Mesh::Draw(Shader& shader, glm::vec3 Position, bool UseModelMatrix)  {
 	//glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 	VAO.Unbind();
 
+}
+
+std::vector<Vertex>& Mesh::GetVertexVector()
+{
+	mingledWith = true;
+	return vertices;
+}
+
+void Mesh::AddToVerticies(Vertex& vert)
+{
+	mingledWith = true;
+	vertices.push_back(vert);
+}
+
+void Mesh::ClearVerticies()
+{
+	mingledWith = true;
+	vertices.clear();
 }

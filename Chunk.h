@@ -44,7 +44,7 @@ public:
 	void deleteblock(glm::vec3 LocPos);
 	void setWorldBlock(glm::vec3 LocPos);
 	void UpdateMeshOnlyAddSingleBlock(Block block);
-	void GenerateTree(glm::vec3 LocPos, glm::vec3 Dir = glm::vec3(0, 0, 1), int branches = 4);
+	void GenerateTree(glm::vec3 LocPos, glm::vec3 Dir = glm::vec3(0, 0, 1), int branches = 2);
 	bool isPositionViable(glm::vec3 LocPos);
 	void UpdateBlocksFromBlockQueueMap(bool JustNewBlocks);
 	Block* vec3ToBlock(glm::vec3 LocPos);

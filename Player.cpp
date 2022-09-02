@@ -32,15 +32,15 @@ void Player::SwitchCompassOnOff()
 	{
 		Compass = new Mesh();
 		
-		Compass->vertices.push_back(
+		Compass->GetVertexVector().push_back(
 			Vertex(glm::vec3(0.0f, 0.0, 0.0f),
 				glm::vec3(1.0f, 1.0f, 1.0f),
 				glm::vec2(1, 0.99)));
-		Compass->vertices.push_back(
+		Compass->GetVertexVector().push_back(
 			Vertex(glm::vec3(0.0, 0.1, 0.0f),
 				glm::vec3(1.0f, 1.0f, 1.0f),
 				glm::vec2(0.99, 1)));
-		Compass->vertices.push_back(
+		Compass->GetVertexVector().push_back(
 			Vertex(glm::vec3(0.3, 0, 0.0f),
 				glm::vec3(0.6f, 0.0f, 0.0f),
 				glm::vec2(1, 1)));
@@ -48,30 +48,30 @@ void Player::SwitchCompassOnOff()
 
 
 
-		Compass->vertices.push_back(
+		Compass->GetVertexVector().push_back(
 			Vertex(glm::vec3(0.0f, 0.0, 0.0f),
 				glm::vec3(1.0f, 1.0f, 1.0f),
 				glm::vec2(1, 0.99)));
-		Compass->vertices.push_back(
+		Compass->GetVertexVector().push_back(
 			Vertex(glm::vec3(0.0, 0.3, 0.0f),
 				glm::vec3(1.0f, 1.0f, 1.0f),
 				glm::vec2(0.99, 1)));
-		Compass->vertices.push_back(
+		Compass->GetVertexVector().push_back(
 			Vertex(glm::vec3(0.1, 0, 0.0f),
 				glm::vec3(0.0f, 0.6f, 0.0f),
 				glm::vec2(1, 1)));
 
 
 
-		Compass->vertices.push_back(
+		Compass->GetVertexVector().push_back(
 			Vertex(glm::vec3(0.0f, 0.0, 0.0f),
 				glm::vec3(1.0f, 1.0f, 1.0f),
 				glm::vec2(1, 0.99)));
-		Compass->vertices.push_back(
+		Compass->GetVertexVector().push_back(
 			Vertex(glm::vec3(0.0, 0.1, 0.0f),
 				glm::vec3(1.0f, 1.0f, 1.0f),
 				glm::vec2(0.99, 1)));
-		Compass->vertices.push_back(
+		Compass->GetVertexVector().push_back(
 			Vertex(glm::vec3(0.0, 0, 0.3f),
 				glm::vec3(0.0f, 0.0f, 0.6f),
 				glm::vec2(1, 1)));
@@ -90,6 +90,15 @@ void Player::HandleInput()
 {
 	crntTime = glfwGetTime();
 
+	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_P) == GLFW_PRESS)
+	{
+		glm::vec2 res2 = Util::WorldPosToChunkPos(Position);
+
+		std::cout << " Player at Chunk Pos " << res2.x << ':' << res2.y << std::endl;
+		std::cout << " Player at World Pos " << Position.x << ':' << Position.y << ':' << Position.z << std::endl;
+
+	}
+	
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_B) == GLFW_PRESS)
 	{
 		std::cout << "breaking..." << std::endl;
@@ -107,19 +116,19 @@ void Player::HandleInput()
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		Position += speed * LookingAtDir;
+		Position += speed * glm::normalize( glm::vec3(LookingAtDir.x, 0, LookingAtDir.z));
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		Position += speed * -glm::normalize(glm::cross(LookingAtDir, glm::vec3(0.0f, 1.0f, 0.0f)));
+		Position += speed * -glm::normalize(glm::cross(glm::vec3(LookingAtDir.x, 0, LookingAtDir.z), glm::vec3(0.0f, 1.0f, 0.0f)));
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		Position += speed * -LookingAtDir;
+		Position += speed * -glm::normalize(glm::vec3(LookingAtDir.x, 0, LookingAtDir.z));
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		Position += speed * glm::normalize(glm::cross(LookingAtDir, glm::vec3(0.0f, 1.0f, 0.0f)));
+		Position += speed * glm::normalize(glm::cross(glm::vec3(LookingAtDir.x,0, LookingAtDir.z), glm::vec3(0.0f, 1.0f, 0.0f)));
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_SPACE) == GLFW_PRESS)
 	{

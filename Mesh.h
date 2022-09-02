@@ -16,10 +16,11 @@
 #include "GLOBAL.h"
 #include "Camera.h"
 class Mesh{
+	std::vector<Vertex> vertices;
 public:
 	  // STATIC to ma byc
 	glm::mat4 model = glm::mat4(1.0f);
-	std::vector<Vertex> vertices;
+	bool mingledWith = false;
 	std::vector < GLuint> indices;
 	//Mesh(std::vector<Vertex>& vertices_, std::vector < GLuint>& indices_);
 	Mesh();
@@ -28,8 +29,10 @@ public:
 	void Draw(Shader& shader, glm::vec3 Position, bool UseModelMatrix = false);
 	VAO VAO;
 	VBO VBO1;
+	std::vector<Vertex>& GetVertexVector();
 
-
+	void AddToVerticies(Vertex& vert);
+	void ClearVerticies();
 };
 
 #endif // !MESH_H

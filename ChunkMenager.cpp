@@ -11,10 +11,10 @@ ChunkMenager::ChunkMenager(World* wrld)
 void ChunkMenager::SpawnChunks()
 {
 	glm::vec2 CurrentPos = Util::WorldPosToChunkPos(glm::vec3(0));
-	for (int i = -RenderDistance ; i <= RenderDistance ; i++)
+	for (int i = -RenderDistance *2 ; i <= RenderDistance*2 ; i++)
 	{
 
-		for (int k = -RenderDistance ; k <= RenderDistance ; k++)
+		for (int k = -RenderDistance*2 ; k <= RenderDistance*2 ; k++)
 		{
 			glm::vec2 ChunkPos = glm::vec2(i, k) + CurrentPos;
 			NewChunk(ChunkPos);
@@ -88,13 +88,14 @@ void ChunkMenager::SetBlockInWorld(glm::vec3 WorldPos, Block block)
 		auto it = BlockQueuesMap.find(ChunkPos);
 		if (it != BlockQueuesMap.end())
 		{
-			it->second.push_back(block);
-
+			
+			it->second.push_back(Block(LocalPos, BlockTypes::Dirt));
+			
 		}
 		else
 		{
 			std::vector<Block> b;
-			b.push_back(Block(LocalPos, block.ID));
+			b.push_back(Block(LocalPos, BlockTypes::Water));
 			BlockQueuesMap.emplace(std::make_pair<>(ChunkPos, b));
 
 		}

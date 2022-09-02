@@ -19,6 +19,21 @@ void Game::tickEntities()
 }
 void Game::WorldUpdate()
 {
+	crntTime = glfwGetTime();
+	timeDiff = crntTime - prevTime;
+	counter++;
+	if (timeDiff >= 1.0 / 30.0)
+	{
+		
+		
+			std::string FPS = std::to_string((1.0 / timeDiff) * counter);
+			std::string ms = std::to_string((timeDiff / counter) * 1000);
+			std::string newTitle = "Prodzekto - " + FPS + "FPS / " + ms + "ms";
+			glfwSetWindowTitle(Window::GetInstance()->window, newTitle.c_str());
+		
+		prevTime = crntTime;
+		counter = 0;
+	}
 	world.IdkWhatToCallThatForNow(player);
 }
 /*

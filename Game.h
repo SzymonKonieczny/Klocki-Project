@@ -35,4 +35,8 @@ private:
 	void PlaygroundForExperiments();
 	void HandleWorldLoadingPositionChangeBased();
 	void HandleWorldLoadingDistanceBased();
+	int crntTime;
+	int timeDiff;
+	int counter;
+	int prevTime;
 };
