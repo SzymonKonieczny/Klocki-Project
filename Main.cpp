@@ -32,7 +32,6 @@ int main()
 
 
 	Game game;
-	Chunk chunk(glm::vec2(1, 0));
 	Mesh Orienterbackandup;
 	Mesh Orienterfrontanddown;
 	FaceBuilder::BuildFace(Orienterbackandup.vertices, Faces::Up, glm::vec3(0, 0, 0));
@@ -58,7 +57,8 @@ int main()
 		//camera.Position += 0.01;
 
 		game.tickEntities();
-		game.RenderChunksInFrustum();
+		game.WorldUpdate();
+		//game.RenderChunksInFrustum();
 
 		
 		//Orienterbackandup.Draw(*game.shaderProgram, glm::vec3(0, 0, 0));

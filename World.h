@@ -26,9 +26,15 @@ class World
 {
 
 public:
-	TerrainGenerator Generator;
-	ChunkMenager ChunkMenager;
+	bool wasShaderSet=false;
+	void SetShader(Shader* prog);
+	World();
+	Shader* shaderProgram;
+	TerrainGenerator terrainGenerator;
+	ChunkMenager chunkMenager;
 	std::queue<glm::vec2> ChunkGenQueue;
 	void NewChunk(glm::vec2 ChunkPos);
+	void GenChunksFromQueue(int amount);
+	void IdkWhatToCallThatForNow(Player& player);
 
 };

@@ -119,6 +119,20 @@ void Chunk::UpdateMeshOnlyAdd(std::vector<Block>& BlocksToAdd)
 
 	}
 }
+void Chunk::UpdateMeshOnlyAddSingleBlock(Block block)
+{
+	glm::vec3 Pos((ChunkPos.x * ChunkSize) + block.LocalPos.x,
+		block.LocalPos.y,
+		(ChunkPos.y * ChunkSize) + block.LocalPos.z);
+	if (vec3ToBlock(block.LocalPos + glm::vec3(0.0f, 1.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh.vertices, Faces::Up, Pos, (BlockTypes)	6);
+	if (vec3ToBlock(block.LocalPos + glm::vec3(0.0f, -1.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh.vertices, Faces::Down, Pos, (BlockTypes)	6);
+	if (vec3ToBlock(block.LocalPos + glm::vec3(0.0f, 0.0f, 1.0f)) == nullptr) FaceBuilder::BuildFace(mesh.vertices, Faces::North, Pos, (BlockTypes)	6);
+	if (vec3ToBlock(block.LocalPos + glm::vec3(0.0f, 0.0f, -1.0f)) == nullptr) FaceBuilder::BuildFace(mesh.vertices, Faces::South, Pos, (BlockTypes)6);
+	if (vec3ToBlock(block.LocalPos + glm::vec3(-1.0f, 0.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh.vertices, Faces::West, Pos, (BlockTypes)	6);
+	if (vec3ToBlock(block.LocalPos + glm::vec3(1.0f, 0.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh.vertices, Faces::East, Pos, (BlockTypes)	6);
+
+
+}
 
 void Chunk::Draw(Shader& shader)
 {
@@ -131,7 +145,20 @@ bool Chunk::setblock(glm::vec3 LocPos, int ID)
 {// returns true if the placement was succesful
 		if (!isPositionViable(LocPos))
 		{
-			std::cout << "Not a viable position. Block requested at " << LocPos.x << " " << LocPos.y + '\n';
+
+			//std::cout << "Not a viable position. Block requested at " << LocPos.x << " " << LocPos.y + '\n';
+			/*
+			|-------------------------------------------------------------------|
+			|																	|
+			|			MAKE A TERRAIN GENERATOR FOR THIS						|
+			|		  what is below is a TEMPORARY solution						|
+			|		Instead of chunk building themselves, a generator should	|
+			|			And it should use the ChunkMenagers functions			|
+			|-------------------------------------------------------------------|
+			*/
+
+			chunkMenager->SetBlockInWorld(Util::LocPosAndChunkPosToWorldPos(LocPos, ChunkPos), Block(LocPos, ID));
+			
 			return false;
 
 

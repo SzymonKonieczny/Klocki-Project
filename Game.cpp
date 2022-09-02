@@ -8,18 +8,21 @@ void Game::framebuffer_size_callback(GLFWwindow* window, int width, int height)
 void Game::RenderChunksInFrustum()
 {
 	
-	for (std::unordered_map<glm::vec2, Chunk>::iterator it = World.begin(); it !=World.end(); it++)
-	{
-		it->second.Draw(*shaderProgram);
-	}
+
 }
 void Game::tickEntities()
 {
 	player.Update();
-	HandleWorldLoadingPositionChangeBased();
+	
+
 	//HandleWorldLoadingDistanceBased();
-	GenChunksFromQueue(1);
+
 }
+void Game::WorldUpdate()
+{
+	world.IdkWhatToCallThatForNow(player);
+}
+/*
 void Game::GenChunksFromQueue(int amount)
 {
 	
@@ -119,7 +122,7 @@ void Game::HandleWorldLoadingDistanceBased() // ADD GENERATION OF NEW CHUNKS
 		World.erase(ToDelete.front());
 		ToDelete.pop();
 	}
-}
+}*/
 Game::Game()
 {
 
@@ -155,11 +158,11 @@ Game::Game()
 	glfwSwapInterval(1);
 
 	ShaderAndTextureStuff();
-
+	world.SetShader(shaderProgram);
 
 	Util::GetInstance()->LoadBlocks();
 
-	PlaygroundForExperiments();
+	//PlaygroundForExperiments();
 }
 
 void Game::ShaderAndTextureStuff()

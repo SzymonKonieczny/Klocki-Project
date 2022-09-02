@@ -7,18 +7,22 @@
 #include <vector>
 #include <unordered_map>
 #include <glm/gtx/hash.hpp>
+#include "Player.h"
 struct Block;
-
+class World;
 class Chunk;
 class ChunkMenager
 {
+	int FramesTillResetQueue = 800;
 public:
-	static std::unordered_map<glm::vec2, std::vector<Block>> BlockQueuesMap;
+	ChunkMenager(World* wrld);
 
+	std::unordered_map<glm::vec2, std::vector<Block>> BlockQueuesMap;
+	World* world;
 	std::unordered_map<glm::vec2, Chunk> ChunkMap;
-	void HandleWorldLoadingPositionChangeBased();
+	void HandleWorldLoadingPositionChangeBased(Player& player);
 	void HandleWorldLoadingDistanceBased();
-	void SetBlock(glm::vec3 WorldPos, Block block);
+	void SetBlockInWorld(glm::vec3 WorldPos, Block block);
 	void NewChunk(glm::vec2 ChunkPos);
 
 };

@@ -20,8 +20,7 @@ public:
 	Texture* PlayerTxt;
 	Player player;
 	World world;
-	int FramesTillResetQueue = 800;
-	std::unordered_map<glm::vec2, Chunk> World;
+
 		Game();
 		void ShaderAndTextureStuff();
 		static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -30,6 +29,7 @@ public:
 		void DrawEntities();
 		void GenChunksFromQueue(int amount);
 		void ClearScreen();
+		void WorldUpdate();
 
 private:
 	void PlaygroundForExperiments();
