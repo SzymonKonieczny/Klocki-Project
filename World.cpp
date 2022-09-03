@@ -1,12 +1,16 @@
 #include "World.h"
 
 
-void AsyncMesh(std::vector< std::unordered_map<glm::vec2, Chunk>::iterator> vec)
+void AsyncMesh(std::vector< Chunk*>& vec, bool* LastBatchReady)
 {
-	for (std::unordered_map<glm::vec2, Chunk>::iterator it : vec)
+	*LastBatchReady = false;
+
+	for (Chunk* chunk : vec)
 	{
-		it->second.UpdateMesh();
+		chunk->UpdateMesh();
 	}
+	*LastBatchReady = true;
+
 }
 World::World() :chunkMenager(this)
 {
@@ -26,7 +30,10 @@ void World::NewChunk(glm::vec2 ChunkPos)
 
 void World::GenChunksFromQueue(int amount)
 {
-	std::vector< std::unordered_map<glm::vec2, Chunk>::iterator> GenChunkOnPosVec;
+
+	if (!LastBatchReady) 
+		return;
+	std::vector< Chunk*> GenChunkOnPosVec;
 	for (int i = 0; i < amount; i++)
 	{
 		if (ChunkGenQueue.empty()) return;
@@ -38,16 +45,16 @@ void World::GenChunksFromQueue(int amount)
 		{
 			it->second.Generate(1);
 
-			GenChunkOnPosVec.push_back(it);
+			GenChunkOnPosVec.push_back(&it->second);
 	
-			//it->second.UpdateMesh();
+			it->second.UpdateMesh();
 
 		}
 
 	}
+	//std::thread f( AsyncMesh, std::ref(GenChunkOnPosVec), &LastBatchReady);
+	//f.detach();
 	
-	auto fut = std::async(std::launch::async, AsyncMesh, GenChunkOnPosVec);
-
 }
 
 
@@ -66,6 +73,6 @@ void World::IdkWhatToCallThatForNow(Player& player)
 		it->second.Draw(*shaderProgram);
 	}
 
-	GenChunksFromQueue(1);
+	GenChunksFromQueue(5);
 
 }

@@ -27,15 +27,17 @@ class ChunkMenager;
 
 class Chunk
 {
+	std::mutex Mutex;
 
 	ChunkMenager* chunkMenager;
 	std::vector<Block> Blocks; //Vector of block IDs that make up teh chunk
-	glm::ivec2 ChunkPos; // ChunkPos.y = Z coordinate in the world
+	glm::vec2 ChunkPos; // ChunkPos.y = Z coordinate in the world
 	ChunkMesh mesh;
 	std::unordered_map<glm::vec3, int> block_map;
 	std::vector<Block> QueuedBlocks;
 	int column_heights[16][16];
-	std::mutex Mutex = std::mutex();
+	bool mutexMakeshift=true;
+
 public:
 
 	bool isDirty = false;

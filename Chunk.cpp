@@ -59,6 +59,7 @@ void Chunk::Generate(int height_)
 void Chunk::UpdateMesh()
 {
 	Mutex.lock();
+
 	mesh.ClearVerticies();
 
 	for (std::vector<Block>::iterator it = Blocks.begin(); it != Blocks.end(); ++it)
@@ -139,7 +140,7 @@ void Chunk::UpdateMeshOnlyAddSingleBlock(Block block)
 
 void Chunk::Draw(Shader& shader)
 {
-	if (Mutex.try_lock())
+	if (Mutex.try_lock())	
 	{
 		mesh.Draw(shader, glm::vec3(0, 0, 0));
 		Mutex.unlock();

@@ -25,7 +25,7 @@
 
 class World
 {
-
+	bool LastBatchReady = true;
 public:
 	//void AsyncMesh(std::vector< std::unordered_map<glm::vec2, Chunk>::iterator> vec);
 	bool wasShaderSet=false;

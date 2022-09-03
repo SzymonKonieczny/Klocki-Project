@@ -106,5 +106,5 @@ void ChunkMenager::SetBlockInWorld(glm::vec3 WorldPos, Block block)
 
 void ChunkMenager::NewChunk(glm::vec2 ChunkPos)
 {
-	ChunkMap.emplace(std::make_pair<>(ChunkPos, Chunk(ChunkPos, this)));
+	ChunkMap.try_emplace(ChunkPos, ChunkPos, this);
 }
