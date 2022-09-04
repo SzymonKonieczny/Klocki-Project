@@ -1,14 +1,26 @@
 #include "World.h"
 
 
+void World::AsyncGenerate(std::shared_ptr < std::vector< std::shared_ptr<Chunk>>> vec, bool* LastBatchReady)
+{
+	*LastBatchReady = false;
+
+
+	for (int i = 0; i < vec->size(); i++)
+	{
+		(*vec)[i]->Generate(1);
+
+
+	}
+	vec->clear();
+	*LastBatchReady = true;
+
+}
 void AsyncMesh(std::shared_ptr < std::vector< std::shared_ptr<Chunk>>> vec, bool* LastBatchReady)
 {
 	*LastBatchReady = false;
 
-	/*for (std::shared_ptr<Chunk> chunk : vec)
-	{
-		chunk->UpdateMesh();
-	}*/
+
 	for (int i = 0; i < vec->size(); i++)
 	{
 		(*vec)[i]->Generate(1);

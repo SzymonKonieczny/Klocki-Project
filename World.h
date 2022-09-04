@@ -38,5 +38,7 @@ public:
 	void NewChunk(glm::vec2 ChunkPos);
 	void GenChunksFromQueue(int amount);
 	void IdkWhatToCallThatForNow(Player& player);
+	void AsyncGenerate(std::shared_ptr < std::vector< std::shared_ptr<Chunk>>> vec, bool* LastBatchReady);
+
 
 };

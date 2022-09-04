@@ -1,9 +1,12 @@
 #pragma once
 #include "Chunk.h"
+#include "SimplexNoise.h"
+
 class TerrainGenerator
 {
-	int fedhm;
-	void XDDD();
+
+	void Generate(std::shared_ptr<Chunk> chunkptr);
 	public:
+	TerrainGenerator();
 	~TerrainGenerator();
 };

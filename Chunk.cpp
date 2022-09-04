@@ -128,12 +128,12 @@ void Chunk::UpdateMeshOnlyAddSingleBlock(Block block)
 	glm::vec3 Pos((ChunkPos.x * ChunkSize) + block.LocalPos.x,
 		block.LocalPos.y,
 		(ChunkPos.y * ChunkSize) + block.LocalPos.z);
-	if (vec3ToBlock(block.LocalPos + glm::vec3(0.0f, 1.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace( mesh.GetVertexVector(), Faces::Up, Pos, (BlockTypes)	6);
-	if (vec3ToBlock(block.LocalPos + glm::vec3(0.0f, -1.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh.GetVertexVector(), Faces::Down, Pos, (BlockTypes)	6);
-	if (vec3ToBlock(block.LocalPos + glm::vec3(0.0f, 0.0f, 1.0f)) == nullptr) FaceBuilder::BuildFace( mesh.GetVertexVector(), Faces::North, Pos, (BlockTypes)	6);
-	if (vec3ToBlock(block.LocalPos + glm::vec3(0.0f, 0.0f, -1.0f)) == nullptr) FaceBuilder::BuildFace(mesh.GetVertexVector(), Faces::South, Pos, (BlockTypes)6);
-	if (vec3ToBlock(block.LocalPos + glm::vec3(-1.0f, 0.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh.GetVertexVector(), Faces::West, Pos, (BlockTypes)	6);
-	if (vec3ToBlock(block.LocalPos + glm::vec3(1.0f, 0.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace( mesh.GetVertexVector(), Faces::East, Pos, (BlockTypes)	6);
+	if (vec3ToBlock(block.LocalPos + glm::vec3(0.0f, 1.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace( mesh.GetVertexVector(), Faces::Up, Pos, (BlockTypes)		block.ID);
+	if (vec3ToBlock(block.LocalPos + glm::vec3(0.0f, -1.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh.GetVertexVector(), Faces::Down, Pos, (BlockTypes)	block.ID);
+	if (vec3ToBlock(block.LocalPos + glm::vec3(0.0f, 0.0f, 1.0f)) == nullptr) FaceBuilder::BuildFace( mesh.GetVertexVector(), Faces::North, Pos, (BlockTypes)	block.ID);
+	if (vec3ToBlock(block.LocalPos + glm::vec3(0.0f, 0.0f, -1.0f)) == nullptr) FaceBuilder::BuildFace(mesh.GetVertexVector(), Faces::South, Pos, (BlockTypes)	block.ID);
+	if (vec3ToBlock(block.LocalPos + glm::vec3(-1.0f, 0.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh.GetVertexVector(), Faces::West, Pos, (BlockTypes)	block.ID);
+	if (vec3ToBlock(block.LocalPos + glm::vec3(1.0f, 0.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace( mesh.GetVertexVector(), Faces::East, Pos, (BlockTypes)	block.ID);
 
 
 }
@@ -180,6 +180,8 @@ bool Chunk::setblock(glm::vec3 LocPos, int ID)
 			{
 				it->second.push_back(Block(LocalPos, BlockTypes::Dirt));
 					//Add updating meshes to those chunks
+
+			
 
 			}
 			else
@@ -278,6 +280,10 @@ void Chunk::UpdateBlocksFromBlockQueueMap(bool JustNewBlocks)
 	if (it != chunkMenager->BlockQueuesMap.end())
 	{
 		Blocks.insert(Blocks.end(), it->second.begin(), it->second.end());
+		for (Block b : it->second)
+		{
+			setblock(b.LocalPos, b.ID);
+		}
 		if (JustNewBlocks)	UpdateMeshOnlyAdd(it->second);
 		else UpdateMesh();
 	}

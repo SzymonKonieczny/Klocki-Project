@@ -99,13 +99,15 @@ void ChunkMenager::SetBlockInWorld(glm::vec3 WorldPos, Block block)
 		if (it != BlockQueuesMap.end())
 		{
 			
-			it->second.push_back(Block(LocalPos, BlockTypes::Dirt));
+			//it->second.push_back(Block(LocalPos, BlockTypes::Dirt));
+			it->second.push_back(Block(LocalPos, block.ID));
 			
 		}
 		else
 		{
 			std::vector<Block> b;
-			b.push_back(Block(LocalPos, BlockTypes::Water));
+		//	b.push_back(Block(LocalPos, BlockTypes::Water));
+			b.push_back(Block(LocalPos, block.ID));
 			BlockQueuesMap.emplace(std::make_pair<>(ChunkPos, b));
 
 		}
