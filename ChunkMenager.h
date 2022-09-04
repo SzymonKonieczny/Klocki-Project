@@ -7,6 +7,7 @@
 #include <vector>
 #include <unordered_map>
 #include <glm/gtx/hash.hpp>
+#include <memory>
 #include "Player.h"
 struct Block;
 class World;
@@ -20,7 +21,7 @@ public:
 	std::unordered_map<glm::vec2, std::vector<Block>> BlockQueuesMap;
 	World* world;
 
-	std::unordered_map<glm::vec2, Chunk> ChunkMap;
+	std::unordered_map<glm::vec2, std::shared_ptr<Chunk>> ChunkMap;
 
 	void HandleWorldLoadingPositionChangeBased(Player& player);
 	void HandleWorldLoadingDistanceBased();

@@ -10,11 +10,12 @@ ChunkMenager::ChunkMenager(World* wrld)
 }
 void ChunkMenager::SpawnChunks()
 {
+	int Render = RenderDistance ;
 	glm::vec2 CurrentPos = Util::WorldPosToChunkPos(glm::vec3(0));
-	for (int i = -RenderDistance *2 ; i <= RenderDistance*2 ; i++)
+	for (int i = -Render ; i <= Render ; i++)
 	{
 
-		for (int k = -RenderDistance*2 ; k <= RenderDistance*2 ; k++)
+		for (int k = -Render  ; k <= Render  ; k++)
 		{
 			glm::vec2 ChunkPos = glm::vec2(i, k) + CurrentPos;
 			NewChunk(ChunkPos);
@@ -23,7 +24,9 @@ void ChunkMenager::SpawnChunks()
 	}
 	std::cout << "Spawn is generating..." << std::endl;
 
-	world->GenChunksFromQueue(RenderDistance * 8);
+	world->GenChunksFromQueue(Render * Render);
+
+
 }
 void ChunkMenager::HandleWorldLoadingPositionChangeBased(Player& player)
 {
@@ -38,9 +41,12 @@ void ChunkMenager::HandleWorldLoadingPositionChangeBased(Player& player)
 
 	if (player.LastFrameChunkPos != Util::GetInstance()->WorldPosToChunkPos(player.Position))
 	{
+
+		int RenderDelete = RenderDistance ;
+
 		glm::vec2 Dir = Util::GetInstance()->WorldPosToChunkPos(player.Position) - player.LastFrameChunkPos;
 		glm::vec2 toGenerate = glm::vec2(Dir.x * RenderDistance, Dir.y * RenderDistance);
-		glm::vec2 toDelete = -glm::vec2(Dir.x * RenderDistance * 2, Dir.y * RenderDistance * 2) - Dir;
+		glm::vec2 toDelete = -glm::vec2(Dir.x * RenderDelete, Dir.y * RenderDelete) - Dir;
 		glm::vec2 CurrentCenter = Util::GetInstance()->WorldPosToChunkPos(player.Position);
 		for (int i = -RenderDistance; i <= RenderDistance; i++)
 		{
@@ -54,7 +60,7 @@ void ChunkMenager::HandleWorldLoadingPositionChangeBased(Player& player)
 			}
 
 		}
-		for (int i = -RenderDistance * 2; i <= RenderDistance * 2; i++)
+		for (int i = -RenderDelete ; i <= RenderDelete; i++)
 		{
 			glm::vec2 DeleteChunkPos = (toDelete + CurrentCenter) + glm::vec2(Dir.y * i, Dir.x * i);//swap is important here AND CORRECT
 			auto it = ChunkMap.find(DeleteChunkPos);
@@ -65,7 +71,7 @@ void ChunkMenager::HandleWorldLoadingPositionChangeBased(Player& player)
 			}
 		}
 
-
+		std::cout << ChunkMap.size() << "Chunks Currently Loaded \n";
 		player.LastFrameChunkPos = CurrentCenter;
 
 	}
@@ -78,9 +84,9 @@ void ChunkMenager::SetBlockInWorld(glm::vec3 WorldPos, Block block)
 	auto existingChunksIterator = ChunkMap.find(ChunkPos);
 	if (existingChunksIterator != ChunkMap.end())
 	{
-		existingChunksIterator->second.setblock(LocalPos, block.ID);
+		existingChunksIterator->second->setblock(LocalPos, block.ID);
 		//std::cout << "Adding to an existing chunk" << std::endl;
-		existingChunksIterator->second.UpdateMeshOnlyAddSingleBlock(Block(LocalPos, block.ID));
+		existingChunksIterator->second->UpdateMeshOnlyAddSingleBlock(Block(LocalPos, block.ID));
 		//existingChunksIterator->second.isDirty = true;
 
 	}
@@ -109,5 +115,5 @@ void ChunkMenager::SetBlockInWorld(glm::vec3 WorldPos, Block block)
 
 void ChunkMenager::NewChunk(glm::vec2 ChunkPos)
 {
-	ChunkMap.try_emplace(ChunkPos, ChunkPos, this);
+	ChunkMap.try_emplace(ChunkPos, std::make_shared<Chunk>(ChunkPos,this));
 }

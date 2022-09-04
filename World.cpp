@@ -1,14 +1,21 @@
 #include "World.h"
 
 
-void AsyncMesh(std::vector< Chunk*>& vec, bool* LastBatchReady)
+void AsyncMesh(std::shared_ptr < std::vector< std::shared_ptr<Chunk>>> vec, bool* LastBatchReady)
 {
 	*LastBatchReady = false;
 
-	for (Chunk* chunk : vec)
+	/*for (std::shared_ptr<Chunk> chunk : vec)
 	{
 		chunk->UpdateMesh();
+	}*/
+	for (int i = 0; i < vec->size(); i++)
+	{
+		(*vec)[i]->Generate(1);
+
+		(*vec)[i]->UpdateMesh();
 	}
+	vec->clear();
 	*LastBatchReady = true;
 
 }
@@ -33,7 +40,7 @@ void World::GenChunksFromQueue(int amount)
 
 	if (!LastBatchReady) 
 		return;
-	std::vector< Chunk*> GenChunkOnPosVec;
+	std::shared_ptr < std::vector< std::shared_ptr<Chunk>>> GenChunkOnPosVec = std::make_shared< std::vector< std::shared_ptr<Chunk>>>();
 	for (int i = 0; i < amount; i++)
 	{
 		if (ChunkGenQueue.empty()) return;
@@ -43,17 +50,20 @@ void World::GenChunksFromQueue(int amount)
 		auto it = chunkMenager.ChunkMap.find(GenChunkOnPos);
 		if (it != chunkMenager.ChunkMap.end())
 		{
-			it->second.Generate(1);
-
-			GenChunkOnPosVec.push_back(&it->second);
-	
-			it->second.UpdateMesh();
+			//it->second->Generate(1);
+			
+			GenChunkOnPosVec->push_back(it->second);
+			
+			//std::shared_ptr<Chunk> s;
+			//s = it->second;
+			//GenChunkOnPosVec.push_back(s);
+			//it->second->UpdateMesh();
 
 		}
 
 	}
-	//std::thread f( AsyncMesh, std::ref(GenChunkOnPosVec), &LastBatchReady);
-	//f.detach();
+	std::thread f( AsyncMesh, GenChunkOnPosVec, &LastBatchReady);
+	f.detach();
 	
 }
 
@@ -68,12 +78,12 @@ void World::IdkWhatToCallThatForNow(Player& player)
 	}
 
 	chunkMenager.HandleWorldLoadingPositionChangeBased(player);
-	for (std::unordered_map<glm::vec2, Chunk>::iterator it = chunkMenager.ChunkMap.begin(); it != chunkMenager.ChunkMap.end(); it++)
+	for (std::unordered_map<glm::vec2, std::shared_ptr<Chunk>>::iterator it = chunkMenager.ChunkMap.begin(); it != chunkMenager.ChunkMap.end(); it++)
 	{
 		if(glm::distance(Util::WorldPosToChunkPos(player.Position),it->first) < RenderDistance)
-		it->second.Draw(*shaderProgram);
+		it->second->Draw(*shaderProgram);
 	}
 
-	GenChunksFromQueue(1);
+	GenChunksFromQueue(5);
 
 }

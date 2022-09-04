@@ -40,12 +40,12 @@ int main()
 	
 
 	Game game;
-	Mesh Orienterbackandup;
+/*	Mesh Orienterbackandup;
 	Mesh Orienterfrontanddown;
 	FaceBuilder::BuildFace(Orienterbackandup.GetVertexVector(), Faces::Up, glm::vec3(0, 0, 0));
 	FaceBuilder::BuildFace(Orienterbackandup.GetVertexVector(), Faces::Down, glm::vec3(0, 0, 0));
 	FaceBuilder::BuildFace(Orienterfrontanddown.GetVertexVector(), Faces::Up, glm::vec3(0, -1, -1));
-	FaceBuilder::BuildFace(Orienterfrontanddown.GetVertexVector(), Faces::Down, glm::vec3(0, -1, -1));
+	FaceBuilder::BuildFace(Orienterfrontanddown.GetVertexVector(), Faces::Down, glm::vec3(0, -1, -1));*/
 
 
 	glm::mat4 Rotation = glm::mat4(1.0);
@@ -69,8 +69,8 @@ int main()
 		//game.RenderChunksInFrustum();
 
 		
-		Orienterbackandup.Draw(*game.shaderProgram, glm::vec3(0, 0, 0));
-		Orienterfrontanddown.Draw(*game.shaderProgram, glm::vec3(0, 0, 0));
+		//Orienterbackandup.Draw(*game.shaderProgram, glm::vec3(0, 0, 0));
+		//Orienterfrontanddown.Draw(*game.shaderProgram, glm::vec3(0, 0, 0));
 		glfwSwapBuffers(Window::GetInstance()->window);
 		glfwPollEvents();
 	}
