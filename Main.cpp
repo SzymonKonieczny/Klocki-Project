@@ -27,8 +27,8 @@
 int main()
 {
 	
-	glm::vec2 res2 = Util::WorldPosToChunkPos(glm::vec3(-17,2,-32));
-	glm::vec3 res3 = Util::WorldPosToLocalPos(glm::vec3(-17, 2, -32));
+	glm::vec2 res2 = Util::WorldPosToChunkPos(glm::vec3(16,2,16));
+	glm::vec3 res3 = Util::WorldPosToLocalPos(glm::vec3(16, 2, 16));
 
 	std::cout << " WorldPosToChunkPos " << res2.x <<':' << res2.y<< std::endl;
 	std::cout << " WorldPosToLocalPos " << res3.x << ':' << res3.y << ':' << res3.z << std::endl;

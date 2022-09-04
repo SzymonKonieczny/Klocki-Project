@@ -87,7 +87,7 @@ std::vector<Vertex>& Mesh::GetVertexVector()
 	return vertices;
 }
 
-void Mesh::AddToVerticies(Vertex& vert)
+void Mesh::AddToVerticies(Vertex vert)
 {
 	mingledWith = true;
 	vertices.push_back(vert);

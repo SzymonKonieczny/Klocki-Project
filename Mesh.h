@@ -31,7 +31,7 @@ public:
 	VBO VBO1;
 	std::vector<Vertex>& GetVertexVector();
 
-	void AddToVerticies(Vertex& vert);
+	void AddToVerticies(Vertex vert);
 	void ClearVerticies();
 };
 

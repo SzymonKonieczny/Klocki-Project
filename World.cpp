@@ -16,7 +16,7 @@ void World::AsyncGenerate(std::shared_ptr < std::vector< std::shared_ptr<Chunk>>
 	*LastBatchReady = true;
 
 }
-void AsyncMesh(std::shared_ptr < std::vector< std::shared_ptr<Chunk>>> vec, bool* LastBatchReady)
+void AsyncMesh(std::shared_ptr <std::vector<std::shared_ptr<Chunk>>> vec, bool* LastBatchReady)
 {
 	*LastBatchReady = false;
 
@@ -63,14 +63,12 @@ void World::GenChunksFromQueue(int amount)
 		if (it != chunkMenager.ChunkMap.end())
 		{
 			//it->second->Generate(1);
+			//GenChunkOnPosVec.push_back(s);
 			
-			GenChunkOnPosVec->push_back(it->second);
 			
 			//std::shared_ptr<Chunk> s;
 			//s = it->second;
-			//GenChunkOnPosVec.push_back(s);
-			//it->second->UpdateMesh();
-
+			GenChunkOnPosVec->push_back(it->second);
 		}
 
 	}

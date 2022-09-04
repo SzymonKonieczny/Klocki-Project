@@ -2,6 +2,11 @@
 
 void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 {
+
+}
+TerrainGenerator::TerrainGenerator()
+{
+
 }
 TerrainGenerator::~TerrainGenerator()
 {

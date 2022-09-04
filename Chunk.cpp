@@ -77,26 +77,26 @@ void Chunk::UpdateMesh()
 
 	}
 	
-	/*mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 0.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
+	mesh.AddToVerticies(Vertex(glm::vec3(0.0f, 0.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
 		glm::vec3(0.5f, 0.5f, 0.5f) ,
 		glm::vec2(0.8f, 0.2f)));
-	mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 255.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
+	mesh.AddToVerticies(Vertex(glm::vec3(0.0f, 255.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
 		glm::vec3(0.5f, 0.5f, 0.5f) ,
 		glm::vec2(0.7f, 0.4f)));
-	mesh.vertices.push_back(Vertex(glm::vec3(15.0f, 0.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
+	mesh.AddToVerticies(Vertex(glm::vec3(15.0f, 0.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
 		glm::vec3(1.0f, 1.0f, 1.0f),
 		glm::vec2(0.6f, 0.2f)));
 
 
-	mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 0.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
+	mesh.AddToVerticies(Vertex(glm::vec3(0.0f, 0.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
 		glm::vec3(0.5f, 0.5f, 0.5f),
 		glm::vec2(0.8f, 0.2f)));
-	mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 255.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
+	mesh.AddToVerticies(Vertex(glm::vec3(0.0f, 255.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
 		glm::vec3(0.5f, 0.5f, 0.5f),
 		glm::vec2(0.7f, 0.4f)));
-	mesh.vertices.push_back(Vertex(glm::vec3(0.0f, 0.0f, 15.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
+	mesh.AddToVerticies(Vertex(glm::vec3(0.0f, 0.0f, 15.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
 		glm::vec3(1.0f, 1.0f, 1.0f),
-		glm::vec2(0.6f, 0.2f)));*/
+		glm::vec2(0.6f, 0.2f)));
 	Mutex.unlock();
 
 }
@@ -279,7 +279,7 @@ void Chunk::UpdateBlocksFromBlockQueueMap(bool JustNewBlocks)
 	auto it = chunkMenager->BlockQueuesMap.find(ChunkPos);
 	if (it != chunkMenager->BlockQueuesMap.end())
 	{
-		Blocks.insert(Blocks.end(), it->second.begin(), it->second.end());
+		//Blocks.insert(Blocks.end(), it->second.begin(), it->second.end());
 		for (Block b : it->second)
 		{
 			setblock(b.LocalPos, b.ID);
