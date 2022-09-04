@@ -21,6 +21,9 @@ void ChunkMenager::SpawnChunks()
 			world->ChunkGenQueue.push(ChunkPos);
 		}
 	}
+	std::cout << "Spawn is generating..." << std::endl;
+
+	world->GenChunksFromQueue(RenderDistance * 8);
 }
 void ChunkMenager::HandleWorldLoadingPositionChangeBased(Player& player)
 {

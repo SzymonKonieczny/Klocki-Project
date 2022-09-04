@@ -173,8 +173,8 @@ Game::Game()
 
 	ShaderAndTextureStuff();
 	world.SetShader(shaderProgram);
-	world.chunkMenager.SpawnChunks();
 	Util::GetInstance()->LoadBlocks();
+	world.chunkMenager.SpawnChunks();
 
 	//PlaygroundForExperiments();
 }

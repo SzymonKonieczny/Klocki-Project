@@ -70,9 +70,10 @@ void World::IdkWhatToCallThatForNow(Player& player)
 	chunkMenager.HandleWorldLoadingPositionChangeBased(player);
 	for (std::unordered_map<glm::vec2, Chunk>::iterator it = chunkMenager.ChunkMap.begin(); it != chunkMenager.ChunkMap.end(); it++)
 	{
+		if(glm::distance(Util::WorldPosToChunkPos(player.Position),it->first) < RenderDistance)
 		it->second.Draw(*shaderProgram);
 	}
 
-	GenChunksFromQueue(5);
+	GenChunksFromQueue(1);
 
 }
