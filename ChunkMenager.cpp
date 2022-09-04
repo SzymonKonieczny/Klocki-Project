@@ -10,6 +10,7 @@ ChunkMenager::ChunkMenager(World* wrld)
 }
 void ChunkMenager::SpawnChunks()
 {
+
 	int Render = RenderDistance ;
 	glm::vec2 CurrentPos = Util::WorldPosToChunkPos(glm::vec3(0));
 	for (int i = -Render ; i <= Render ; i++)
@@ -42,7 +43,7 @@ void ChunkMenager::HandleWorldLoadingPositionChangeBased(Player& player)
 	if (player.LastFrameChunkPos != Util::GetInstance()->WorldPosToChunkPos(player.Position))
 	{
 
-		int RenderDelete = RenderDistance ;
+		int RenderDelete = RenderDistance *2;
 
 		glm::vec2 Dir = Util::GetInstance()->WorldPosToChunkPos(player.Position) - player.LastFrameChunkPos;
 		glm::vec2 toGenerate = glm::vec2(Dir.x * RenderDistance, Dir.y * RenderDistance);
@@ -115,5 +116,7 @@ void ChunkMenager::SetBlockInWorld(glm::vec3 WorldPos, Block block)
 
 void ChunkMenager::NewChunk(glm::vec2 ChunkPos)
 {
+
+
 	ChunkMap.try_emplace(ChunkPos, std::make_shared<Chunk>(ChunkPos,this));
 }
