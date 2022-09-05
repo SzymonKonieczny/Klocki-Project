@@ -58,8 +58,9 @@ void Chunk::Generate(int height_)
 
 void Chunk::UpdateMesh()
 {
+	meshed = false;
 	VertexMutex.lock();
-
+	
 	mesh.ClearVerticies();
 
 	for (std::vector<Block>::iterator it = Blocks.begin(); it != Blocks.end(); ++it)
@@ -99,7 +100,7 @@ void Chunk::UpdateMesh()
 		glm::vec2(0.6f, 0.2f)));*/
 
 	VertexMutex.unlock();
-
+	meshed = true;
 }
 
 bool Chunk::CheckIfSolidBlock(glm::vec3 Pos)
@@ -141,11 +142,14 @@ void Chunk::UpdateMeshOnlyAddSingleBlock(Block block)
 
 void Chunk::Draw(Shader& shader)
 {
-	if (VertexMutex.try_lock())
+	if (meshed)
 	{
-		glFinish();
+		if (VertexMutex.try_lock())
+		{
 		mesh.Draw(shader, glm::vec3(0, 0, 0));
-		VertexMutex.unlock();
+		VertexMutex.unlock();	
+		}
+
 	}
 
 }

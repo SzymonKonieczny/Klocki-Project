@@ -29,7 +29,8 @@ class Chunk
 	std::mutex VertexMutex;
 public:
 	std::mutex BlocksMutex;
-
+	bool generated = false;
+	bool meshed = false;
 	ChunkMenager* chunkMenager;
 	std::vector<Block> Blocks; //Vector of block IDs that make up teh chunk
 	glm::vec2 ChunkPos; // ChunkPos.y = Z coordinate in the world

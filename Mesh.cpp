@@ -53,6 +53,8 @@ void Mesh::Draw(Shader& shader, glm::vec3 Position, bool UseModelMatrix)  {
 	if (mingledWith)
 	{
 		VBO1.Rebuffer(vertices);
+		glFinish();
+
 		mingledWith = false;
 	}
 
