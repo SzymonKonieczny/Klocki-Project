@@ -23,7 +23,7 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 
 				if (k == column_height)
 				{
-					if (Util::GetInstance()->random(0, 1000) < 200) GenerateTree(Util::LocPosAndChunkPosToWorldPos(glm::vec3(j, k, i), chunkptr->ChunkPos));
+					if (Util::GetInstance()->random(0, 100) < 1) GenerateTree(Util::LocPosAndChunkPosToWorldPos(glm::vec3(j, k, i), chunkptr->ChunkPos));
 					else 
 					chunkptr->setblock(glm::vec3(j, k, i), BlockTypes::Grass);
 					//setblock(glm::vec3(j, k, i), Util::GetInstance()->random(0, 9));

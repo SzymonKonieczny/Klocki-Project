@@ -25,7 +25,9 @@
 #include "TerrainGenerator.h"
 class World
 {
-	bool LastBatchReady = true;
+	bool LastGenMeshBatchReady = true;
+	bool LastMeshBatchReady = true;
+	std::queue<glm::vec2> ChunkMeshAddQueue;
 public:
 	//void AsyncMesh(std::vector< std::unordered_map<glm::vec2, Chunk>::iterator> vec);
 	bool wasShaderSet=false;
@@ -35,10 +37,15 @@ public:
 	TerrainGenerator terrainGenerator;
 	ChunkMenager chunkMenager;
 	std::queue<glm::vec2> ChunkGenQueue;
+
+
 	void NewChunk(glm::vec2 ChunkPos);
 	void GenChunksFromQueue(int amount);
+	void AddChunksToGen(glm::vec2 ChunkPos);
+
+	void MeshUpdateFromQueue(int amount);
+	void AddChunksMeshToUpdate(glm::vec2 ChunkPos);
+
 	void IdkWhatToCallThatForNow(Player& player);
 	void AsyncGenerate(std::shared_ptr < std::vector< std::shared_ptr<Chunk>>> vec, bool* LastBatchReady);
-
-
-};
+	};

@@ -20,6 +20,8 @@ class Mesh{
 public:
 	  // STATIC to ma byc
 	glm::mat4 model = glm::mat4(1.0f);
+	bool verticiesReady = false;
+
 	bool mingledWith = false;
 	std::vector < GLuint> indices;
 	//Mesh(std::vector<Vertex>& vertices_, std::vector < GLuint>& indices_);
@@ -30,7 +32,10 @@ public:
 	VAO VAO;
 	VBO VBO1;
 	std::vector<Vertex>& GetVertexVector();
+	void verticiesSetNotReady();
+	void verticiesSetReady();
 
+	void MarkDirty();
 	void AddToVerticies(Vertex vert);
 	void ClearVerticies();
 };

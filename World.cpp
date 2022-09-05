@@ -16,7 +16,7 @@ void World::AsyncGenerate(std::shared_ptr < std::vector< std::shared_ptr<Chunk>>
 	*LastBatchReady = true;
 
 }
-void AsyncMesh(std::shared_ptr <std::vector<std::shared_ptr<Chunk>>> vec, bool& LastBatchReady, TerrainGenerator* tg)
+void AsyncGenerateAndMesh(std::shared_ptr <std::vector<std::shared_ptr<Chunk>>> vec, bool& LastBatchReady, TerrainGenerator* tg)
 {
 	LastBatchReady = false;
 
@@ -25,7 +25,20 @@ void AsyncMesh(std::shared_ptr <std::vector<std::shared_ptr<Chunk>>> vec, bool& 
 	{
 		//(*vec)[i]->Generate(1);
 		tg->Generate((*vec)[i]);
+		
+		//(*vec)[i]->UpdateMesh();
+	}
+	vec->clear();
+	LastBatchReady = true;
 
+}
+void AsyncMeshOnly(std::shared_ptr <std::vector<std::shared_ptr<Chunk>>> vec, bool& LastBatchReady)
+{
+	LastBatchReady = false;
+
+
+	for (int i = 0; i < vec->size(); i++)
+	{
 		(*vec)[i]->UpdateMesh();
 	}
 	vec->clear();
@@ -51,7 +64,7 @@ void World::NewChunk(glm::vec2 ChunkPos)
 void World::GenChunksFromQueue(int amount)
 {
 
-	if (!LastBatchReady) 
+	if (!LastGenMeshBatchReady)
 		return;
 	std::shared_ptr < std::vector< std::shared_ptr<Chunk>>> GenChunkOnPosVec = std::make_shared< std::vector< std::shared_ptr<Chunk>>>();
 	for (int i = 0; i < amount; i++)
@@ -73,10 +86,59 @@ void World::GenChunksFromQueue(int amount)
 		}
 
 	}
-	std::thread f( AsyncMesh, GenChunkOnPosVec, std::ref(LastBatchReady), &terrainGenerator);
+	std::thread f(AsyncGenerateAndMesh, GenChunkOnPosVec, std::ref(LastGenMeshBatchReady), &terrainGenerator);
+	//std::thread f([this, GenChunkOnPosVec] { this->AsyncGenerateAndMesh(GenChunkOnPosVec, LastMeshBatchReady, &terrainGenerator); });
+
 	f.detach();
 
 	
+}
+
+void World::AddChunksToGen(glm::vec2 ChunkPos)
+{
+	ChunkGenQueue.push(ChunkPos);
+
+}
+
+void World::MeshUpdateFromQueue(int amount)
+{
+	if (!LastMeshBatchReady)
+		return;
+	std::shared_ptr < std::vector< std::shared_ptr<Chunk>>> UpdateChunkMeshOnPosVec = std::make_shared< std::vector< std::shared_ptr<Chunk>>>();
+	for (int i = 0; i < amount; i++)
+	{
+
+		if (ChunkMeshAddQueue.empty()) return;
+		glm::vec2 GenChunkOnPos = ChunkMeshAddQueue.front();
+
+		ChunkMeshAddQueue.pop();
+		auto it = chunkMenager.ChunkMap.find(GenChunkOnPos);
+		if (it != chunkMenager.ChunkMap.end())
+		{
+			//it->second->Generate(1);
+			//GenChunkOnPosVec.push_back(s);
+
+
+			std::shared_ptr<Chunk> s = it->second;
+			UpdateChunkMeshOnPosVec->push_back(s);
+			//GenChunkOnPosVec->push_back(it->second);
+		}
+
+	}
+	std::thread f(AsyncMeshOnly, UpdateChunkMeshOnPosVec, std::ref(LastMeshBatchReady));
+	//std::thread f([this, UpdateChunkMeshOnPosVec] { this->AsyncMeshOnly(UpdateChunkMeshOnPosVec, LastMeshBatchReady); });
+
+
+	f.detach();
+	//std::cout << "MeshUpdateQ Members : " << ChunkMeshAddQueue.size() << " \n";
+
+}
+
+void World::AddChunksMeshToUpdate(glm::vec2 ChunkPos)
+{
+
+	ChunkMeshAddQueue.push(ChunkPos);
+
 }
 
 
@@ -96,6 +158,7 @@ void World::IdkWhatToCallThatForNow(Player& player)
 		it->second->Draw(*shaderProgram);
 	}
 
-	GenChunksFromQueue(5);
+	GenChunksFromQueue(3);
+	MeshUpdateFromQueue(1);
 
 }

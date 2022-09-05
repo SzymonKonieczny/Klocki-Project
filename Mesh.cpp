@@ -49,14 +49,18 @@ Mesh::~Mesh()
 }
 void Mesh::Draw(Shader& shader, glm::vec3 Position, bool UseModelMatrix)  {
 
+
 	shader.Activate();
-	if (mingledWith)
+
+
+	if (mingledWith && verticiesReady)
 	{
 		VBO1.Rebuffer(vertices);
 		glFinish();
 
 		mingledWith = false;
 	}
+
 
 	//EBO1->Rebuffer(indices);
 	VAO.Bind();
@@ -87,6 +91,16 @@ std::vector<Vertex>& Mesh::GetVertexVector()
 {
 	mingledWith = true;
 	return vertices;
+}
+
+void Mesh::verticiesSetNotReady()
+{
+	verticiesReady = false;
+}
+
+void Mesh::verticiesSetReady()
+{
+	verticiesReady = true;
 }
 
 void Mesh::AddToVerticies(Vertex vert)

@@ -5,8 +5,10 @@
 #include "Camera.h"
 #include "Mesh.h"
 #include "FaceBuilder.h"
+class World;
 class Player
 {
+
 	Mesh* Compass;
 	float crntTime;
 	float F3Cooldown=0;
@@ -21,6 +23,9 @@ public:
 	glm::vec3 Position = glm::vec3(0.0f, 0.0f, 2.0f);
 
 	Camera Cam;
+
+
+	World* world;
 	Player();
 	void Update();
 	void SwitchCompassOnOff();

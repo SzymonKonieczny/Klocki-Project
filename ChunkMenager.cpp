@@ -51,7 +51,8 @@ void ChunkMenager::HandleWorldLoadingPositionChangeBased(Player& player)
 			if (it == ChunkMap.end()) // if NOT in the world already
 			{
 				NewChunk(NewChunkPos);
-				world->ChunkGenQueue.push(NewChunkPos);
+				//world->ChunkGenQueue.push(NewChunkPos);
+				world->AddChunksToGen(NewChunkPos);
 			}
 
 		}
@@ -151,4 +152,5 @@ void ChunkMenager::NewChunk(glm::vec2 ChunkPos)
 
 
 	ChunkMap.try_emplace(ChunkPos, std::make_shared<Chunk>(ChunkPos,this));
+
 }

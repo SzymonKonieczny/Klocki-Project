@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "World.h"
 /*glm::vec3(0.0f, 0.0, 0.0f),
 		glm::vec3(1.0f, 1.0f, 1.0f),
 		glm::vec2(0, 1)*/
@@ -98,7 +99,12 @@ void Player::HandleInput()
 		std::cout << " Player at World Pos " << Position.x << ':' << Position.y << ':' << Position.z << std::endl;
 
 	}
-	
+	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_R) == GLFW_PRESS)
+	{
+		glm::vec2 res2 = Util::WorldPosToChunkPos(Position);
+		world->AddChunksMeshToUpdate(res2);
+
+	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_B) == GLFW_PRESS)
 	{
 		std::cout << "breaking..." << std::endl;
