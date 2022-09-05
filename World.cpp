@@ -67,8 +67,8 @@ void World::GenChunksFromQueue(int amount)
 			//GenChunkOnPosVec.push_back(s);
 			
 			
-			//std::shared_ptr<Chunk> s;
-			//s = it->second;
+			//std::shared_ptr<Chunk> s= it->second;
+			//GenChunkOnPosVec->push_back(s);
 			GenChunkOnPosVec->push_back(it->second);
 		}
 
