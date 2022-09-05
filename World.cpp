@@ -16,20 +16,20 @@ void World::AsyncGenerate(std::shared_ptr < std::vector< std::shared_ptr<Chunk>>
 	*LastBatchReady = true;
 
 }
-void AsyncMesh(std::shared_ptr <std::vector<std::shared_ptr<Chunk>>> vec, bool* LastBatchReady, TerrainGenerator& tg)
+void AsyncMesh(std::shared_ptr <std::vector<std::shared_ptr<Chunk>>> vec, bool& LastBatchReady, TerrainGenerator* tg)
 {
-	*LastBatchReady = false;
+	LastBatchReady = false;
 
 
 	for (int i = 0; i < vec->size(); i++)
 	{
 		//(*vec)[i]->Generate(1);
-		tg.Generate((*vec)[i]);
+		tg->Generate((*vec)[i]);
 
 		(*vec)[i]->UpdateMesh();
 	}
 	vec->clear();
-	*LastBatchReady = true;
+	LastBatchReady = true;
 
 }
 World::World() :chunkMenager(this), terrainGenerator(&chunkMenager)
@@ -73,7 +73,7 @@ void World::GenChunksFromQueue(int amount)
 		}
 
 	}
-	std::thread f( AsyncMesh, GenChunkOnPosVec, &LastBatchReady, std::ref(terrainGenerator));
+	std::thread f( AsyncMesh, GenChunkOnPosVec, std::ref(LastBatchReady), &terrainGenerator);
 	f.detach();
 	
 }
