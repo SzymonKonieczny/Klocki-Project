@@ -58,7 +58,7 @@ void Chunk::Generate(int height_)
 
 void Chunk::UpdateMesh()
 {
-	Mutex.lock();
+	VertexMutex.lock();
 
 	mesh.ClearVerticies();
 
@@ -77,7 +77,7 @@ void Chunk::UpdateMesh()
 
 	}
 	
-	mesh.AddToVerticies(Vertex(glm::vec3(0.0f, 0.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
+	/*mesh.AddToVerticies(Vertex(glm::vec3(0.0f, 0.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
 		glm::vec3(0.5f, 0.5f, 0.5f) ,
 		glm::vec2(0.8f, 0.2f)));
 	mesh.AddToVerticies(Vertex(glm::vec3(0.0f, 255.0f, 0.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
@@ -96,8 +96,8 @@ void Chunk::UpdateMesh()
 		glm::vec2(0.7f, 0.4f)));
 	mesh.AddToVerticies(Vertex(glm::vec3(0.0f, 0.0f, 15.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
 		glm::vec3(1.0f, 1.0f, 1.0f),
-		glm::vec2(0.6f, 0.2f)));
-	Mutex.unlock();
+		glm::vec2(0.6f, 0.2f)));*/
+	VertexMutex.unlock();
 
 }
 
@@ -140,10 +140,10 @@ void Chunk::UpdateMeshOnlyAddSingleBlock(Block block)
 
 void Chunk::Draw(Shader& shader)
 {
-	if (Mutex.try_lock())	
+	if (VertexMutex.try_lock())
 	{
 		mesh.Draw(shader, glm::vec3(0, 0, 0));
-		Mutex.unlock();
+		VertexMutex.unlock();
 	}
 
 }
@@ -152,6 +152,7 @@ void Chunk::Draw(Shader& shader)
 
 bool Chunk::setblock(glm::vec3 LocPos, int ID)
 {// returns true if the placement was succesful
+
 		if (!isPositionViable(LocPos))
 		{
 
@@ -166,31 +167,13 @@ bool Chunk::setblock(glm::vec3 LocPos, int ID)
 			|-------------------------------------------------------------------|
 			*/
 
-			chunkMenager->SetBlockInWorld(Util::LocPosAndChunkPosToWorldPos(LocPos, ChunkPos), Block(LocPos, ID));
-			
+			chunkMenager->SetBlockInWorld(Util::LocPosAndChunkPosToWorldPos(LocPos, ChunkPos),  ID);
+			std::cout << "Not a viable position. Block requested at " << LocPos.x << " " << LocPos.y + '\n';
+			std::cout << "THIS SHOULD NOT HAPPEN '\n'";
+
 
 			return false;
 
-
-			glm::vec3 WorldPos = Util::LocPosAndChunkPosToWorldPos(LocPos,ChunkPos);
-			glm::vec2 ChunkPos = Util::WorldPosToChunkPos(WorldPos);
-			glm::vec3 LocalPos = Util::WorldPosToLocalPos(WorldPos);
-			auto it = chunkMenager->BlockQueuesMap.find(ChunkPos);
-			if (it != chunkMenager->BlockQueuesMap.end())
-			{
-				it->second.push_back(Block(LocalPos, BlockTypes::Dirt));
-					//Add updating meshes to those chunks
-
-			
-
-			}
-			else
-			{
-				std::vector<Block> b;
-				b.push_back(Block(LocalPos, BlockTypes::Water));
-				chunkMenager->BlockQueuesMap.emplace(std::make_pair<>(ChunkPos,b ));
-	
-			}
 		}
 	
 		if (block_map.find(glm::vec3(LocPos.x, LocPos.y, LocPos.z)) != block_map.end())
@@ -284,7 +267,7 @@ void Chunk::UpdateBlocksFromBlockQueueMap(bool JustNewBlocks)
 		{
 			setblock(b.LocalPos, b.ID);
 		}
-		if (JustNewBlocks)	UpdateMeshOnlyAdd(it->second);
+		if (JustNewBlocks)UpdateMeshOnlyAdd(it->second);
 		else UpdateMesh();
 	}
 }

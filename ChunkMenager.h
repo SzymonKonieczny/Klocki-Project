@@ -9,6 +9,7 @@
 #include <glm/gtx/hash.hpp>
 #include <memory>
 #include "Player.h"
+
 struct Block;
 class World;
 class Chunk;
@@ -25,7 +26,9 @@ public:
 
 	void HandleWorldLoadingPositionChangeBased(Player& player);
 	void HandleWorldLoadingDistanceBased();
-	void SetBlockInWorld(glm::vec3 WorldPos, Block block);
+	void SetBlockInWorld(glm::vec3 WorldPos, int ID);
+	void SetBlockInWorld(glm::vec3 LocalPos, glm::vec2 ChunkPos, int ID);
+
 	void NewChunk(glm::vec2 ChunkPos);
 
 };

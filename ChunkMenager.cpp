@@ -31,13 +31,7 @@ void ChunkMenager::SpawnChunks()
 }
 void ChunkMenager::HandleWorldLoadingPositionChangeBased(Player& player)
 {
-	if (FramesTillResetQueue <= 0)
-	{
-		// BlockQueuesMap.clear();
-		FramesTillResetQueue = 1000;
-		std::cout << "Clearing the Q cycle (currently disabled)" << std::endl;
-	}
-	FramesTillResetQueue--;
+	
 
 
 	if (player.LastFrameChunkPos != Util::GetInstance()->WorldPosToChunkPos(player.Position))
@@ -78,11 +72,13 @@ void ChunkMenager::HandleWorldLoadingPositionChangeBased(Player& player)
 	}
 }
 
-void ChunkMenager::SetBlockInWorld(glm::vec3 WorldPos, Block block)
+void ChunkMenager::SetBlockInWorld(glm::vec3 WorldPos, int ID) 
 {
 	glm::vec2 ChunkPos = Util::WorldPosToChunkPos(WorldPos);
 	glm::vec3 LocalPos = Util::WorldPosToLocalPos(WorldPos);
-	auto existingChunksIterator = ChunkMap.find(ChunkPos);
+	SetBlockInWorld(LocalPos, ChunkPos, ID);
+	return;
+	/*auto existingChunksIterator = ChunkMap.find(ChunkPos);
 	if (existingChunksIterator != ChunkMap.end())
 	{
 		existingChunksIterator->second->setblock(LocalPos, block.ID);
@@ -112,8 +108,42 @@ void ChunkMenager::SetBlockInWorld(glm::vec3 WorldPos, Block block)
 
 		}
 	}
+	*/
+
+}
+
+void ChunkMenager::SetBlockInWorld(glm::vec3 LocalPos, glm::vec2 ChunkPos, int ID)
+{
+	auto existingChunksIterator = ChunkMap.find(ChunkPos);
+	if (existingChunksIterator != ChunkMap.end())
+	{
+		existingChunksIterator->second->setblock(LocalPos, ID);
+		//std::cout << "Adding to an existing chunk" << std::endl;
+		existingChunksIterator->second->UpdateMeshOnlyAddSingleBlock(Block(LocalPos, ID));
+		//existingChunksIterator->second.isDirty = true;
+
+	}
+	else
+	{
 
 
+		auto it = BlockQueuesMap.find(ChunkPos);
+		if (it != BlockQueuesMap.end())
+		{
+
+			//it->second.push_back(Block(LocalPos, BlockTypes::Dirt));
+			it->second.push_back(Block(LocalPos, ID));
+
+		}
+		else
+		{
+			std::vector<Block> b;
+			//	b.push_back(Block(LocalPos, BlockTypes::Water));
+			b.push_back(Block(LocalPos, ID));
+			BlockQueuesMap.emplace(std::make_pair<>(ChunkPos, b));
+
+		}
+	}
 }
 
 void ChunkMenager::NewChunk(glm::vec2 ChunkPos)

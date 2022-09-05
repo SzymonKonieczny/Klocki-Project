@@ -22,7 +22,7 @@
 #include "Chunk.h"
 #include "ChunkMenager.h"
 #include <thread>
-
+#include "TerrainGenerator.h"
 class World
 {
 	bool LastBatchReady = true;

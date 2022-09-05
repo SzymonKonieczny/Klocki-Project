@@ -19,7 +19,6 @@
 #include "SimplexNoise.h"
 
 
-#include "TerrainGenerator.h"
 #include "ChunkMenager.h"
 
 class ChunkMenager;
@@ -27,7 +26,9 @@ class ChunkMenager;
 
 class Chunk
 {
-	std::mutex Mutex;
+	std::mutex VertexMutex;
+public:
+	std::mutex BlocksMutex;
 
 	ChunkMenager* chunkMenager;
 	std::vector<Block> Blocks; //Vector of block IDs that make up teh chunk
@@ -38,7 +39,7 @@ class Chunk
 	int column_heights[16][16];
 	bool mutexMakeshift=true;
 
-public:
+
 
 	bool isDirty = false;
 	Chunk(glm::vec2 ChunkCoords, ChunkMenager* ChunkMenager_);
