@@ -25,7 +25,7 @@ void ChunkMenager::SpawnChunks()
 	}
 	std::cout << "Spawn is generating..." << std::endl;
 
-	world->GenChunksFromQueue(Render * Render);
+	world->GenChunksFromQueue(5);
 
 
 }

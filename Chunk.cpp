@@ -97,6 +97,7 @@ void Chunk::UpdateMesh()
 	mesh.AddToVerticies(Vertex(glm::vec3(0.0f, 0.0f, 15.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
 		glm::vec3(1.0f, 1.0f, 1.0f),
 		glm::vec2(0.6f, 0.2f)));*/
+
 	VertexMutex.unlock();
 
 }
@@ -142,6 +143,7 @@ void Chunk::Draw(Shader& shader)
 {
 	if (VertexMutex.try_lock())
 	{
+		glFinish();
 		mesh.Draw(shader, glm::vec3(0, 0, 0));
 		VertexMutex.unlock();
 	}
@@ -265,7 +267,7 @@ void Chunk::UpdateBlocksFromBlockQueueMap(bool JustNewBlocks)
 		//Blocks.insert(Blocks.end(), it->second.begin(), it->second.end());
 		for (Block b : it->second)
 		{
-			setblock(b.LocalPos, b.ID);
+			setblock(b.LocalPos, 4);
 		}
 		if (JustNewBlocks)UpdateMeshOnlyAdd(it->second);
 		else UpdateMesh();
