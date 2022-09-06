@@ -64,22 +64,22 @@ void Chunk::UpdateMesh()
 	mesh.verticiesSetNotReady();
 
 	VertexMutex.lock();
-	BlocksMutex.lock(); error here, idk why
-	std::cout << "Meshing chunk Pos:" << ChunkPos.x << ' ' << ChunkPos.y << std::endl;
+	BlocksMutex.lock();
+	//std::cout << "Meshing chunk Pos:" << ChunkPos.x << ' ' << ChunkPos.y << std::endl;
 
 	mesh.ClearVerticies();
 
-	for (std::vector<Block>::iterator it = Blocks.begin(); it != Blocks.end(); it++)
+	for (int i =0; i < Blocks.size(); i++)
 	{
-		glm::vec3 Pos((ChunkPos.x*ChunkSize) + it->LocalPos.x, 
-			 it->LocalPos.y, 
-			(ChunkPos.y * ChunkSize) + it->LocalPos.z);
-		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, 1.0f, 0.0f)) == nullptr) FaceBuilder ::BuildFace(mesh, Faces::Up, Pos,(BlockTypes)it->ID);
-		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, -1.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh, Faces::Down, Pos, (BlockTypes)it->ID);
-		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, 0.0f, 1.0f)) == nullptr) FaceBuilder::BuildFace( mesh, Faces::North, Pos, (BlockTypes)it->ID);
-		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, 0.0f, -1.0f)) == nullptr) FaceBuilder::BuildFace(mesh, Faces::South, Pos, (BlockTypes)it->ID);
-		if (vec3ToBlock(it->LocalPos + glm::vec3(-1.0f, 0.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh, Faces::West, Pos, (BlockTypes)it->ID);
-		if (vec3ToBlock(it->LocalPos + glm::vec3(1.0f, 0.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace( mesh, Faces::East, Pos, (BlockTypes)it->ID);
+		glm::vec3 Pos((ChunkPos.x*ChunkSize) + Blocks[i].LocalPos.x, 
+			Blocks[i].LocalPos.y,
+			(ChunkPos.y * ChunkSize) + Blocks[i].LocalPos.z);
+		if (vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 1.0f, 0.0f)) == nullptr) FaceBuilder ::BuildFace(mesh, Faces::Up, Pos,(BlockTypes)		Blocks[i].ID);
+		if (vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, -1.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh, Faces::Down, Pos, (BlockTypes)	Blocks[i].ID);
+		if (vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 0.0f, 1.0f)) == nullptr) FaceBuilder::BuildFace( mesh, Faces::North, Pos, (BlockTypes)	Blocks[i].ID);
+		if (vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 0.0f, -1.0f)) == nullptr) FaceBuilder::BuildFace(mesh, Faces::South, Pos, (BlockTypes)	Blocks[i].ID);
+		if (vec3ToBlock(Blocks[i].LocalPos + glm::vec3(-1.0f, 0.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh, Faces::West, Pos, (BlockTypes)	Blocks[i].ID);
+		if (vec3ToBlock(Blocks[i].LocalPos + glm::vec3(1.0f, 0.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace( mesh, Faces::East, Pos, (BlockTypes)	Blocks[i].ID);
 
 
 	}
@@ -179,7 +179,8 @@ bool Chunk::setblock(glm::vec3 LocPos, int ID)
 			return false;
 
 		}
-	
+		BlocksMutex.lock();
+
 		if (block_map.find(glm::vec3(LocPos.x, LocPos.y, LocPos.z)) != block_map.end())
 		{
 			Blocks[block_map[glm::vec3(LocPos.x, LocPos.y, LocPos.z)]].ID = ID;
@@ -189,8 +190,10 @@ bool Chunk::setblock(glm::vec3 LocPos, int ID)
 			//Blocks.push_back(ID);
 			Blocks.push_back(Block{ glm::vec3(LocPos.x, LocPos.y, LocPos.z), ID });
 			block_map.insert(std::make_pair(glm::vec3(LocPos.x, LocPos.y, LocPos.z), Blocks.size() - 1));
+
 		}
 
+		BlocksMutex.unlock();
 
 	return true;
 }
@@ -288,8 +291,11 @@ Block* Chunk::vec3ToBlock(glm::vec3 LocPos)
 	auto search_result = block_map.find(LocPos);
 	if (search_result != block_map.end())
 	{
-		
+
+
 		return &Blocks[(*search_result).second];
+
+
 	}
 	else return nullptr;
 

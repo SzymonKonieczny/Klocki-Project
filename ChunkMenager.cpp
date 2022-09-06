@@ -121,7 +121,8 @@ void ChunkMenager::SetBlockInWorld(glm::vec3 LocalPos, glm::vec2 ChunkPos, int I
 		existingChunksIterator->second->setblock(LocalPos, ID);
 		//std::cout << "Adding to an existing chunk" << std::endl;
 		//existingChunksIterator->second->UpdateMeshOnlyAddSingleBlock(Block(LocalPos, ID));
-		existingChunksIterator->second->UpdateMesh(); here is the error
+	//	existingChunksIterator->second->UpdateMesh();
+		world->AddChunksMeshToUpdate(ChunkPos);
 		//existingChunksIterator->second.setDirty();
 
 	}

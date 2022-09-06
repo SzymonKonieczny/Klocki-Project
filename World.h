@@ -6,6 +6,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <future>
+#include <unordered_set>
+
 #include <queue>
 #include "Util.h"
 #include"shaderClass.h"
@@ -28,6 +30,7 @@ class World
 	bool LastGenMeshBatchReady = true;
 	bool LastMeshBatchReady = true;
 	std::queue<glm::vec2> ChunkMeshAddQueue;
+	std::unordered_set<glm::vec2> ChunkMeshQMembers;
 public:
 	//void AsyncMesh(std::vector< std::unordered_map<glm::vec2, Chunk>::iterator> vec);
 	bool wasShaderSet=false;

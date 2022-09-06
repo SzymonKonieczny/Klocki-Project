@@ -24,6 +24,8 @@ void AsyncGenerateAndMesh(std::shared_ptr <std::vector<std::shared_ptr<Chunk>>> 
 	for (int i = 0; i < vec->size(); i++)
 	{
 		//(*vec)[i]->Generate(1);
+		std::cout << "Generating chunk Pos:" << (*vec)[i]->ChunkPos.x << ' ' << (*vec)[i]->ChunkPos.y << std::endl;
+
 		tg->Generate((*vec)[i]);
 		
 		//(*vec)[i]->UpdateMesh();
@@ -39,6 +41,7 @@ void AsyncMeshOnly(std::shared_ptr <std::vector<std::shared_ptr<Chunk>>> vec, bo
 
 	for (int i = 0; i < vec->size(); i++)
 	{
+		std::cout << "Meshing chunk Pos:" << (*vec)[i]->ChunkPos.x << ' ' << (*vec)[i]->ChunkPos.y << std::endl;
 		(*vec)[i]->UpdateMesh();
 	}
 	vec->clear();
@@ -65,7 +68,9 @@ void World::GenChunksFromQueue(int amount)
 {
 
 	if (!LastGenMeshBatchReady)
+	{
 		return;
+	}
 	std::shared_ptr < std::vector< std::shared_ptr<Chunk>>> GenChunkOnPosVec = std::make_shared< std::vector< std::shared_ptr<Chunk>>>();
 	for (int i = 0; i < amount; i++)
 	{
@@ -103,7 +108,11 @@ void World::AddChunksToGen(glm::vec2 ChunkPos)
 void World::MeshUpdateFromQueue(int amount)
 {
 	if (!LastMeshBatchReady)
+	{
+		std::cout << "Meshing Q empty" << std::endl;
 		return;
+
+	}
 	std::shared_ptr < std::vector< std::shared_ptr<Chunk>>> UpdateChunkMeshOnPosVec = std::make_shared< std::vector< std::shared_ptr<Chunk>>>();
 	for (int i = 0; i < amount; i++)
 	{
@@ -112,6 +121,8 @@ void World::MeshUpdateFromQueue(int amount)
 		glm::vec2 GenChunkOnPos = ChunkMeshAddQueue.front();
 
 		ChunkMeshAddQueue.pop();
+		ChunkMeshQMembers.erase(GenChunkOnPos);
+
 		auto it = chunkMenager.ChunkMap.find(GenChunkOnPos);
 		if (it != chunkMenager.ChunkMap.end())
 		{
@@ -136,8 +147,11 @@ void World::MeshUpdateFromQueue(int amount)
 
 void World::AddChunksMeshToUpdate(glm::vec2 ChunkPos)
 {
-
-	ChunkMeshAddQueue.push(ChunkPos);
+	if (!ChunkMeshQMembers.contains(ChunkPos))
+	{
+		ChunkMeshQMembers.emplace(ChunkPos);
+		ChunkMeshAddQueue.push(ChunkPos);
+	}
 
 }
 
