@@ -87,12 +87,8 @@ void TerrainGenerator::GenerateTree(glm::vec3 WorldPos, glm::vec3 Dir, int branc
 }
 TerrainGenerator::TerrainGenerator(ChunkMenager* menager) : BaseTerrainGenerator(menager)
 {
-	chunkmenager = menager;
-	fnSimplex = FastNoise::New<FastNoise::Simplex>();
-	fnFractal = FastNoise::New<FastNoise::FractalFBm>();
 
-	fnFractal->SetSource(fnSimplex);
-	fnFractal->SetOctaveCount(5);
+
 	fnGenerator = FastNoise::NewFromEncodedNodeTree("DQAFAAAAAAAAQAgAAAAAAD8AAAAAAA==");
 }
 TerrainGenerator::~TerrainGenerator()

@@ -28,6 +28,8 @@ struct BlockTemplate
 
 	glm::vec2 textureCoordinatesX;  //x mininmum, y maximim 
 	glm::vec2 textureCoordinatesY; //x mininmum, y maximim 
+	bool Solid;
+
 	bool Collidable;
 	std::string name;
 	BlockTypes drops;

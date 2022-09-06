@@ -67,7 +67,7 @@ void Util::LoadBlocks()
 			glm::vec2 testingX = glm::vec2(texturedimention * k, texturedimention * k + texturedimention);
 			glm::vec2 testingY = glm::vec2(texturedimention * i, texturedimention * i + texturedimention);
 
-			BLOCKS.push_back(BlockTemplate({ testingX,testingY ,true , "Unnamed", BlockTypes::Air }));
+			BLOCKS.push_back(BlockTemplate({ testingX,testingY ,true,true , "Unnamed", BlockTypes::Air }));
 			loadedAmout++;
 			if (loadedAmout >= amoutOfBlocks) break;
 		}
@@ -75,6 +75,9 @@ void Util::LoadBlocks()
 	//Here load properties of every block.
 	BLOCKS[BlockTypes::Air].Collidable = false;
 	BLOCKS[BlockTypes::Water].Collidable = false;
+	BLOCKS[BlockTypes::Water].Solid = false;
+	BLOCKS[BlockTypes::Leaves].Solid = false;
+
 
 	BLOCKS[BlockTypes::Grass].name = "Grass Block";
 	BLOCKS[BlockTypes::ShubiumOre].name = "Shubium Ore";
