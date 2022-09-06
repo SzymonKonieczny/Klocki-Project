@@ -160,6 +160,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="ChunkMenager.cpp" />
+    <ClCompile Include="CustomTerrainGenerator.cpp" />
     <ClCompile Include="EBO.cpp" />
     <ClCompile Include="FaceBuilder.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Chunk.h" />
     <ClInclude Include="ChunkMenager.h" />
     <ClInclude Include="ChunkMesh.h" />
+    <ClInclude Include="CustomTerrainGenerator.h" />
     <ClInclude Include="EBO.h" />
     <ClInclude Include="FaceBuilder.h" />
     <ClInclude Include="Game.h" />

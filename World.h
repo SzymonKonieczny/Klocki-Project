@@ -24,7 +24,7 @@
 #include "Chunk.h"
 #include "ChunkMenager.h"
 #include <thread>
-#include "TerrainGenerator.h"
+#include "CustomTerrainGenerator.h"
 class World
 {
 	bool LastGenMeshBatchReady = true;
@@ -37,7 +37,7 @@ public:
 	void SetShader(Shader* prog);
 	World(); 
 	Shader* shaderProgram;
-	TerrainGenerator terrainGenerator;
+	CustomTerrainGenerator terrainGenerator;
 	ChunkMenager chunkMenager;
 	std::queue<glm::vec2> ChunkGenQueue;
 

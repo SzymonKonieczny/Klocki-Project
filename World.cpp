@@ -91,7 +91,7 @@ void World::GenChunksFromQueue(int amount)
 		}
 
 	}
-	std::thread f(AsyncGenerateAndMesh, GenChunkOnPosVec, std::ref(LastGenMeshBatchReady), &terrainGenerator);
+	std::thread f(AsyncGenerateAndMesh, GenChunkOnPosVec, std::ref(LastGenMeshBatchReady), (TerrainGenerator*)&terrainGenerator);
 	//std::thread f([this, GenChunkOnPosVec] { this->AsyncGenerateAndMesh(GenChunkOnPosVec, LastMeshBatchReady, &terrainGenerator); });
 
 	f.detach();

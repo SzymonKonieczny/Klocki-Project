@@ -153,7 +153,7 @@ void Player::HandleInput(float dt)
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
 	{
-		speed = 100.f;
+		speed = 40.f;
 	}
 	else if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_LEFT_CONTROL) == GLFW_RELEASE)
 	{
