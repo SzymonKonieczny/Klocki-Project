@@ -62,11 +62,14 @@ void Chunk::UpdateMesh()
 	
 	meshed = false;
 	mesh.verticiesSetNotReady();
+
 	VertexMutex.lock();
-	
+	BlocksMutex.lock(); error here, idk why
+	std::cout << "Meshing chunk Pos:" << ChunkPos.x << ' ' << ChunkPos.y << std::endl;
+
 	mesh.ClearVerticies();
 
-	for (std::vector<Block>::iterator it = Blocks.begin(); it != Blocks.end(); ++it)
+	for (std::vector<Block>::iterator it = Blocks.begin(); it != Blocks.end(); it++)
 	{
 		glm::vec3 Pos((ChunkPos.x*ChunkSize) + it->LocalPos.x, 
 			 it->LocalPos.y, 
@@ -101,6 +104,7 @@ void Chunk::UpdateMesh()
 	mesh.AddToVerticies(Vertex(glm::vec3(0.0f, 0.0f, 15.0f) + glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),
 		glm::vec3(1.0f, 1.0f, 1.0f),
 		glm::vec2(0.6f, 0.2f)));*/
+	BlocksMutex.unlock();
 
 	VertexMutex.unlock();
 	meshed = true;
@@ -113,25 +117,12 @@ bool Chunk::CheckIfSolidBlock(glm::vec3 Pos)
 	return false;
 }
 
-void Chunk::UpdateMeshOnlyAdd(std::vector<Block>& BlocksToAdd)
-{
-	for (std::vector<Block>::iterator it = BlocksToAdd.begin(); it != BlocksToAdd.end(); ++it)
-	{
-		glm::vec3 Pos((ChunkPos.x * ChunkSize) + it->LocalPos.x,
-			it->LocalPos.y,
-			(ChunkPos.y * ChunkSize) + it->LocalPos.z);
-		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, 1.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace( mesh, Faces::Up, Pos, (BlockTypes)it->ID);
-		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, -1.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh, Faces::Down, Pos, (BlockTypes)it->ID);
-		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, 0.0f, 1.0f)) == nullptr) FaceBuilder::BuildFace( mesh, Faces::North, Pos, (BlockTypes)it->ID);
-		if (vec3ToBlock(it->LocalPos + glm::vec3(0.0f, 0.0f, -1.0f)) == nullptr) FaceBuilder::BuildFace(mesh, Faces::South, Pos, (BlockTypes)it->ID);
-		if (vec3ToBlock(it->LocalPos + glm::vec3(-1.0f, 0.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh, Faces::West, Pos, (BlockTypes)it->ID);
-		if (vec3ToBlock(it->LocalPos + glm::vec3(1.0f, 0.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace( mesh, Faces::East, Pos, (BlockTypes)it->ID);
 
-
-	}
-}
 void Chunk::UpdateMeshOnlyAddSingleBlock(Block block)
 {
+
+	VertexMutex.lock();
+	//BlocksMutex.lock(); causes an abort, idk why, should be here tho
 	glm::vec3 Pos((ChunkPos.x * ChunkSize) + block.LocalPos.x,
 		block.LocalPos.y,
 		(ChunkPos.y * ChunkSize) + block.LocalPos.z);
@@ -141,6 +132,8 @@ void Chunk::UpdateMeshOnlyAddSingleBlock(Block block)
 	if (vec3ToBlock(block.LocalPos + glm::vec3(0.0f, 0.0f, -1.0f)) == nullptr) FaceBuilder::BuildFace(mesh, Faces::South, Pos, (BlockTypes)	block.ID);
 	if (vec3ToBlock(block.LocalPos + glm::vec3(-1.0f, 0.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace(mesh, Faces::West, Pos, (BlockTypes)	block.ID);
 	if (vec3ToBlock(block.LocalPos + glm::vec3(1.0f, 0.0f, 0.0f)) == nullptr) FaceBuilder::BuildFace( mesh, Faces::East, Pos, (BlockTypes)	block.ID);
+	//BlocksMutex.unlock();
+	VertexMutex.unlock();
 
 
 }
@@ -177,10 +170,10 @@ bool Chunk::setblock(glm::vec3 LocPos, int ID)
 			|			And it should use the ChunkMenagers functions			|
 			|-------------------------------------------------------------------|
 			*/
-
-			chunkMenager->SetBlockInWorld(Util::LocPosAndChunkPosToWorldPos(LocPos, ChunkPos),  ID);
 			std::cout << "Not a viable position. Block requested at " << LocPos.x << " " << LocPos.y + '\n';
 			std::cout << "THIS SHOULD NOT HAPPEN '\n'";
+
+			chunkMenager->SetBlockInWorld(Util::LocPosAndChunkPosToWorldPos(LocPos, ChunkPos),  ID);
 
 
 			return false;
@@ -270,9 +263,11 @@ bool Chunk::setblock(glm::vec3 LocPos, int ID)
 
 void Chunk::UpdateBlocksFromBlockQueueMap(bool JustNewBlocks)
 {
+
 	auto it = chunkMenager->BlockQueuesMap.find(ChunkPos);
 	if (it != chunkMenager->BlockQueuesMap.end())
 	{
+		BlocksMutex.lock();
 		//Blocks.insert(Blocks.end(), it->second.begin(), it->second.end());
 		for (Block b : it->second)
 		{
@@ -280,6 +275,8 @@ void Chunk::UpdateBlocksFromBlockQueueMap(bool JustNewBlocks)
 		}
 		//if (JustNewBlocks)UpdateMeshOnlyAdd(it->second);
 		//else UpdateMesh();
+		BlocksMutex.unlock();
+
 	}
 	chunkMenager->world->AddChunksMeshToUpdate(ChunkPos);
 
@@ -309,4 +306,13 @@ Chunk::~Chunk()
 	
 	delete[] column_heights;*/
 	
+}
+
+void Chunk::LockBlockMutex()
+{
+	BlocksMutex.lock();
+}
+void Chunk::UnlockBlockMutex()
+{
+	BlocksMutex.unlock();
 }

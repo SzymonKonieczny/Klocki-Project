@@ -105,12 +105,16 @@ void Mesh::verticiesSetReady()
 
 void Mesh::AddToVerticies(Vertex vert)
 {
+	VerticiesMutex.lock();
 	mingledWith = true;
 	vertices.push_back(vert);
+	VerticiesMutex.unlock();
 }
 
 void Mesh::ClearVerticies()
 {
+	VerticiesMutex.lock();
 	mingledWith = true;
 	vertices.clear();
+	VerticiesMutex.unlock();
 }

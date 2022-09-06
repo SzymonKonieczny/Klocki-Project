@@ -3,6 +3,8 @@
 void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 {
 
+	chunkptr->LockBlockMutex();
+
 	std::cout << "Generating chunk Pos:" << chunkptr->ChunkPos.x << ' ' << chunkptr->ChunkPos.y << std::endl;
 
 
@@ -23,7 +25,7 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 
 				if (k == column_height)
 				{
-					if (Util::GetInstance()->random(0, 100) < 1) GenerateTree(Util::LocPosAndChunkPosToWorldPos(glm::vec3(j, k, i), chunkptr->ChunkPos));
+					if (Util::GetInstance()->random(0, 10) < 1) GenerateTree(Util::LocPosAndChunkPosToWorldPos(glm::vec3(j, k, i), chunkptr->ChunkPos));
 					else 
 					chunkptr->setblock(glm::vec3(j, k, i), BlockTypes::Grass);
 					//setblock(glm::vec3(j, k, i), Util::GetInstance()->random(0, 9));
@@ -37,6 +39,8 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 
 		}
 	}
+	chunkptr->UnlockBlockMutex();
+
 	chunkptr->UpdateBlocksFromBlockQueueMap(true);
 
 }

@@ -27,16 +27,18 @@ class ChunkMenager;
 class Chunk
 {
 	std::mutex VertexMutex;
-public:
+	std::vector<Block> Blocks; //Vector of block IDs that make up teh chunk
 	std::mutex BlocksMutex;
+public:
+
 	bool generated = false;
 	bool meshed = false;
 	ChunkMenager* chunkMenager;
-	std::vector<Block> Blocks; //Vector of block IDs that make up teh chunk
+
 	glm::vec2 ChunkPos; // ChunkPos.y = Z coordinate in the world
 	ChunkMesh mesh;
 	std::unordered_map<glm::vec3, int> block_map;
-	std::vector<Block> QueuedBlocks;
+
 	int column_heights[16][16];
 	bool mutexMakeshift=true;
 
@@ -57,6 +59,9 @@ public:
 	bool isPositionViable(glm::vec3 LocPos);
 	void UpdateBlocksFromBlockQueueMap(bool JustNewBlocks);
 	Block* vec3ToBlock(glm::vec3 LocPos);
+	void LockBlockMutex();
+	void UnlockBlockMutex();
+
 	~Chunk();
 
 
