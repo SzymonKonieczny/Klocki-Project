@@ -85,7 +85,7 @@ void TerrainGenerator::GenerateTree(glm::vec3 WorldPos, glm::vec3 Dir, int branc
 	
 
 }
-TerrainGenerator::TerrainGenerator(ChunkMenager* menager)
+TerrainGenerator::TerrainGenerator(ChunkMenager* menager) : BaseTerrainGenerator(menager)
 {
 	chunkmenager = menager;
 	fnSimplex = FastNoise::New<FastNoise::Simplex>();

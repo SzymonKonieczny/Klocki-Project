@@ -154,6 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BaseTerrainGenerator.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BlockSelectMesh.cpp" />
     <ClCompile Include="BlockTemplate.cpp" />
@@ -181,6 +182,7 @@
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseTerrainGenerator.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="BlockSelectMesh.h" />
     <ClInclude Include="BlockTemplate.h" />
