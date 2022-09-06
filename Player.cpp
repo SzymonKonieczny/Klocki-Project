@@ -8,10 +8,10 @@ Player::Player(): Cam(Position)
 
 }
 
-void Player::Update()
+void Player::Update(float dt)
 {
 
-	HandleInput();
+	HandleInput(dt);
 
 	Cam.UpdateView(*UsedShader);
 	Cam.Position = Position;
@@ -87,7 +87,7 @@ void Player::SetShader(Shader* shader)
 	UsedShader = shader;
 }
 
-void Player::HandleInput()
+void Player::HandleInput(float dt)
 {
 	crntTime = glfwGetTime();
 
@@ -122,27 +122,27 @@ void Player::HandleInput()
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		Position += speed * glm::normalize( glm::vec3(LookingAtDir.x, 0, LookingAtDir.z));
+		Position += dt * speed * glm::normalize( glm::vec3(LookingAtDir.x, 0, LookingAtDir.z));
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		Position += speed * -glm::normalize(glm::cross(glm::vec3(LookingAtDir.x, 0, LookingAtDir.z), glm::vec3(0.0f, 1.0f, 0.0f)));
+		Position += dt * speed * -glm::normalize(glm::cross(glm::vec3(LookingAtDir.x, 0, LookingAtDir.z), glm::vec3(0.0f, 1.0f, 0.0f)));
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		Position += speed * -glm::normalize(glm::vec3(LookingAtDir.x, 0, LookingAtDir.z));
+		Position += dt * speed * -glm::normalize(glm::vec3(LookingAtDir.x, 0, LookingAtDir.z));
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		Position += speed * glm::normalize(glm::cross(glm::vec3(LookingAtDir.x,0, LookingAtDir.z), glm::vec3(0.0f, 1.0f, 0.0f)));
+		Position += dt* speed * glm::normalize(glm::cross(glm::vec3(LookingAtDir.x,0, LookingAtDir.z), glm::vec3(0.0f, 1.0f, 0.0f)));
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_SPACE) == GLFW_PRESS)
 	{
-		Position += speed * glm::vec3(0.0f, 1.0f, 0.0f);
+		Position += dt * speed * glm::vec3(0.0f, 1.0f, 0.0f);
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 	{
-		Position += speed * glm::vec3(0.0f, -1.0f, 0.0f);
+		Position += dt * speed * glm::vec3(0.0f, -1.0f, 0.0f);
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
@@ -153,11 +153,11 @@ void Player::HandleInput()
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
 	{
-		speed = 0.4f;
+		speed = 100.f;
 	}
 	else if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_LEFT_CONTROL) == GLFW_RELEASE)
 	{
-		speed = 0.1f;
+		speed = 10.f;
 	}
 
 	if (firstClick && glfwGetMouseButton(Window::GetInstance()->window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)

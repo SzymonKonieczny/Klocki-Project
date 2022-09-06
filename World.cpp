@@ -101,6 +101,7 @@ void World::GenChunksFromQueue(int amount)
 
 void World::AddChunksToGen(glm::vec2 ChunkPos)
 {
+
 	ChunkGenQueue.push(ChunkPos);
 
 }
@@ -157,7 +158,7 @@ void World::AddChunksMeshToUpdate(glm::vec2 ChunkPos)
 
 
 
-void World::IdkWhatToCallThatForNow(Player& player)
+void World::IdkWhatToCallThatForNow(Player& player, float dt)
 {
 	if (!wasShaderSet)
 	{

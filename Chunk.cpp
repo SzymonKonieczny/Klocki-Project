@@ -270,7 +270,7 @@ void Chunk::UpdateBlocksFromBlockQueueMap(bool JustNewBlocks)
 	auto it = chunkMenager->BlockQueuesMap.find(ChunkPos);
 	if (it != chunkMenager->BlockQueuesMap.end())
 	{
-		BlocksMutex.lock();
+	
 		//Blocks.insert(Blocks.end(), it->second.begin(), it->second.end());
 		for (Block b : it->second)
 		{
@@ -278,7 +278,7 @@ void Chunk::UpdateBlocksFromBlockQueueMap(bool JustNewBlocks)
 		}
 		//if (JustNewBlocks)UpdateMeshOnlyAdd(it->second);
 		//else UpdateMesh();
-		BlocksMutex.unlock();
+	
 
 	}
 	chunkMenager->world->AddChunksMeshToUpdate(ChunkPos);

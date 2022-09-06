@@ -12,7 +12,7 @@ void Game::RenderChunksInFrustum()
 }
 void Game::tickEntities()
 {
-	player.Update();
+	player.Update(timeDiff);
 	
 
 
@@ -34,7 +34,7 @@ void Game::WorldUpdate()
 		prevTime = crntTime;
 		counter = 0;
 	}
-	world.IdkWhatToCallThatForNow(player);
+	world.IdkWhatToCallThatForNow(player, timeDiff);
 }
 /*
 void Game::GenChunksFromQueue(int amount)

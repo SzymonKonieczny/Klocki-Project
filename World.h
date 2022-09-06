@@ -49,6 +49,6 @@ public:
 	void MeshUpdateFromQueue(int amount);
 	void AddChunksMeshToUpdate(glm::vec2 ChunkPos);
 
-	void IdkWhatToCallThatForNow(Player& player);
+	void IdkWhatToCallThatForNow(Player& player, float dt);
 	void AsyncGenerate(std::shared_ptr < std::vector< std::shared_ptr<Chunk>>> vec, bool* LastBatchReady);
 	};

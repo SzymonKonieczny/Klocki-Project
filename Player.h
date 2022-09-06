@@ -27,10 +27,10 @@ public:
 
 	World* world;
 	Player();
-	void Update();
+	void Update(float dt);
 	void SwitchCompassOnOff();
 	void SetShader(Shader* shader);
-	void HandleInput();
+	void HandleInput(float dt);
 };
 
 #endif // !PLAYER_H
