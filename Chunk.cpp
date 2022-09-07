@@ -279,7 +279,7 @@ bool Chunk::setblock(glm::vec3 LocPos, int ID)
 
 	bool Chunk::isPositionViable(glm::vec3 LocPos)
 {
-	return !(LocPos.x > ChunkSize - 1 || LocPos.x < 0 || LocPos.y < 0 || LocPos.y > ChunkHeight - 1 
+	return !(LocPos.x > ChunkSize - 1 || LocPos.x < 0 || LocPos.y < 0 // || LocPos.y > ChunkHeight - 1
 		|| LocPos.z > ChunkSize - 1 || LocPos.z < 0);
 
 }

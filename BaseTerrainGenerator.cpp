@@ -5,6 +5,6 @@ BaseTerrainGenerator::BaseTerrainGenerator(ChunkMenager* menager) : chunkmenager
 	fnFractal = FastNoise::New<FastNoise::FractalFBm>();
 
 	fnFractal->SetSource(fnSimplex);
-	fnFractal->SetOctaveCount(5);
+	//fnFractal->SetOctaveCount(5);
 
 }
