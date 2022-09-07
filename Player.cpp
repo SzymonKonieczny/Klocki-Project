@@ -77,7 +77,7 @@ void Player::SwitchCompassOnOff()
 				glm::vec3(0.0f, 0.0f, 0.6f),
 				glm::vec2(1, 1)));
 
-
+		Compass->verticiesSetReady();
 	}
 	isCompassOn = !isCompassOn;
 }

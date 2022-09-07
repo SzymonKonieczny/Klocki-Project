@@ -20,13 +20,13 @@ void CustomTerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 
 		for (int j = 0; j < ChunkSize; j++) // j = X coordinate
 		{
-			int column_height = ((noiseOutput[index++] + 1) / 2) * 20 + 5;
+			int column_height = ((noiseOutput[index++] + 1) / 2) * 30 + 15;
 			for (int k = 0; k <= column_height; k++) // k = Y coordinate
 			{
 
 				if (k == column_height)
 				{
-					if (Util::GetInstance()->random(0, 500) < 1) GenerateTree(Util::LocPosAndChunkPosToWorldPos(glm::vec3(j, k, i), chunkptr->ChunkPos));
+					if (Util::GetInstance()->random(0, 50) < 1) GenerateTree(Util::LocPosAndChunkPosToWorldPos(glm::vec3(j, k, i), chunkptr->ChunkPos));
 					else
 						chunkptr->setblock(glm::vec3(j, k, i), BlockTypes::Grass);
 					//setblock(glm::vec3(j, k, i), Util::GetInstance()->random(0, 9));
@@ -91,8 +91,8 @@ void CustomTerrainGenerator::GenerateTree(glm::vec3 WorldPos, glm::vec3 Dir, int
 
 CustomTerrainGenerator::CustomTerrainGenerator(ChunkMenager* menager) : BaseTerrainGenerator(menager)
 {
-	fnGenerator = FastNoise::NewFromEncodedNodeTree("DQADAAAASOG6PwkAAKRwTUAAmpmJQA==");
-
+	fnGenerator = FastNoise::NewFromEncodedNodeTree("DQACAAAAhetRPw0AAgAAAMP1KD8IAABSuEZBAI/C9b0A16OwPwBcjyLA");
+	//DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A
 
 	//fnGenerator = FastNoise::NewFromEncodedNodeTree("DQAFAAAAAAAAQAgAAAAAAD8AAAAAAA==");
 
