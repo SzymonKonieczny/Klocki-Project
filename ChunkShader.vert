@@ -20,10 +20,10 @@ void main()
 	float z = float((Data1 & 0xF8000u)>>15);
 	uint corner = uint((Data1 & 0x300000u)>>20);
 	uint col = uint((Data1 & 0xC00000u)>>22);
-	uint TextureNr = uint((Data1 & 0xFF000000u)>>24);
+	int TextureNr = int((Data1 & 0xFF000000u)>>24);
 
 	//vec3 aPos = vec3(x,y,z);
-	float texx = float((int(TextureNr) % 5) * 0.2);
+	float texx = float((TextureNr % 5) * 0.2);
 	float texy = float((float(TextureNr)/5) * 0.2);
 	switch(corner)
 	{
