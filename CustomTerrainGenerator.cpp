@@ -91,10 +91,11 @@ void CustomTerrainGenerator::GenerateTree(glm::vec3 WorldPos, glm::vec3 Dir, int
 
 CustomTerrainGenerator::CustomTerrainGenerator(ChunkMenager* menager) : BaseTerrainGenerator(menager)
 {
-	fnGenerator = FastNoise::NewFromEncodedNodeTree("GQANAAQAAADD9Sg/CQAACtcjPgCPwnU+ARMACtejPQ0ACgAAAArXIz8JAAAK1yNAAFyPwkA=");
+	fnGenerator = FastNoise::NewFromEncodedNodeTree("DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A");
+	//GQANAAQAAADD9Sg/CQAACtcjPgCPwnU+ARMACtejPQ0ACgAAAArXIz8JAAAK1yNAAFyPwkA=
 	// islnad EwCPwnU/DQADAAAAAAAAQA0AAgAAAHE9ikAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI/Cdb0AUrhOQQEIAAAAAAAA
 	//DQACAAAAhetRPw0AAgAAAMP1KD8IAABSuEZBAI/C9b0A16OwPwBcjyLA
-	//DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A
+	//
 
 	//fnGenerator = FastNoise::NewFromEncodedNodeTree("DQAFAAAAAAAAQAgAAAAAAD8AAAAAAA==");
 

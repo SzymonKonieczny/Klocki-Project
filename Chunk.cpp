@@ -178,7 +178,7 @@ bool Chunk::setblock(glm::vec3 LocPos, int ID)
 {// returns true if the placement was succesful
 
 		if (!isPositionViable(LocPos))
-		{
+		{ 
 
 			//std::cout << "Not a viable position. Block requested at " << LocPos.x << " " << LocPos.y + '\n';
 			/*
@@ -192,7 +192,7 @@ bool Chunk::setblock(glm::vec3 LocPos, int ID)
 			*/
 			std::cout << "Not a viable position. Block requested at " << LocPos.x << " " << LocPos.y + '\n';
 			std::cout << "THIS SHOULD NOT HAPPEN '\n'";
-
+			return false;
 			chunkMenager->SetBlockInWorld(Util::LocPosAndChunkPosToWorldPos(LocPos, ChunkPos),  ID);
 
 
@@ -279,7 +279,7 @@ bool Chunk::setblock(glm::vec3 LocPos, int ID)
 
 	bool Chunk::isPositionViable(glm::vec3 LocPos)
 {
-	return !(LocPos.x > ChunkSize - 1 || LocPos.x < 0 || LocPos.y < 0 // || LocPos.y > ChunkHeight - 1
+	return !(LocPos.x > ChunkSize - 1 || LocPos.x < 0 || LocPos.y < 0 || LocPos.y > ChunkHeight - 1
 		|| LocPos.z > ChunkSize - 1 || LocPos.z < 0);
 
 }
