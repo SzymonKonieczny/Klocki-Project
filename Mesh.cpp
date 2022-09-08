@@ -33,7 +33,7 @@ Mesh::Mesh(): VBO1(vertices)
 
 
 	// Links VBO to VAO
-	VAO.LinkAttrib(VBO1, 0, 1, GL_FLOAT, sizeof(Vertex), (void*)0);
+	VAO.LinkAttrib(VBO1, 0, 1, GL_UNSIGNED_INT, sizeof(Vertex), (void*)0);
 	//VAO.LinkAttrib(VBO1, 1, 1, GL_UNSIGNED_INT, sizeof(Vertex), (void*)(sizeof(unsigned int)));
 
 	//VAO.LinkAttrib(VBO1, 0, 3, GL_FLOAT, sizeof(Vertex), (void*)0);

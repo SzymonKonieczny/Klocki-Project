@@ -78,19 +78,19 @@ void Chunk::UpdateMesh()
 		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid)
 			FaceBuilder::BuildFace(mesh, Faces::Up, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
 		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, -1.0f, 0.0f));
-		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::Down, Pos, (BlockTypes)Blocks[i].ID);
-		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 0.0f, 1.0f));
+	    if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::Down, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
+	    neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 0.0f, 1.0f));
 	
-		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::North, Pos, (BlockTypes)Blocks[i].ID);
+		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::North, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
 		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 0.0f, -1.0f));
 	
-		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::South, Pos, (BlockTypes)Blocks[i].ID);
+		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::South, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
 		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(-1.0f, 0.0f, 0.0f));
 	
-		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::West, Pos, (BlockTypes)Blocks[i].ID);
+		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::West, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
 		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(1.0f, 0.0f, 0.0f));
 	
-		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::East, Pos, (BlockTypes)Blocks[i].ID);
+		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::East, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
 
 
 	}
