@@ -75,20 +75,21 @@ void Chunk::UpdateMesh()
 			Blocks[i].LocalPos.y,
 			(ChunkPos.y * ChunkSize) + Blocks[i].LocalPos.z);
 			Block* neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 1.0f, 0.0f));
-		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::Up, Pos, (BlockTypes)Blocks[i].ID);
+		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid)
+			FaceBuilder::BuildFace(mesh, Faces::Up, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
 		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, -1.0f, 0.0f));
 		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::Down, Pos, (BlockTypes)Blocks[i].ID);
 		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 0.0f, 1.0f));
-
+	
 		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::North, Pos, (BlockTypes)Blocks[i].ID);
 		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 0.0f, -1.0f));
-
+	
 		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::South, Pos, (BlockTypes)Blocks[i].ID);
 		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(-1.0f, 0.0f, 0.0f));
-
+	
 		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::West, Pos, (BlockTypes)Blocks[i].ID);
 		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(1.0f, 0.0f, 0.0f));
-
+	
 		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::East, Pos, (BlockTypes)Blocks[i].ID);
 
 
@@ -164,7 +165,7 @@ void Chunk::Draw(Shader& shader)
 	{
 		if (VertexMutex.try_lock())
 		{
-		mesh.Draw(shader, glm::vec3(0, 0, 0));
+		mesh.Draw(shader, glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),true);
 		VertexMutex.unlock();	
 		}
 

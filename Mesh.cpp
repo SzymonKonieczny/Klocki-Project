@@ -33,9 +33,12 @@ Mesh::Mesh(): VBO1(vertices)
 
 
 	// Links VBO to VAO
-	VAO.LinkAttrib(VBO1, 0, 3, GL_FLOAT, sizeof(Vertex), (void*)0);
-	VAO.LinkAttrib(VBO1, 1, 3, GL_FLOAT, sizeof(Vertex), (void*)(3 * sizeof(float)));
-	VAO.LinkAttrib(VBO1, 2, 2, GL_FLOAT, sizeof(Vertex), (void*)(6 * sizeof(float)));
+	VAO.LinkAttrib(VBO1, 0, 1, GL_FLOAT, sizeof(Vertex), (void*)0);
+	//VAO.LinkAttrib(VBO1, 1, 1, GL_UNSIGNED_INT, sizeof(Vertex), (void*)(sizeof(unsigned int)));
+
+	//VAO.LinkAttrib(VBO1, 0, 3, GL_FLOAT, sizeof(Vertex), (void*)0);
+	//VAO.LinkAttrib(VBO1, 1, 3, GL_FLOAT, sizeof(Vertex), (void*)(3 * sizeof(float)));
+	//VAO.LinkAttrib(VBO1, 2, 2, GL_FLOAT, sizeof(Vertex), (void*)(6 * sizeof(float)));
 
 	// Unbind all to prevent accidentally modifying them
 	VAO.Unbind();
@@ -56,13 +59,14 @@ void Mesh::Draw(Shader& shader, glm::vec3 Position, bool UseModelMatrix)  {
 	if (mingledWith && verticiesReady)
 	{
 		VBO1.Rebuffer(vertices);
+		//EBO1->Rebuffer(indices);
 		glFinish();
 
 		mingledWith = false;
 	}
 
 
-	//EBO1->Rebuffer(indices);
+
 	VAO.Bind();
 	
 	if (UseModelMatrix)

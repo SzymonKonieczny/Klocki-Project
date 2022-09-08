@@ -182,7 +182,7 @@ Game::Game()
 
 void Game::ShaderAndTextureStuff()
 {
-	shaderProgram = new Shader("default.vert", "default.frag");
+	shaderProgram = new Shader("ChunkShader.vert", "default.frag");
 	 TextureAtlas = new Texture("textures/textureatlas.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 	 PlayerTxt = new Texture("textures/Player.png", GL_TEXTURE_2D, GL_TEXTURE1, GL_RGBA, GL_UNSIGNED_BYTE);
 

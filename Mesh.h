@@ -20,7 +20,7 @@ class Mesh{
 	std::vector<Vertex> vertices;
 	std::mutex VerticiesMutex;
 public:
-	  // STATIC to ma byc
+
 	glm::mat4 model = glm::mat4(1.0f);
 	bool verticiesReady = false;
 

@@ -20,7 +20,7 @@ class Player
 	glm::vec3 LookingAtDir = glm::vec3(0.0f, 0.0f, -1.0f);
 public:
 	glm::vec2 LastFrameChunkPos;
-	glm::vec3 Position = glm::vec3(0.0f, 0.0f, 2.0f);
+	glm::vec3 Position = glm::vec3(0.0f, 70.0f, 2.0f);
 
 	Camera Cam;
 

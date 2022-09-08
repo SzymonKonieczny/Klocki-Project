@@ -8,9 +8,12 @@
 
 struct Vertex
 {
-	glm::vec3 position;
+	unsigned int CompressedData1;
+	//unsigned int CompressedData2;
+
+	/*glm::vec3 position;
 	glm::vec3 color;
-	glm::vec2 texturePos;
+	glm::vec2 texturePos;*/
 }; 
 
 class VBO

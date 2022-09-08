@@ -209,6 +209,8 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ChunkShader.frag" />
+    <None Include="ChunkShader.vert" />
     <None Include="default.frag" />
     <None Include="default.vert" />
     <None Include="defaultUI.vert" />

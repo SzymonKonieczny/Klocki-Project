@@ -55,6 +55,13 @@ Shader::Shader(const char* vertexFile, const char* fragmentFile)
 	glAttachShader(ID, fragmentShader);
 	glLinkProgram(ID);
 
+	glGetProgramiv(ID, GL_LINK_STATUS, &success);
+	if (!success) {
+		glGetProgramInfoLog(ID, 512, NULL, infoLog);
+		std::cout << "ERROR::SHADER::SHADER_PROGRAM::LINKING_FAILED\n" <<
+			infoLog << std::endl;
+	}
+
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 
@@ -63,6 +70,7 @@ Shader::Shader(const char* vertexFile, const char* fragmentFile)
 // Activates the Shader Program
 void Shader::Activate()
 {
+	
 	glUseProgram(ID);
 }
 

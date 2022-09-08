@@ -33,7 +33,7 @@ void Player::SwitchCompassOnOff()
 	{
 		Compass = new Mesh();
 		
-		Compass->GetVertexVector().push_back(
+		/*Compass->GetVertexVector().push_back(
 			Vertex(glm::vec3(0.0f, 0.0, 0.0f),
 				glm::vec3(1.0f, 1.0f, 1.0f),
 				glm::vec2(1, 0.99)));
@@ -45,7 +45,7 @@ void Player::SwitchCompassOnOff()
 			Vertex(glm::vec3(0.3, 0, 0.0f),
 				glm::vec3(0.6f, 0.0f, 0.0f),
 				glm::vec2(1, 1)));
-
+		
 
 
 
@@ -76,7 +76,7 @@ void Player::SwitchCompassOnOff()
 			Vertex(glm::vec3(0.0, 0, 0.3f),
 				glm::vec3(0.0f, 0.0f, 0.6f),
 				glm::vec2(1, 1)));
-
+		*/
 		Compass->verticiesSetReady();
 	}
 	isCompassOn = !isCompassOn;
