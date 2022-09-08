@@ -86,12 +86,12 @@ void FaceBuilder::BuildFace(Mesh& vertices, Faces Direction, glm::vec3 Pos, Bloc
 				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.x)));*/
 		break;
 	case North:
-		vertices.AddToVerticies(Vertex((x | (y << 5) | ((z+1) << 15)						 | (0 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex(((x + 1) | (y << 5) | ((z + 1) << 15)				 | (2 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex(((x + 1) | ((y+1) << 5) | ((z + 1) << 15)			 | (3 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex(((x + 1) | ((y+1)  << 5) | ((z + 1) << 15)				 | (3 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex((x | ((y+1)  << 5) | ((z + 1) << 15)					 | (1 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex((x | (y << 5) | ((z + 1) << 15)					     | (0 << 20) | (00 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex((x | (y << 5) | ((z+1) << 15)						 | (0 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex(((x + 1) | (y << 5) | ((z + 1) << 15)				 | (2 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex(((x + 1) | ((y+1) << 5) | ((z + 1) << 15)			 | (3 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex(((x + 1) | ((y+1)  << 5) | ((z + 1) << 15)			 | (3 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex((x | ((y+1)  << 5) | ((z + 1) << 15)					 | (1 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex((x | (y << 5) | ((z + 1) << 15)					     | (0 << 20) | (01 << 22) | (block << 24))));
 		/*vertices.AddToVerticies(
 			Vertex(Pos + glm::vec3(0.0f, 0.0, 1.0f),
 				glm::vec3(0.7f, 0.7f, 0.7f),
@@ -118,12 +118,12 @@ void FaceBuilder::BuildFace(Mesh& vertices, Faces Direction, glm::vec3 Pos, Bloc
 				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.x)));*/
 		break;
 	case East:
-		vertices.AddToVerticies(Vertex(((x + 1) | (y << 5) | (z << 15)						 | (0 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex(((x + 1) | (y << 5) | ((z + 1) << 15)				 | (2 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex(((x + 1) | ((y+1) << 5) | ((z + 1) << 15)			 | (3 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex(((x + 1) | ((y+1)  << 5) | ((z + 1) << 15)			 | (3 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex(((x+1) | ((y+1)  << 5) | (z << 15)					 | (1 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex(((x + 1) | (y << 5) | (z << 15)					     | (0 << 20) | (00 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex(((x + 1) | (y << 5) | (z << 15)						 | (0 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex(((x + 1) | (y << 5) | ((z + 1) << 15)				 | (2 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex(((x + 1) | ((y+1) << 5) | ((z + 1) << 15)			 | (3 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex(((x + 1) | ((y+1)  << 5) | ((z + 1) << 15)			 | (3 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex(((x+1) | ((y+1)  << 5) | (z << 15)					 | (1 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex(((x + 1) | (y << 5) | (z << 15)					     | (0 << 20) | (01 << 22) | (block << 24))));
 
 		/*vertices.AddToVerticies(
 			Vertex(Pos + glm::vec3(1.0f, 0.0, 0.0f),
@@ -151,12 +151,12 @@ void FaceBuilder::BuildFace(Mesh& vertices, Faces Direction, glm::vec3 Pos, Bloc
 				glm::vec2(instance->BLOCKS[block].textureCoordinatesX.x, instance->BLOCKS[block].textureCoordinatesY.x)));*/
 		break;
 	case South:
-		vertices.AddToVerticies(Vertex((x | (y << 5) | (z << 15)							 | (0 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex(((x + 1) | (y << 5) | (z << 15)						 | (2 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex(((x + 1) | ((y+1) << 5) | (z << 15)					 | (3 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex(((x + 1) | ((y+1) << 5) | (z << 15)					 | (3 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex((x | ((y+1)  << 5) | (z << 15)						 | (1 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex((x| (y << 5) | (z << 15)							     | (0 << 20) | (00 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex((x | (y << 5) | (z << 15)							 | (0 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex(((x + 1) | (y << 5) | (z << 15)						 | (2 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex(((x + 1) | ((y+1) << 5) | (z << 15)					 | (3 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex(((x + 1) | ((y+1) << 5) | (z << 15)					 | (3 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex((x | ((y+1)  << 5) | (z << 15)						 | (1 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex((x| (y << 5) | (z << 15)							     | (0 << 20) | (01 << 22) | (block << 24))));
 
 
 		/*vertices.AddToVerticies(
@@ -186,12 +186,12 @@ void FaceBuilder::BuildFace(Mesh& vertices, Faces Direction, glm::vec3 Pos, Bloc
 
 		break;
 	case West:
-		vertices.AddToVerticies(Vertex((x | (y << 5) | ((z+1) << 15)							| (0 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex((x | (y << 5) | (z << 15)								| (2 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex((x| ((y + 1) << 5) | (z << 15)							| (3 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex((x| ((y + 1) << 5) | (z << 15)							| (3 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex((x | ((y + 1) << 5) | ((z+1) << 15)						| (1 << 20) | (00 << 22) | (block << 24))));
-		vertices.AddToVerticies(Vertex((x | (y << 5) | ((z+1) << 15)							| (0 << 20) | (00 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex((x | (y << 5) | ((z+1) << 15)							| (0 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex((x | (y << 5) | (z << 15)								| (2 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex((x| ((y + 1) << 5) | (z << 15)							| (3 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex((x| ((y + 1) << 5) | (z << 15)							| (3 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex((x | ((y + 1) << 5) | ((z+1) << 15)						| (1 << 20) | (01 << 22) | (block << 24))));
+		vertices.AddToVerticies(Vertex((x | (y << 5) | ((z+1) << 15)							| (0 << 20) | (01 << 22) | (block << 24))));
 
 
 	/*	vertices.AddToVerticies(
