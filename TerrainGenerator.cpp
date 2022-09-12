@@ -36,7 +36,7 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 							if (Util::GetInstance()->random(0,1000) < 1)
 							{
 								shoudHouseGenerate = true;
-								HousePos = glm::vec3(j, k, i);
+								HousePos = Util::LocPosAndChunkPosToWorldPos( glm::vec3(j, k, i), chunkptr->ChunkPos);
 							}
 						}
 						
@@ -107,7 +107,7 @@ void TerrainGenerator::GenerateTree(glm::vec3 WorldPos, glm::vec3 Dir, int branc
 void TerrainGenerator::TryToGenerateHouse(glm::vec3 WorldPos)
 {
 	
-	for (int x = 0; x < 7; x++) //Check if empty Space
+	/*for (int x = 0; x < 7; x++) //Check if empty Space
 	{
 		for (int z = 0; z < 7; z++)
 		{
@@ -119,7 +119,7 @@ void TerrainGenerator::TryToGenerateHouse(glm::vec3 WorldPos)
 			}
 
 		}
-	}
+	}*/
 	
 	for (int x = 0; x < 7; x++) //Floor
 	{
@@ -129,15 +129,23 @@ void TerrainGenerator::TryToGenerateHouse(glm::vec3 WorldPos)
 		}
 	}
 	
+		for (int y = 0; y < 4; y++) // part 1 of the box
+		{	for (int xz = 0; xz < 7; xz++)
+			{
+				chunkmenager->SetBlockInWorld(glm::vec3(WorldPos.x, WorldPos.y + y, WorldPos.z - xz), BlockTypes::Log);
+				chunkmenager->SetBlockInWorld(glm::vec3(WorldPos.x - xz, WorldPos.y + y, WorldPos.z ), BlockTypes::Log);
+			}
+		}
+		WorldPos -= glm::vec3(7, 0, 7);
 		for (int y = 0; y < 4; y++)
 		{
 			for (int xz = 0; xz < 7; xz++)
 			{
-				chunkmenager->SetBlockInWorld(glm::vec3(WorldPos.x - xz, WorldPos.y - 1, WorldPos.z - xz), BlockTypes::Log);
-
+				chunkmenager->SetBlockInWorld(glm::vec3(WorldPos.x, WorldPos.y + y, WorldPos.z + xz), BlockTypes::Log);
+				chunkmenager->SetBlockInWorld(glm::vec3(WorldPos.x + xz, WorldPos.y + y, WorldPos.z), BlockTypes::Log);
 			}
-
 		}
+
 	
 
 }
