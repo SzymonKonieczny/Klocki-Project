@@ -169,7 +169,7 @@ Game::Game()
 
 	glfwSetFramebufferSizeCallback(Window::GetInstance()->window, framebuffer_size_callback);
 	glViewport(0, 0, Window::GetInstance()->WinWidth, -(Window::GetInstance()->WinHeight));
-	glfwSwapInterval(1);
+	glfwSwapInterval(0);
 
 	ShaderAndTextureStuff();
 	world.SetShader(shaderProgram);

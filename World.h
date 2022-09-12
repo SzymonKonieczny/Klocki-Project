@@ -37,7 +37,7 @@ public:
 	void SetShader(Shader* prog);
 	World(); 
 	Shader* shaderProgram;
-	CustomTerrainGenerator terrainGenerator;
+	TerrainGenerator terrainGenerator;
 	ChunkMenager chunkMenager;
 	std::queue<glm::vec2> ChunkGenQueue;
 
