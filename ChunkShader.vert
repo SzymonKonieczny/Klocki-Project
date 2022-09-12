@@ -21,26 +21,9 @@ void main()
 	uint col = uint((Data1 & 0xC00000u)>>22);
 	int TextureNr = int((Data1 & 0xFF000000u)>>24);
 
-	//vec3 aPos = vec3(x,y,z);
-	//float texx = float((TextureNr % 5) * 0.2);
-	//float texy = float((float(TextureNr)/5) * 0.2);
-	//switch(corner)
-	//{
-	//case 0u:
-	//break;
-	//case 1u:
-	//texx+=0.2;
-	//break;
-	//case 2u:
-	//texy+=0.2;
-	//break;
-	//case 3u:
-	//texy+=0.2;
-	//texx+=0.2;
-	//break;
-	//}
+
 	float ratio = 16.0f/80.0f;
-	float texx = float(TextureNr % 5) * ratio;
+	float texx = (TextureNr % 5) * ratio;
 	float texy = int((TextureNr)/5.0f) * ratio;
 	switch(corner)
 	{
@@ -80,9 +63,6 @@ void main()
 	gl_Position = projection * view * model * vec4(x,y,z,1.0) ;
     texCoord = vec2(texx,texy);
 
-	//color = aColor;
-
-	//texCoord = aTex;
 
 
 }

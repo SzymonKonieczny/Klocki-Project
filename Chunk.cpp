@@ -76,7 +76,7 @@ void Chunk::UpdateMesh()
 			(ChunkPos.y * ChunkSize) + Blocks[i].LocalPos.z);
 			Block* neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 1.0f, 0.0f));
 		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid)
-			FaceBuilder::BuildFace(mesh, Faces::Up, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
+																					   FaceBuilder::BuildFace(mesh, Faces::Up, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
 		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, -1.0f, 0.0f));
 	    if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::Down, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
 	    neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 0.0f, 1.0f));
