@@ -30,6 +30,9 @@ public:
 	void SetBlockInWorld(glm::vec3 WorldPos, int ID);
 	void SetBlockInWorld(glm::vec3 LocalPos, glm::vec2 ChunkPos, int ID);
 
+	Block* GetBlockInWorld(glm::vec3 WorldPos);
+	Block* GetBlockInWorld(glm::vec3 LocalPos, glm::vec2 ChunkPos);
+
 	void NewChunk(glm::vec2 ChunkPos);
 
 };

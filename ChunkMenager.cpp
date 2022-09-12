@@ -149,6 +149,23 @@ void ChunkMenager::SetBlockInWorld(glm::vec3 LocalPos, glm::vec2 ChunkPos, int I
 	}
 }
 
+Block* ChunkMenager::GetBlockInWorld(glm::vec3 WorldPos )
+{
+	glm::vec2 ChunkPos = Util::WorldPosToChunkPos(WorldPos);
+	glm::vec3 LocalPos = Util::WorldPosToLocalPos(WorldPos);
+	return 	GetBlockInWorld(LocalPos, ChunkPos);
+}
+
+Block* ChunkMenager::GetBlockInWorld(glm::vec3 LocalPos, glm::vec2 ChunkPos)
+{
+	auto existingChunksIterator = ChunkMap.find(ChunkPos);
+	if (existingChunksIterator != ChunkMap.end())
+	{
+		return existingChunksIterator->second->vec3ToBlock(LocalPos);
+
+	}
+}
+
 void ChunkMenager::NewChunk(glm::vec2 ChunkPos)
 {
 

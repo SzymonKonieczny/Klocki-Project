@@ -6,7 +6,8 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 	//chunkptr->LockBlockMutex(); SetBlock locks it anyways
 
 	std::cout << "Generating chunk Pos:" << chunkptr->ChunkPos.x << ' ' << chunkptr->ChunkPos.y << std::endl;
-
+	glm::vec3 HousePos;
+	bool shoudHouseGenerate = false;
 
 	std::vector<float> noiseOutput(ChunkSize * ChunkSize);
 	fnGenerator->GenUniformGrid2D(noiseOutput.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
@@ -29,8 +30,16 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 					else
 					{
 						if (Util::GetInstance()->random(0, 500) < 1) GenerateTree(Util::LocPosAndChunkPosToWorldPos(glm::vec3(j, k, i), chunkptr->ChunkPos));
-						else 
-						chunkptr->setblock(glm::vec3(j, k, i), BlockTypes::Grass);
+						else
+						{
+							chunkptr->setblock(glm::vec3(j, k, i), BlockTypes::Dirt);
+							if (Util::GetInstance()->random(0,1000) < 1)
+							{
+								shoudHouseGenerate = true;
+								HousePos = glm::vec3(j, k, i);
+							}
+						}
+						
 						//setblock(glm::vec3(j, k, i), Util::GetInstance()->random(0, 9));
 
 					}
@@ -50,7 +59,7 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 		}
 	}
 	//chunkptr->UnlockBlockMutex();
-
+	if (shoudHouseGenerate) TryToGenerateHouse(HousePos);
 	chunkptr->UpdateBlocksFromBlockQueueMap(true);
 
 }
@@ -95,11 +104,48 @@ void TerrainGenerator::GenerateTree(glm::vec3 WorldPos, glm::vec3 Dir, int branc
 	
 
 }
+void TerrainGenerator::TryToGenerateHouse(glm::vec3 WorldPos)
+{
+	
+	for (int x = 0; x < 7; x++) //Check if empty Space
+	{
+		for (int z = 0; z < 7; z++)
+		{
+			Block* b = chunkmenager->GetBlockInWorld(glm::vec3(WorldPos.x - x, WorldPos.y, WorldPos.z - z));
+			if (b != nullptr)
+			{
+				if (Util::GetInstance()->BLOCKS[b->ID].Solid) return;
+
+			}
+
+		}
+	}
+	
+	for (int x = 0; x < 7; x++) //Floor
+	{
+		for (int z = 0; z < 7; z++)
+		{
+			chunkmenager->SetBlockInWorld(glm::vec3(WorldPos.x - x, WorldPos.y-1, WorldPos.z - z), BlockTypes::Stone);
+		}
+	}
+	
+		for (int y = 0; y < 4; y++)
+		{
+			for (int xz = 0; xz < 7; xz++)
+			{
+				chunkmenager->SetBlockInWorld(glm::vec3(WorldPos.x - xz, WorldPos.y - 1, WorldPos.z - xz), BlockTypes::Log);
+
+			}
+
+		}
+	
+
+}
 TerrainGenerator::TerrainGenerator(ChunkMenager* menager) : BaseTerrainGenerator(menager)
 {
 
 
-	fnGenerator = FastNoise::NewFromEncodedNodeTree("EwCPwnU/DQADAAAAAAAAQA0AAgAAAHE9ikAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI/Cdb0AUrhOQQEIAAAAAAAA");
+	fnGenerator = FastNoise::NewFromEncodedNodeTree("DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A");
 }
 TerrainGenerator::~TerrainGenerator()
 {
