@@ -28,7 +28,14 @@ void CustomTerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 				{
 					if (Util::GetInstance()->random(0, 50) < 1) GenerateTree(Util::LocPosAndChunkPosToWorldPos(glm::vec3(j, k, i), chunkptr->ChunkPos));
 					else
+					{
 						chunkptr->setblock(glm::vec3(j, k, i), BlockTypes::Grass);
+						if (Util::GetInstance()->random(0, 10) < 1)
+						{
+							chunkptr->setblock(glm::vec3(j, k+3, i), Util::GetInstance()->random(0, 9));
+						}
+					}
+						
 					//setblock(glm::vec3(j, k, i), Util::GetInstance()->random(0, 9));
 
 

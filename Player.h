@@ -12,6 +12,8 @@ class Player
 	Mesh* Compass;
 	float crntTime;
 	float F3Cooldown=0;
+	float RCooldown = 0;
+
 	bool firstClick = true;
 	bool isCompassOn = false;
 	float speed = 0.1f;

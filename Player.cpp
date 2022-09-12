@@ -101,8 +101,14 @@ void Player::HandleInput(float dt)
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_R) == GLFW_PRESS)
 	{
-		glm::vec2 res2 = Util::WorldPosToChunkPos(Position);
-		world->AddChunksMeshToUpdate(res2);
+		if (crntTime - RCooldown > 0.5f)
+		{
+			glm::vec2 res2 = Util::WorldPosToChunkPos(Position);
+			world->AddChunksMeshToUpdate(res2);
+			RCooldown = glfwGetTime();
+
+		}
+
 
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_B) == GLFW_PRESS)
