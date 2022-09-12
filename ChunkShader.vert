@@ -12,8 +12,7 @@ uniform mat4 projection;
 
 void main()
 {
-	//uint* tst = (uint*)&ddt1;
-	//uint Data1 = *tst;
+
 
 	float x = float(Data1 & 0x1Fu);
 	float y = float((Data1 & 0x7FE0u)>>5);
@@ -23,26 +22,42 @@ void main()
 	int TextureNr = int((Data1 & 0xFF000000u)>>24);
 
 	//vec3 aPos = vec3(x,y,z);
-	float texx = float((TextureNr % 5) * 0.2);
-	float texy = float((float(TextureNr)/5) * 0.2);
+	//float texx = float((TextureNr % 5) * 0.2);
+	//float texy = float((float(TextureNr)/5) * 0.2);
+	//switch(corner)
+	//{
+	//case 0u:
+	//break;
+	//case 1u:
+	//texx+=0.2;
+	//break;
+	//case 2u:
+	//texy+=0.2;
+	//break;
+	//case 3u:
+	//texy+=0.2;
+	//texx+=0.2;
+	//break;
+	//}
+	float ratio = 16.0f/80.0f;
+	float texx = float(TextureNr % 5) * ratio;
+	float texy = int((TextureNr)/5.0f) * ratio;
 	switch(corner)
 	{
 	case 0u:
+
 	break;
 	case 1u:
-	texx+=0.2;
+	texx+= ratio;
 	break;
 	case 2u:
-	texy+=0.2;
-
+	texy+=ratio;
 	break;
 	case 3u:
-	texy+=0.2;
-	texx+=0.2;
-
+	texy+=ratio;
+	texx+=ratio;
 	break;
 	}
-	
 
 	 switch(col)
 	{
