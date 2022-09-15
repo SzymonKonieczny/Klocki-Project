@@ -98,48 +98,21 @@ void Chunk::UpdateMesh()
 		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, -1.0f, 0.0f));
 	    if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::Down, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
 		
-		if (ZPlusChunk != nullptr && Blocks[i].LocalPos.z == 15)
-		{ 
-			if (ZPlusChunk->CheckIfSolidBlock(glm::vec3(Blocks[i].LocalPos.x, Blocks[i].LocalPos.y, 0)))
-			{
-			neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 0.0f, 1.0f));
-			if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::North, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
 	
-			}
+		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 0.0f, 1.0f));
+		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::North, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
+	
+		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 0.0f, -1.0f));
+		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::South, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
 
-		}
+
+		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(-1.0f, 0.0f, 0.0f));
+		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::West, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
+
 		
-		if (ZMinusChunk != nullptr &&Blocks[i].LocalPos.z == 0)
-		{
-			if ( ZPlusChunk->CheckIfSolidBlock(glm::vec3(Blocks[i].LocalPos.x, Blocks[i].LocalPos.y, 15)))
-			{
-				neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 0.0f, -1.0f));
-				if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::South, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
+		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(1.0f, 0.0f, 0.0f));
+		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::East, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
 
-			}
-		}
-
-
-		if (XMinusChunk != nullptr && Blocks[i].LocalPos.x == 0)
-		{
-			if ( ZPlusChunk->CheckIfSolidBlock(glm::vec3(15, Blocks[i].LocalPos.y, Blocks[i].LocalPos.z)))
-			{
-				neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(-1.0f, 0.0f, 0.0f));
-				if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::West, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
-		
-			}
-		}
-
-		if (XPlusChunk != nullptr && Blocks[i].LocalPos.x == 15)
-		{
-			if ( ZPlusChunk->CheckIfSolidBlock(glm::vec3(0, Blocks[i].LocalPos.y, Blocks[i].LocalPos.z)))
-					{
-						neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(1.0f, 0.0f, 0.0f));
-						if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::East, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
-
-			}
-		}
-		
 
 
 	}
@@ -174,9 +147,21 @@ void Chunk::UpdateMesh()
 
 bool Chunk::CheckIfSolidBlock(glm::vec3 Pos)
 {
+
 	Block* blockptr = vec3ToBlock(Pos);
-	if (blockptr == nullptr) return false;
-	if (!Util::GetInstance()->BLOCKS[blockptr->ID].Solid) return true;
+	
+	if (blockptr == nullptr)
+	{
+
+		return false;
+
+	}
+	if (!Util::GetInstance()->BLOCKS[blockptr->ID].Solid)
+	{
+	
+		return true;
+	}
+
 	return false;
 }
 
@@ -217,13 +202,9 @@ bool Chunk::setblock(glm::vec3 LocPos, int ID)
 			std::cout << "Not a viable position. Block requested at " << LocPos.x << " " << LocPos.y + '\n';
 			std::cout << "THIS SHOULD NOT HAPPEN '\n'";
 			return false;
-			chunkMenager->SetBlockInWorld(Util::LocPosAndChunkPosToWorldPos(LocPos, ChunkPos),  ID);
-
-
-			return false;
-
+			
 		}
-		BlocksMutex.lock();
+		LockBlockMutex();
 
 		if (block_map.find(glm::vec3(LocPos.x, LocPos.y, LocPos.z)) != block_map.end())
 		{
@@ -237,7 +218,7 @@ bool Chunk::setblock(glm::vec3 LocPos, int ID)
 
 		}
 
-		BlocksMutex.unlock();
+		UnlockBlockMutex();
 
 	return true;
 }
@@ -332,9 +313,13 @@ void Chunk::UpdateBlocksFromBlockQueueMap(bool JustNewBlocks)
 Block* Chunk::vec3ToBlock(glm::vec3 LocPos)
 {
 	if (!isPositionViable(LocPos))return nullptr;
+	
 	auto search_result = block_map.find(LocPos);
+	//std::cout << "search_result: " << LocPos.x << ' ' << LocPos.y << ' ' << LocPos.z << '\n';
 	if (search_result != block_map.end())
 	{
+		
+
 		return &Blocks[(*search_result).second];
 	}
 	else return nullptr;
