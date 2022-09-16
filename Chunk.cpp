@@ -205,7 +205,7 @@ bool Chunk::setblock(glm::vec3 LocPos, int ID)
 			
 		}
 		LockBlockMutex();
-
+		LocPos = glm::floor(LocPos);
 		if (block_map.find(glm::vec3(LocPos.x, LocPos.y, LocPos.z)) != block_map.end())
 		{
 			Blocks[block_map[glm::vec3(LocPos.x, LocPos.y, LocPos.z)]].ID = ID;

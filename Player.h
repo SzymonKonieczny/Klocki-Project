@@ -14,13 +14,13 @@ class Player
 	float crntTime;
 	float F3Cooldown=0;
 	float RCooldown = 0;
-	bool noClip = false;
+	bool noClip = true;
 	bool firstClick = true;
 	bool isCompassOn = false;
 	bool isOnGround;
 	float speed = 0.01f;
 	float sensitivity = 100.0f;
-	float jumpForce = 100.f;
+	float jumpForce = 0.4f;
 	Shader* UsedShader;
 	glm::vec3 LookingAtDir = glm::vec3(0.0f, 0.0f, -1.0f);
 public:

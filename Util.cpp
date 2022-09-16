@@ -48,11 +48,13 @@ glm::vec3 Util::WorldPosToLocalPos(glm::vec3 WorldPos)
 	int x = static_cast<int>(WorldPos.x);
 
 	int z = static_cast<int>(WorldPos.z);
-	glm::vec2 ChunkPos = Util::WorldPosToChunkPos(WorldPos);
+	//glm::vec2 ChunkPos = Util::WorldPosToChunkPos(WorldPos);
 	//return glm::vec3(WorldPos.x - ChunkPos.x * ChunkSize, WorldPos.y, WorldPos.z - ChunkPos.y * ChunkSize);
-	return glm::vec3( (ChunkSize+(x%ChunkSize))%ChunkSize , WorldPos.y, (ChunkSize + (z % ChunkSize)) % ChunkSize); //hopson?
+	//return glm::vec3( glm::abs(x) % ChunkSize, WorldPos.y, glm::abs(z) % ChunkSize );
+	return glm::vec3( (ChunkSize+(x%ChunkSize))%ChunkSize , glm::floor(WorldPos.y), (ChunkSize + (z % ChunkSize)) % ChunkSize); //hopson?
 
 }
+
 
 void Util::LoadBlocks()
 {

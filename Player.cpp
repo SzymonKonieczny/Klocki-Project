@@ -49,20 +49,21 @@ bool Player::HandleCollisions(glm::vec3& Velocity) // returns if the position co
 void Player::Update(float dt)
 {
 	
-	isOnGround = CheckCollisionSide(glm::vec3(Position.x, Position.y - 0.9, Position.z));
+	isOnGround = CheckCollisionSide(glm::vec3(0, -0.2, 0));
 
 	HandleInput(dt);
 	//temporary gravity
-	if (!noClip) velocity.y -= 8.1 * dt;
+	if (!noClip) velocity.y -= 2 * dt;
 	if(!noClip)HandleCollisions(velocity);
 
 	Position += velocity;
-	velocity *= ( drag*dt);//glm::vec3(drag*dt);
-	
+	velocity.x *=  drag*dt;//glm::vec3(drag*dt);
+	velocity.z *= drag * dt;
+	if(noClip) velocity.y *= drag * dt;
 
 	Cam.UpdateView(*UsedShader);
 	Cam.Position = Position;
-	Cam.Position.y += 2;
+	//Cam.Position.y += 2;
 	Cam.LookingAtDir = LookingAtDir;
 
 	if (isCompassOn)
@@ -142,6 +143,7 @@ void Player::HandleInput(float dt)
 	{
 		if (crntTime - F3Cooldown > 0.5f)
 		{
+			F3Cooldown = glfwGetTime();
 			noClip = !noClip;
 		}
 
@@ -169,7 +171,7 @@ void Player::HandleInput(float dt)
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_B) == GLFW_PRESS)
 	{
-		std::cout << "breaking..." << std::endl;
+ 		std::cout << "breaking..." << std::endl;
 
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_F3) == GLFW_PRESS)
@@ -200,8 +202,12 @@ void Player::HandleInput(float dt)
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_SPACE) == GLFW_PRESS)
 	{
-		if(!noClip && isOnGround)velocity += jumpForce * glm::vec3(0.0f, 1.0f, 0.0f);
-		else velocity += speed * dt * glm::vec3(0.0f, 1.0f, 0.0f);
+		if (!noClip && isOnGround)
+		{
+			std::cout << "Jump";
+			velocity += jumpForce * glm::vec3(0.0f, 1.0f, 0.0f);
+		}
+		else if (noClip) velocity += speed * dt * glm::vec3(0.0f, 1.0f, 0.0f);
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 	{
