@@ -48,10 +48,14 @@ bool Player::HandleCollisions(glm::vec3& Velocity) // returns if the position co
 
 void Player::Update(float dt)
 {
+	
+	isOnGround = CheckCollisionSide(glm::vec3(Position.x, Position.y - 0.3, Position.z));
+
 	HandleInput(dt);
 	//temporary gravity
 	if (!noClip) velocity.y -= 8.1 * dt;
 	if(!noClip)HandleCollisions(velocity);
+
 	Position += velocity;
 	velocity *= ( drag*dt);//glm::vec3(drag*dt);
 	
@@ -195,7 +199,8 @@ void Player::HandleInput(float dt)
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_SPACE) == GLFW_PRESS)
 	{
-		velocity += dt * speed * glm::vec3(0.0f, 1.0f, 0.0f);
+		if(!noClip && isOnGround)velocity += jumpForce * glm::vec3(0.0f, 1.0f, 0.0f);
+		else velocity += speed * dt * glm::vec3(0.0f, 1.0f, 0.0f);
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 	{
