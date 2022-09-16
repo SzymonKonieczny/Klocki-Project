@@ -49,7 +49,7 @@ bool Player::HandleCollisions(glm::vec3& Velocity) // returns if the position co
 void Player::Update(float dt)
 {
 	
-	isOnGround = CheckCollisionSide(glm::vec3(Position.x, Position.y - 0.3, Position.z));
+	isOnGround = CheckCollisionSide(glm::vec3(Position.x, Position.y - 0.9, Position.z));
 
 	HandleInput(dt);
 	//temporary gravity
@@ -62,6 +62,7 @@ void Player::Update(float dt)
 
 	Cam.UpdateView(*UsedShader);
 	Cam.Position = Position;
+	Cam.Position.y += 2;
 	Cam.LookingAtDir = LookingAtDir;
 
 	if (isCompassOn)
