@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "World.h"
+
 /*glm::vec3(0.0f, 0.0, 0.0f),
 		glm::vec3(1.0f, 1.0f, 1.0f),
 		glm::vec2(0, 1)*/
@@ -7,11 +8,53 @@ Player::Player(): Cam(Position)
 {
 
 }
+bool Player::CheckCollisionSide(glm::vec3 dir)
+{
+	bool ret = false;
+	auto chunk = world->chunkMenager.ChunkMap.find(Util::WorldPosToChunkPos(Position + dir));
+	if (chunk != world->chunkMenager.ChunkMap.end())
+	{
+		glm::vec3 locpos = Util::WorldPosToLocalPos(Position+dir);
+		Block* b = chunk->second->vec3ToBlock(locpos);
+		if (b != nullptr )
+			if(Util::GetInstance()->BLOCKS[b->ID].Solid)	ret = true;
+
+	}
+
+	return ret;
+}
+bool Player::HandleCollisions(glm::vec3& Velocity) // returns if the position collides
+{
+	bool ret = false;
+	if (CheckCollisionSide(glm::vec3(Velocity.x, 0, 0)))
+	{
+		velocity.x = 0;
+		 ret = true;
+
+	}
+	if (CheckCollisionSide(glm::vec3(0, Velocity.y, 0)))
+	{
+		velocity.y = 0;
+		ret = true;
+	}
+	if (CheckCollisionSide(glm::vec3(0, 0, Velocity.z)))
+	{
+		velocity.z = 0;
+		ret = true;
+	}
+
+	return ret;
+}
 
 void Player::Update(float dt)
 {
-
 	HandleInput(dt);
+	//temporary gravity
+	if (!noClip) velocity.y -= 8.1 * dt;
+	if(!noClip)HandleCollisions(velocity);
+	Position += velocity;
+	velocity *= ( drag*dt);//glm::vec3(drag*dt);
+	
 
 	Cam.UpdateView(*UsedShader);
 	Cam.Position = Position;
@@ -90,7 +133,15 @@ void Player::SetShader(Shader* shader)
 void Player::HandleInput(float dt)
 {
 	crntTime = glfwGetTime();
+	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_C) == GLFW_PRESS)
+	{
+		if (crntTime - F3Cooldown > 0.5f)
+		{
+			noClip = !noClip;
+		}
 
+
+	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_P) == GLFW_PRESS)
 	{
 		glm::vec2 res2 = Util::WorldPosToChunkPos(Position);
@@ -128,27 +179,27 @@ void Player::HandleInput(float dt)
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		Position += dt * speed * glm::normalize( glm::vec3(LookingAtDir.x, 0, LookingAtDir.z));
+		velocity += dt * speed * glm::normalize( glm::vec3(LookingAtDir.x, 0, LookingAtDir.z));
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		Position += dt * speed * -glm::normalize(glm::cross(glm::vec3(LookingAtDir.x, 0, LookingAtDir.z), glm::vec3(0.0f, 1.0f, 0.0f)));
+		velocity += dt * speed * -glm::normalize(glm::cross(glm::vec3(LookingAtDir.x, 0, LookingAtDir.z), glm::vec3(0.0f, 1.0f, 0.0f)));
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		Position += dt * speed * -glm::normalize(glm::vec3(LookingAtDir.x, 0, LookingAtDir.z));
+		velocity += dt * speed * -glm::normalize(glm::vec3(LookingAtDir.x, 0, LookingAtDir.z));
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		Position += dt* speed * glm::normalize(glm::cross(glm::vec3(LookingAtDir.x,0, LookingAtDir.z), glm::vec3(0.0f, 1.0f, 0.0f)));
+		velocity += dt* speed * glm::normalize(glm::cross(glm::vec3(LookingAtDir.x,0, LookingAtDir.z), glm::vec3(0.0f, 1.0f, 0.0f)));
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_SPACE) == GLFW_PRESS)
 	{
-		Position += dt * speed * glm::vec3(0.0f, 1.0f, 0.0f);
+		velocity += dt * speed * glm::vec3(0.0f, 1.0f, 0.0f);
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 	{
-		Position += dt * speed * glm::vec3(0.0f, -1.0f, 0.0f);
+		velocity += dt * speed * glm::vec3(0.0f, -1.0f, 0.0f);
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
@@ -198,7 +249,6 @@ void Player::HandleInput(float dt)
 
 
 		LookingAtDir = glm::rotate(LookingAtDir, glm::radians(-rotY), glm::vec3(0.0f, 1.0f, 0.0f));
-
 		glfwSetCursorPos(Window::GetInstance()->window, (Window::GetInstance()->WinWidth / 2), (Window::GetInstance()->WinHeight / 2));
 	
 	}

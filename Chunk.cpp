@@ -313,7 +313,7 @@ void Chunk::UpdateBlocksFromBlockQueueMap(bool JustNewBlocks)
 Block* Chunk::vec3ToBlock(glm::vec3 LocPos)
 {
 	if (!isPositionViable(LocPos))return nullptr;
-	
+	LocPos = glm::floor(LocPos);
 	auto search_result = block_map.find(LocPos);
 	//std::cout << "search_result: " << LocPos.x << ' ' << LocPos.y << ' ' << LocPos.z << '\n';
 	if (search_result != block_map.end())
