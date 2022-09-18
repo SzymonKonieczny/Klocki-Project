@@ -48,9 +48,10 @@ glm::vec3 Util::WorldPosToLocalPos(glm::vec3 WorldPos)
 	int x = static_cast<int>(WorldPos.x);
 
 	int z = static_cast<int>(WorldPos.z);
-	//glm::vec2 ChunkPos = Util::WorldPosToChunkPos(WorldPos);
-	//return glm::vec3(WorldPos.x - ChunkPos.x * ChunkSize, WorldPos.y, WorldPos.z - ChunkPos.y * ChunkSize);
-	//return glm::vec3( glm::abs(x) % ChunkSize, WorldPos.y, glm::abs(z) % ChunkSize );
+
+	if (x < 0) x--;
+	if (z < 0) z--; // 0 coordinate is in the positives, so negatives start at -1, chence chunkPos X =-1 are blocks -1 to -16, not 0 to 15
+
 	return glm::vec3( (ChunkSize+(x%ChunkSize))%ChunkSize , glm::floor(WorldPos.y), (ChunkSize + (z % ChunkSize)) % ChunkSize); //hopson?
 
 }

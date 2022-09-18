@@ -24,7 +24,7 @@ void AsyncGenerateAndMesh(std::shared_ptr <std::vector<std::shared_ptr<Chunk>>> 
 	for (int i = 0; i < vec->size(); i++)
 	{
 		//(*vec)[i]->Generate(1);
-		std::cout << "Generating chunk Pos:" << (*vec)[i]->ChunkPos.x << ' ' << (*vec)[i]->ChunkPos.y << std::endl;
+	//	std::cout << "Generating chunk Pos:" << (*vec)[i]->ChunkPos.x << ' ' << (*vec)[i]->ChunkPos.y << std::endl;
 
 		tg->Generate((*vec)[i]);
 		
@@ -41,7 +41,7 @@ void AsyncMeshOnly(std::shared_ptr <std::vector<std::shared_ptr<Chunk>>> vec, bo
 
 	for (int i = 0; i < vec->size(); i++)
 	{
-		std::cout << "Meshing chunk Pos:" << (*vec)[i]->ChunkPos.x << ' ' << (*vec)[i]->ChunkPos.y << std::endl;
+	//	std::cout << "Meshing chunk Pos:" << (*vec)[i]->ChunkPos.x << ' ' << (*vec)[i]->ChunkPos.y << std::endl;
 		(*vec)[i]->UpdateMesh();
 	}
 	vec->clear();
@@ -110,7 +110,7 @@ void World::MeshUpdateFromQueue(int amount)
 {
 	if (!LastMeshBatchReady)
 	{
-		std::cout << "Meshing Q empty" << std::endl;
+	//	std::cout << "Meshing Q empty" << std::endl;
 		return;
 
 	}

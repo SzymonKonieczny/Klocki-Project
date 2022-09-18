@@ -6,7 +6,7 @@
 
 void CustomTerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 {
-	std::cout << "Generating chunk Pos:" << chunkptr->ChunkPos.x << ' ' << chunkptr->ChunkPos.y << std::endl;
+	//std::cout << "Generating chunk Pos:" << chunkptr->ChunkPos.x << ' ' << chunkptr->ChunkPos.y << std::endl;
 
 
 	std::vector<float> noiseOutput(ChunkSize * ChunkSize);
@@ -20,7 +20,7 @@ void CustomTerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 
 		for (int j = 0; j < ChunkSize; j++) // j = X coordinate
 		{
-			int column_height = ((noiseOutput[index++] + 1) / 2) * 10 + 50;
+			int column_height = ((noiseOutput[index++] + 1) / 2) * 30 + 50;
 			for (int k = 0; k <= column_height; k++) // k = Y coordinate
 			{
 

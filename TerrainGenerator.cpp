@@ -5,7 +5,7 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 
 	//chunkptr->LockBlockMutex(); SetBlock locks it anyways
 
-	std::cout << "Generating chunk Pos:" << chunkptr->ChunkPos.x << ' ' << chunkptr->ChunkPos.y << std::endl;
+	//std::cout << "Generating chunk Pos:" << chunkptr->ChunkPos.x << ' ' << chunkptr->ChunkPos.y << std::endl;
 	glm::vec3 HousePos;
 	bool shoudHouseGenerate = false;
 
@@ -32,7 +32,7 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 						if (Util::GetInstance()->random(0, 500) < 1) GenerateTree(Util::LocPosAndChunkPosToWorldPos(glm::vec3(j, k, i), chunkptr->ChunkPos));
 						else
 						{
-							chunkptr->setblock(glm::vec3(j, k, i), BlockTypes::Dirt);
+							chunkptr->setblock(glm::vec3(j, k, i), BlockTypes::Grass);
 							if (Util::GetInstance()->random(0,1000) < 1)
 							{
 								shoudHouseGenerate = true;
@@ -151,8 +151,8 @@ void TerrainGenerator::TryToGenerateHouse(glm::vec3 WorldPos)
 }
 TerrainGenerator::TerrainGenerator(ChunkMenager* menager) : BaseTerrainGenerator(menager)
 {
-
-
+	//DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A
+	//EwCPwnU/DQADAAAAAAAAQA0AAgAAAHE9ikAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI/Cdb0AUrhOQQEIAAAAAAAA
 	fnGenerator = FastNoise::NewFromEncodedNodeTree("DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A");
 }
 TerrainGenerator::~TerrainGenerator()

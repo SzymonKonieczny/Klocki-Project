@@ -17,7 +17,7 @@ bool Player::CheckCollisionSide(glm::vec3 dir)
 		glm::vec3 locpos = Util::WorldPosToLocalPos(Position+dir);
 		Block* b = chunk->second->vec3ToBlock(locpos);
 		if (b != nullptr )
-			if(Util::GetInstance()->BLOCKS[b->ID].Solid)	ret = true;
+			if(Util::GetInstance()->BLOCKS[b->ID].Collidable)	ret = true;
 
 	}
 
@@ -53,7 +53,7 @@ void Player::Update(float dt)
 
 	HandleInput(dt);
 	//temporary gravity
-	if (!noClip) velocity.y -= 2 * dt;
+	if (!noClip) velocity.y -= 0.8 * dt;
 	if(!noClip)HandleCollisions(velocity);
 
 	Position += velocity;
@@ -63,7 +63,7 @@ void Player::Update(float dt)
 
 	Cam.UpdateView(*UsedShader);
 	Cam.Position = Position;
-	//Cam.Position.y += 2;
+	Cam.Position.y += 2;
 	Cam.LookingAtDir = LookingAtDir;
 
 	if (isCompassOn)
@@ -151,10 +151,17 @@ void Player::HandleInput(float dt)
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_P) == GLFW_PRESS)
 	{
-		glm::vec2 res2 = Util::WorldPosToChunkPos(Position);
+		if (crntTime - RCooldown > 0.5f)
+		{
+			glm::vec2 res2 = Util::WorldPosToChunkPos(Position);
+			glm::vec3 res = Util::WorldPosToLocalPos(Position);
+			std::cout << " Player at Chunk Pos " << res2.x << ':' << res2.y << std::endl;
+			std::cout << " Player at Local Pos " << res.x << ':' << res.z << std::endl;
+			std::cout << " Player at World Pos " << Position.x << ':' << Position.y << ':' << Position.z << std::endl;
 
-		std::cout << " Player at Chunk Pos " << res2.x << ':' << res2.y << std::endl;
-		std::cout << " Player at World Pos " << Position.x << ':' << Position.y << ':' << Position.z << std::endl;
+			RCooldown = glfwGetTime();
+		}
+
 
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_R) == GLFW_PRESS)
@@ -204,7 +211,6 @@ void Player::HandleInput(float dt)
 	{
 		if (!noClip && isOnGround)
 		{
-			std::cout << "Jump";
 			velocity += jumpForce * glm::vec3(0.0f, 1.0f, 0.0f);
 		}
 		else if (noClip) velocity += speed * dt * glm::vec3(0.0f, 1.0f, 0.0f);
@@ -222,11 +228,11 @@ void Player::HandleInput(float dt)
 	}
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
 	{
-		speed = 40.f;
+		speed = 20.f;
 	}
 	else if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_LEFT_CONTROL) == GLFW_RELEASE)
 	{
-		speed = 10.f;
+		speed = 5.f;
 	}
 
 	if (firstClick && glfwGetMouseButton(Window::GetInstance()->window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)

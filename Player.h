@@ -18,9 +18,9 @@ class Player
 	bool firstClick = true;
 	bool isCompassOn = false;
 	bool isOnGround;
-	float speed = 0.01f;
+	float speed = 2.5f;
 	float sensitivity = 100.0f;
-	float jumpForce = 0.4f;
+	float jumpForce = 0.8f;
 	Shader* UsedShader;
 	glm::vec3 LookingAtDir = glm::vec3(0.0f, 0.0f, -1.0f);
 public:
