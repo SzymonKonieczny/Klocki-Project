@@ -174,6 +174,6 @@ void World::IdkWhatToCallThatForNow(Player& player, float dt)
 	}
 
 	GenChunksFromQueue(3);
-	MeshUpdateFromQueue(1);
+	MeshUpdateFromQueue(3);
 
 }

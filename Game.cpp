@@ -21,8 +21,9 @@ void Game::WorldUpdate()
 {
 	crntTime = glfwGetTime();
 	timeDiff = crntTime - prevTime;
+	prevTime = crntTime;
 	counter++;
-	if (timeDiff >= 1.0 / 30.0)
+	//if (timeDiff >= 1.0 / 30.0)
 	{
 		
 		
@@ -31,7 +32,7 @@ void Game::WorldUpdate()
 			std::string newTitle = "Prodzekto - " + FPS + "FPS / " + ms + "ms";
 			glfwSetWindowTitle(Window::GetInstance()->window, newTitle.c_str());
 		
-		prevTime = crntTime;
+		//prevTime = crntTime;
 		counter = 0;
 	}
 	world.IdkWhatToCallThatForNow(player, timeDiff);

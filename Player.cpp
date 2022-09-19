@@ -12,9 +12,9 @@ bool Player::CheckCollisionSide(glm::vec3 dir)
 {
 	bool ret = false;
 	auto chunk = world->chunkMenager.ChunkMap.find(Util::WorldPosToChunkPos(Position + dir));
-	if (!chunk->second->generated) return ret;
 	if (chunk != world->chunkMenager.ChunkMap.end())
-	{
+	{	
+		if (!chunk->second->generated) return ret;
 		glm::vec3 locpos = Util::WorldPosToLocalPos(Position+dir);
 		Block* b = chunk->second->vec3ToBlock(locpos);
 		if (b != nullptr )
@@ -54,13 +54,13 @@ void Player::Update(float dt)
 
 	HandleInput(dt);
 	//temporary gravity
-	if (!noClip) velocity.y -= 0.8 * dt;
+	if (!noClip) velocity.y -= 0.8f * dt;
 	if(!noClip)HandleCollisions(velocity);
 
 	Position += velocity;
 	velocity.x *=  drag*dt;//glm::vec3(drag*dt);
 	velocity.z *= drag * dt;
-	if(noClip) velocity.y *= drag * dt;
+	if (noClip) velocity.y *= drag * dt;
 
 	Cam.UpdateView(*UsedShader);
 	Cam.Position = Position;
@@ -212,7 +212,7 @@ void Player::HandleInput(float dt)
 	{
 		if (!noClip && isOnGround)
 		{
-			velocity += jumpForce * glm::vec3(0.0f, 1.0f, 0.0f);
+			velocity = jumpForce * glm::vec3(0.0f, 1.0f, 0.0f);
 		}
 		else if (noClip) velocity += speed * dt * glm::vec3(0.0f, 1.0f, 0.0f);
 	}
@@ -233,7 +233,7 @@ void Player::HandleInput(float dt)
 	}
 	else if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_LEFT_CONTROL) == GLFW_RELEASE)
 	{
-		speed = 5.f;
+		speed = 3.5f;
 	}
 
 	if (firstClick && glfwGetMouseButton(Window::GetInstance()->window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
