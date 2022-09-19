@@ -6,9 +6,9 @@ layout (location = 0) in uint Data1;
 out vec3 color;
 out vec2 texCoord;
 
-uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
+uniform highp mat4 model;
+uniform highp mat4 view;
+uniform highp mat4 projection;
 
 void main()
 {

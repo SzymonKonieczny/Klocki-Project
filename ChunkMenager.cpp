@@ -8,11 +8,11 @@ ChunkMenager::ChunkMenager(World* wrld)
 
 
 }
-void ChunkMenager::SpawnChunks()
+void ChunkMenager::SpawnChunks(glm::vec3 PlayerPos)
 {
 
 	int Render = RenderDistance ;
-	glm::vec2 CurrentPos = Util::WorldPosToChunkPos(glm::vec3(0));
+	glm::vec2 CurrentPos = Util::WorldPosToChunkPos(PlayerPos);
 	for (int i = -Render ; i <= Render ; i++)
 	{
 

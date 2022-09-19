@@ -10,8 +10,10 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 	bool shoudHouseGenerate = false;
 
 	std::vector<float> noiseOutput(ChunkSize * ChunkSize);
-	fnGenerator->GenUniformGrid2D(noiseOutput.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
+	std::vector<float> noiseOutputBiome(ChunkSize * ChunkSize);
 
+	fnGenerator->GenUniformGrid2D(noiseOutput.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
+	fnGeneratorBiomeOracle->GenUniformGrid2D(noiseOutputBiome.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
 
 	int index = 0;
 	for (int i = 0; i < ChunkSize; i++) //i = Z coordinate
@@ -20,12 +22,22 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 
 		for (int j = 0; j < ChunkSize; j++) // j = X coordinate
 		{
-			int column_height = ((noiseOutput[index++] + 1) / 2) * 20 + 35;
+			int column_height;
+			int BiomeAtBlock = ((noiseOutputBiome[index] + 1) / 2) * 20;
+
+			column_height = ((noiseOutput[index++] + 1) / 2) * 20 + 3;
+
 			for (int k = 0; k <= column_height; k++) // k = Y coordinate
 			{
 
+				/*if (BiomeAtBlock < 0.3)
+				{
+					if(column_height < 15) chunkptr->setblock(glm::vec3(j, k, i), BlockTypes::Water);
+					continue;
+				}*/
 				if (k == column_height)
 				{
+					
 					if (k < 20 && k == column_height) chunkptr->setblock(glm::vec3(j, k, i), BlockTypes::Sand);
 					else
 					{
@@ -151,6 +163,11 @@ void TerrainGenerator::TryToGenerateHouse(glm::vec3 WorldPos)
 }
 TerrainGenerator::TerrainGenerator(ChunkMenager* menager) : BaseTerrainGenerator(menager)
 {
+	
+	
+	
+
+	fnGeneratorBiomeOracle = FastNoise::NewFromEncodedNodeTree("EwCPwnU/DQADAAAAAAAAQA0AAgAAAHE9ikAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI/Cdb0AUrhOQQEIAAAAAAAA");
 	//DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A
 	//EwCPwnU/DQADAAAAAAAAQA0AAgAAAHE9ikAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI/Cdb0AUrhOQQEIAAAAAAAA
 	fnGenerator = FastNoise::NewFromEncodedNodeTree("DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A");

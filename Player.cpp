@@ -12,6 +12,7 @@ bool Player::CheckCollisionSide(glm::vec3 dir)
 {
 	bool ret = false;
 	auto chunk = world->chunkMenager.ChunkMap.find(Util::WorldPosToChunkPos(Position + dir));
+	if (!chunk->second->generated) return ret;
 	if (chunk != world->chunkMenager.ChunkMap.end())
 	{
 		glm::vec3 locpos = Util::WorldPosToLocalPos(Position+dir);
