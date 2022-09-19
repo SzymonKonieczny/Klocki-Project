@@ -85,7 +85,10 @@ void Chunk::UpdateMesh()
 	temp = chunkMenager->ChunkMap.find(ChunkPos + glm::vec2(0, 1));
 	(temp != chunkMenager->ChunkMap.end()) ? ZPlusChunk = temp->second : ZPlusChunk = nullptr;
 
-	
+	bool queuedXminus = false;
+	bool queuedXplus = false;
+	bool queuedZminus = false;
+	bool queuedZplus = false;
 
 	for (int i =0; i < Blocks.size(); i++)
 	{
@@ -95,12 +98,17 @@ void Chunk::UpdateMesh()
 		bool meshXplus = true;
 		bool meshZminus = true;
 		bool meshZplus = true;
+
 		if (Blocks[i].LocalPos.x == 15)
 		{
 			if (XPlusChunk != nullptr && XPlusChunk->generated)
 			{
 				Block* b = XPlusChunk->vec3ToBlock(glm::vec3(0, Blocks[i].LocalPos.y, Blocks[i].LocalPos.z));
-				if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Solid) meshXplus = false;
+				if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Solid)
+				{
+					queuedXplus = true;
+					meshXplus = false;
+				}
 			}
 
 		}
@@ -109,7 +117,12 @@ void Chunk::UpdateMesh()
 			if (XMinusChunk!= nullptr && XMinusChunk->generated)
 			{
 				Block* b = XMinusChunk->vec3ToBlock(glm::vec3(15, Blocks[i].LocalPos.y, Blocks[i].LocalPos.z));
-			 	if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Solid) meshXminus = false;
+				if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Solid)
+				{	
+					queuedXminus = true;
+					meshXminus = false;
+				}
+			
 			}
 		}
 
@@ -118,7 +131,11 @@ void Chunk::UpdateMesh()
 			if (ZPlusChunk != nullptr && ZPlusChunk->generated)
 			{
 				Block* b = ZPlusChunk->vec3ToBlock(glm::vec3(Blocks[i].LocalPos.x, Blocks[i].LocalPos.y, 0));
-			  	if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Solid) meshZplus = false;
+			  	if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Solid) 
+				{
+					queuedZplus = true;
+					meshZplus = false;
+				}
 			}
 
 		}
@@ -127,7 +144,11 @@ void Chunk::UpdateMesh()
 			if (ZMinusChunk != nullptr && ZMinusChunk->generated)
 			{
 				Block* b = ZMinusChunk->vec3ToBlock(glm::vec3(Blocks[i].LocalPos.x, Blocks[i].LocalPos.y, 15));
-			 	if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Solid) meshZminus = false;
+			 	if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Solid)
+				{
+					queuedZminus = true;
+					 meshZminus = false;
+				}
 			}
 		}
 
@@ -161,6 +182,17 @@ void Chunk::UpdateMesh()
 	VertexMutex.unlock();
 	meshed = true;
 	mesh.verticiesSetReady();
+		
+
+			// causes a cascade of remeshes
+	//if (queuedXminus)chunkMenager->world->AddChunksMeshToUpdate(XMinusChunk->ChunkPos);
+	//if (queuedXplus )chunkMenager->world->AddChunksMeshToUpdate(XPlusChunk->ChunkPos);
+	//if (queuedZminus)chunkMenager->world->AddChunksMeshToUpdate(ZMinusChunk->ChunkPos);
+	//if (queuedZplus )chunkMenager->world->AddChunksMeshToUpdate(ZPlusChunk->ChunkPos);
+	
+
+	
+	
 
 }
 
