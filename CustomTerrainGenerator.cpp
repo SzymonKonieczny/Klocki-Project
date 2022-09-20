@@ -47,7 +47,7 @@ void CustomTerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 
 		}
 	}
-	//chunkptr->UnlockBlockMutex();
+
 
 	chunkptr->UpdateBlocksFromBlockQueueMap(true);
 }

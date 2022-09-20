@@ -6,8 +6,8 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 	//chunkptr->LockBlockMutex(); SetBlock locks it anyways
 
 	//std::cout << "Generating chunk Pos:" << chunkptr->ChunkPos.x << ' ' << chunkptr->ChunkPos.y << std::endl;
-	glm::vec3 HousePos;
-	bool shoudHouseGenerate = false;
+	
+
 
 	std::vector<float> noiseOutput(ChunkSize * ChunkSize);
 	std::vector<float> noiseOutputBiome(ChunkSize * ChunkSize);
@@ -27,15 +27,13 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 
 			column_height = ((noiseOutput[index++] + 1) / 2) * 20 + 3;
 
+
+
 			for (int k = 0; k <= column_height; k++) // k = Y coordinate
 			{
 
-				/*if (BiomeAtBlock < 0.3)
-				{
-					if(column_height < 15) chunkptr->setblock(glm::vec3(j, k, i), BlockTypes::Water);
-					continue;
-				}*/
-				if (k == column_height)
+				chunkptr->setblock(glm::vec3(j, k, i), Forest.GetBlockTypeAt(glm::vec3(j, k, i), k == column_height));
+				/*if (k == column_height)
 				{
 					
 					if (k < 20 && k == column_height) chunkptr->setblock(glm::vec3(j, k, i), BlockTypes::Sand);
@@ -62,7 +60,7 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 				else
 				{ 
 					 chunkptr->setblock(glm::vec3(j, k, i), BlockTypes::Stone);
-				}
+				}*/
 				
 
 			}
@@ -71,7 +69,7 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 		}
 	}
 	//chunkptr->UnlockBlockMutex();
-	if (shoudHouseGenerate) TryToGenerateHouse(HousePos);
+
 	chunkptr->UpdateBlocksFromBlockQueueMap(true);
 
 }
@@ -119,19 +117,7 @@ void TerrainGenerator::GenerateTree(glm::vec3 WorldPos, glm::vec3 Dir, int branc
 void TerrainGenerator::TryToGenerateHouse(glm::vec3 WorldPos)
 {
 	
-	/*for (int x = 0; x < 7; x++) //Check if empty Space
-	{
-		for (int z = 0; z < 7; z++)
-		{
-			Block* b = chunkmenager->GetBlockInWorld(glm::vec3(WorldPos.x - x, WorldPos.y, WorldPos.z - z));
-			if (b != nullptr)
-			{
-				if (Util::GetInstance()->BLOCKS[b->ID].Solid) return;
 
-			}
-
-		}
-	}*/
 	
 	for (int x = 0; x < 7; x++) //Floor
 	{

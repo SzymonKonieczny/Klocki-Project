@@ -20,9 +20,9 @@ class Camera
 
 
 public:
-	glm::mat4 model = glm::mat4(1.0f);
-	glm::mat4 view = glm::mat4(1.0f);		//The Camera
-	glm::mat4 proj = glm::mat4(1.0f);
+	glm::mat4 model = glm::mat4(1.0);
+	glm::mat4 view = glm::mat4(1.0);		//The Camera
+	glm::mat4 proj = glm::mat4(1.0);
 	
 
 	glm::vec3 Position;

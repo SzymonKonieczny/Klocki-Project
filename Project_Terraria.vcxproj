@@ -155,6 +155,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseTerrainGenerator.cpp" />
+    <ClCompile Include="Biome.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BlockSelectMesh.cpp" />
     <ClCompile Include="BlockTemplate.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="CustomTerrainGenerator.cpp" />
     <ClCompile Include="EBO.cpp" />
     <ClCompile Include="FaceBuilder.cpp" />
+    <ClCompile Include="FlatTerrainGenerator.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="GLOBAL.cpp" />
@@ -183,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseTerrainGenerator.h" />
+    <ClInclude Include="Biome.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="BlockSelectMesh.h" />
     <ClInclude Include="BlockTemplate.h" />
@@ -194,6 +197,7 @@
     <ClInclude Include="CustomTerrainGenerator.h" />
     <ClInclude Include="EBO.h" />
     <ClInclude Include="FaceBuilder.h" />
+    <ClInclude Include="FlatTerrainGenerator.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GLOBAL.h" />
     <ClInclude Include="Mesh.h" />

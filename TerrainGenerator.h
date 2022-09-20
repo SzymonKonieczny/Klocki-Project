@@ -1,12 +1,10 @@
 #pragma once
 #include "BaseTerrainGenerator.h"
-
+#include "Biome.h"
 class TerrainGenerator : private BaseTerrainGenerator
 {
 	FastNoise::SmartNode<> fnGeneratorBiomeOracle;
-	FastNoise::SmartNode<> Desert;
-	FastNoise::SmartNode<> Hills;
-	FastNoise::SmartNode<> Ocean;
+	BiomeForest Forest;
 
 
 
