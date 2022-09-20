@@ -21,6 +21,7 @@ class Util
 		static glm::vec2 WorldPosToChunkPos(glm::vec3 WorldPos);
 		static glm::vec3 LocPosAndChunkPosToWorldPos(glm::vec3 LocPos, glm::vec2 ChunkPos);
 		static glm::vec3 WorldPosToLocalPos(glm::vec3 WorldPos);
+		static float lerp(float v0, float v1, float t);
 		void LoadBlocks();
 		Util(Util& other) = delete;
 		void operator=(const Util&) = delete;

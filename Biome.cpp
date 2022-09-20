@@ -9,7 +9,7 @@ BaseBiome::BaseBiome(std::string EncodedTree)
 BlockTypes BiomeForest::GetBlockTypeAt(glm::vec3 pos, bool isSurfaceBlock)
 {
 	if (isSurfaceBlock) return BlockTypes::Grass;
-	else  BlockTypes::Stone;
+	else return BlockTypes::Stone;
 }
 
 BiomeForest::BiomeForest() : BaseBiome("DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A")
@@ -25,10 +25,10 @@ void BiomeForest::GenerateFeatures()
 BlockTypes BiomeDesert::GetBlockTypeAt(glm::vec3 pos, bool isSurfaceBlock)
 {
 	if (isSurfaceBlock) return BlockTypes::Sand;
-	else  BlockTypes::Stone;
+	else return BlockTypes::Stone;
 }
 
-BiomeDesert::BiomeDesert(): BaseBiome("DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A")
+BiomeDesert::BiomeDesert(): BaseBiome("EwAK16M+DQACAAAAw/UoPw0ABAAAAAAAAEAJAAAAAIA/AAAAAD8AAACAPwAAAAAA")
 {
 }
 

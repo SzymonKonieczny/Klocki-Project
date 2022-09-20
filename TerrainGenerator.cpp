@@ -28,19 +28,25 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 		for (int j = 0; j < ChunkSize; j++) // j = X coordinate
 		{
 			int column_height;
-			int BiomeAtBlock = ((noiseOutputBiome[index] + 1) / 2) * 20;
+			float BiomeAtBlock = (noiseOutputBiome[index]+1.f)/2.f;
 			BIOMES Biome;
-			if (BiomeAtBlock > 0.5) Biome = BIOMES::Forest;
+			if (BiomeAtBlock < 0.55) Biome = BIOMES::Forest;
 			else Biome = BIOMES::Desert;
 
 
 			switch (Biome)
 			{
 			case BIOMES::Forest:
-				column_height = ((noiseOutputForest[index++] + 1) / 2) * 20 + 30;
 
+				column_height = ((noiseOutputForest[index++] + 1) / 2) * 20 + 30;
 				break;
 			case BIOMES::Desert:
+				if (BiomeAtBlock - 0.55 < 0.05)
+				{
+					column_height = (((noiseOutputDesert[index] + 1) / 2) + ((noiseOutputForest[index] + 1) / 2) / 2) * 20 + 30;
+					index++;
+				}
+				else
 				column_height = ((noiseOutputDesert[index++] + 1) / 2) * 20 + 30;
 			
 				break;
@@ -49,10 +55,16 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 				index++;
 				break;
 			}
-			//column_height = 5;
-
-
-
+			
+			
+			//
+			//			NOTE TO SELF
+			//		TAKE EXTREME VALUES OF THE NOISE FUNCTIONS (AT 0,0;15,0;0,15;15,15) AND
+			//	INTERPOLATE FOR ALL THE REST AS LERP(0,0,1/16); 
+			//		or something idk 
+			// 
+			// 
+			//
 			for (int k = 0; k <= column_height; k++) // k = Y coordinate
 			{
 
@@ -64,6 +76,7 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 					break;
 				case BIOMES::Desert:
 					chunkptr->setblock(glm::vec3(j, k, i), Desert.GetBlockTypeAt(glm::vec3(j, k, i), k == column_height));
+					
 
 					break;
 				default:
@@ -193,7 +206,7 @@ TerrainGenerator::TerrainGenerator(ChunkMenager* menager) : BaseTerrainGenerator
 	
 	
 
-	fnGeneratorBiomeOracle = FastNoise::NewFromEncodedNodeTree("DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A");
+	fnGeneratorBiomeOracle = FastNoise::NewFromEncodedNodeTree("EwApXA8+DQAQAAAAw/UoPw0AAgAAAAAAAEAJAAAAAIA/AAAAAD8AAACAPwAAAAAA");
 	//DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A
 	//EwCPwnU/DQADAAAAAAAAQA0AAgAAAHE9ikAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI/Cdb0AUrhOQQEIAAAAAAAA
 	fnGenerator = FastNoise::NewFromEncodedNodeTree("DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A");

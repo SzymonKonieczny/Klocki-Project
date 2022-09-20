@@ -118,7 +118,7 @@ void World::MeshUpdateFromQueue(int amount)
 	for (int i = 0; i < amount; i++)
 	{
 
-		if (ChunkMeshAddQueue.empty()) return;
+		if (ChunkMeshAddQueue.empty()) continue;
 		glm::vec2 GenChunkOnPos = ChunkMeshAddQueue.front();
 
 		ChunkMeshAddQueue.pop();
@@ -137,6 +137,7 @@ void World::MeshUpdateFromQueue(int amount)
 		}
 
 	}
+	if (UpdateChunkMeshOnPosVec->empty()) return;
 	std::thread f(AsyncMeshOnly, UpdateChunkMeshOnPosVec, std::ref(LastMeshBatchReady));
 	//std::thread f([this, UpdateChunkMeshOnPosVec] { this->AsyncMeshOnly(UpdateChunkMeshOnPosVec, LastMeshBatchReady); });
 
