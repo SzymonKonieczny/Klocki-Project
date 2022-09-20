@@ -9,11 +9,16 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 	
 
 
-	std::vector<float> noiseOutput(ChunkSize * ChunkSize);
 	std::vector<float> noiseOutputBiome(ChunkSize * ChunkSize);
-
-	fnGenerator->GenUniformGrid2D(noiseOutput.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
 	fnGeneratorBiomeOracle->GenUniformGrid2D(noiseOutputBiome.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
+
+
+	std::vector<float> noiseOutputForest(ChunkSize * ChunkSize);
+	Forest.NoiseFunc->GenUniformGrid2D(noiseOutputForest.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
+
+
+	std::vector<float> noiseOutputDesert(ChunkSize * ChunkSize);
+	Desert.NoiseFunc->GenUniformGrid2D(noiseOutputDesert.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
 
 	int index = 0;
 	for (int i = 0; i < ChunkSize; i++) //i = Z coordinate
@@ -24,15 +29,50 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 		{
 			int column_height;
 			int BiomeAtBlock = ((noiseOutputBiome[index] + 1) / 2) * 20;
+			BIOMES Biome;
+			if (BiomeAtBlock > 0.5) Biome = BIOMES::Forest;
+			else Biome = BIOMES::Desert;
 
-			column_height = ((noiseOutput[index++] + 1) / 2) * 20 + 3;
+
+			switch (Biome)
+			{
+			case BIOMES::Forest:
+				column_height = ((noiseOutputForest[index++] + 1) / 2) * 20 + 30;
+
+				break;
+			case BIOMES::Desert:
+				column_height = ((noiseOutputDesert[index++] + 1) / 2) * 20 + 30;
+			
+				break;
+			default:
+				column_height = 5;
+				index++;
+				break;
+			}
+			//column_height = 5;
 
 
 
 			for (int k = 0; k <= column_height; k++) // k = Y coordinate
 			{
 
-				chunkptr->setblock(glm::vec3(j, k, i), Forest.GetBlockTypeAt(glm::vec3(j, k, i), k == column_height));
+				switch (Biome)
+				{
+				case BIOMES::Forest:
+					chunkptr->setblock(glm::vec3(j, k, i), Forest.GetBlockTypeAt(glm::vec3(j, k, i), k == column_height));
+
+					break;
+				case BIOMES::Desert:
+					chunkptr->setblock(glm::vec3(j, k, i), Desert.GetBlockTypeAt(glm::vec3(j, k, i), k == column_height));
+
+					break;
+				default:
+					chunkptr->setblock(glm::vec3(j, k, i), BlockTypes::Log);
+					break;
+				}
+				
+				
+				
 				/*if (k == column_height)
 				{
 					
@@ -153,7 +193,7 @@ TerrainGenerator::TerrainGenerator(ChunkMenager* menager) : BaseTerrainGenerator
 	
 	
 
-	fnGeneratorBiomeOracle = FastNoise::NewFromEncodedNodeTree("EwCPwnU/DQADAAAAAAAAQA0AAgAAAHE9ikAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI/Cdb0AUrhOQQEIAAAAAAAA");
+	fnGeneratorBiomeOracle = FastNoise::NewFromEncodedNodeTree("DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A");
 	//DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A
 	//EwCPwnU/DQADAAAAAAAAQA0AAgAAAHE9ikAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI/Cdb0AUrhOQQEIAAAAAAAA
 	fnGenerator = FastNoise::NewFromEncodedNodeTree("DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A");

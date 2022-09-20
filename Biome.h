@@ -4,12 +4,14 @@
 
 #include <memory>
 #include "SimplexNoise.h"
+enum BIOMES {
+	Forest,
+	Desert
+};
 
 class BaseBiome {
 public:
 	BaseBiome(std::string EncodedTree);
-	//BlockTypes SurfaceBlock = BlockTypes::Log;
-	//BlockTypes UnderGround = BlockTypes::Log;
 
 	virtual BlockTypes GetBlockTypeAt(glm::vec3 pos, bool isSurfaceBlock)=0;
 	FastNoise::SmartNode<> NoiseFunc;
@@ -19,9 +21,15 @@ public:
 class BiomeForest : public BaseBiome
 {
 public:
-	//BlockTypes SurfaceBlock = BlockTypes::Grass;
-	//BlockTypes UnderGround = BlockTypes::Stone;
 	BlockTypes GetBlockTypeAt(glm::vec3 pos, bool isSurfaceBlock);
 	BiomeForest();
 	void GenerateFeatures();
 };
+class BiomeDesert : public BaseBiome
+{
+public:
+	BlockTypes GetBlockTypeAt(glm::vec3 pos, bool isSurfaceBlock);
+	BiomeDesert();
+	void GenerateFeatures();
+};
+
