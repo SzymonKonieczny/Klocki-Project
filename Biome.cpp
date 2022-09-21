@@ -104,3 +104,17 @@ void BiomeDesert::GenerateFeatures(glm::vec3 pos)
 	else if (Util::GetInstance()->random(0, 100) < 1)
 		GenerateCactus(pos);
 }
+
+BlockTypes BiomeMountain::GetBlockTypeAt(glm::vec3 pos, bool isSurfaceBlock)
+{
+	if (isSurfaceBlock) return BlockTypes::Stone;
+	else return BlockTypes::Stone;
+}
+
+BiomeMountain::BiomeMountain(ChunkMenager* _chunkmenager) : BaseBiome("GQATAI/C9T0NAAcAAACPwoVACQAAAACAPwBSuN4/ALgehT4=", _chunkmenager)
+{
+}
+
+void BiomeMountain::GenerateFeatures(glm::vec3 pos)
+{
+}

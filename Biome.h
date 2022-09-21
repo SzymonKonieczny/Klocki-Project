@@ -6,7 +6,8 @@
 #include "SimplexNoise.h"
 enum BIOMES {
 	Forest,
-	Desert
+	Desert,
+	Mountain
 };
 
 class BaseBiome {
@@ -36,4 +37,13 @@ public:
 
 	void GenerateFeatures(glm::vec3 pos);
 };
+class BiomeMountain : public BaseBiome
+{
+public:
+	BlockTypes GetBlockTypeAt(glm::vec3 pos, bool isSurfaceBlock);
+	BiomeMountain(ChunkMenager* _chunkmenager);
+
+	void GenerateFeatures(glm::vec3 pos);
+};
+
 

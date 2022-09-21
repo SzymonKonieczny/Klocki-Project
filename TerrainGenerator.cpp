@@ -20,6 +20,9 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 	std::vector<float> noiseOutputDesert(ChunkSize * ChunkSize);
 	Desert.NoiseFunc->GenUniformGrid2D(noiseOutputDesert.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
 
+	std::vector<float> noiseOutputMountain(ChunkSize * ChunkSize);
+	Mountain.NoiseFunc->GenUniformGrid2D(noiseOutputMountain.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
+
 	int index = 0;
 	for (int i = 0; i < ChunkSize; i++) //i = Z coordinate
 	{
@@ -30,9 +33,12 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 			int column_height;
 			float BiomeAtBlock = (noiseOutputBiome[index]+1.f)/2.f;
 			BIOMES Biome;
-			if (BiomeAtBlock < 0.55) Biome = BIOMES::Forest;
-			else Biome = BIOMES::Desert;
-
+			if (BiomeAtBlock < 0.45) Biome = BIOMES::Mountain;
+			else 
+			{
+				if (BiomeAtBlock < 0.6)Biome = BIOMES::Forest;
+					else Biome = BIOMES::Desert;
+			}
 
 			switch (Biome)
 			{
@@ -44,6 +50,10 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 
 				column_height = ((noiseOutputDesert[index++] + 1) / 2) * 20 + 30;
 			
+				break;
+			case BIOMES::Mountain:
+				column_height = ((noiseOutputMountain[index++] + 1) / 2) * 20 + 30;
+
 				break;
 			default:
 				column_height = 5;
@@ -75,6 +85,12 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 				case BIOMES::Desert:
 					chunkptr->setblock(glm::vec3(j, k, i), Desert.GetBlockTypeAt(glm::vec3(j, k, i), k == column_height));
 					if (k == column_height) Desert.GenerateFeatures(Util::LocPosAndChunkPosToWorldPos(glm::vec3(j, k, i),
+						chunkptr->ChunkPos));
+
+					break;
+				case BIOMES::Mountain:
+					chunkptr->setblock(glm::vec3(j, k, i), Mountain.GetBlockTypeAt(glm::vec3(j, k, i), k == column_height));
+					if (k == column_height) Mountain.GenerateFeatures(Util::LocPosAndChunkPosToWorldPos(glm::vec3(j, k, i),
 						chunkptr->ChunkPos));
 
 					break;
@@ -199,16 +215,17 @@ void TerrainGenerator::TryToGenerateHouse(glm::vec3 WorldPos)
 	
 
 }
-TerrainGenerator::TerrainGenerator(ChunkMenager* menager) : BaseTerrainGenerator(menager), Forest(chunkmenager), Desert(chunkmenager)
+TerrainGenerator::TerrainGenerator(ChunkMenager* menager) : BaseTerrainGenerator(menager), Forest(chunkmenager), Desert(chunkmenager), Mountain(chunkmenager)
 {
 	
 	
 	
 
-	fnGeneratorBiomeOracle = FastNoise::NewFromEncodedNodeTree("EwApXA8+DQAQAAAAw/UoPw0AAgAAAAAAAEAJAAAAAIA/AAAAAD8AAACAPwAAAAAA");
+	fnGeneratorBiomeOracle = FastNoise::NewFromEncodedNodeTree("DQAQAAAAw/UoPw0ABAAAAK5HYT4JAAAAAIA/AD0K90AAAACAPwAK1yM9");
+	//EwApXA8+DQAQAAAAw/UoPw0AAgAAAAAAAEAJAAAAAIA/AAAAAD8AAACAPwAAAAAA
 	//DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A
 	//EwCPwnU/DQADAAAAAAAAQA0AAgAAAHE9ikAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI/Cdb0AUrhOQQEIAAAAAAAA
-	fnGenerator = FastNoise::NewFromEncodedNodeTree("DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A");
+	//fnGenerator = FastNoise::NewFromEncodedNodeTree("DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A");
 }
 TerrainGenerator::~TerrainGenerator()
 {

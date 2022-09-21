@@ -6,6 +6,7 @@ class TerrainGenerator : private BaseTerrainGenerator
 	FastNoise::SmartNode<> fnGeneratorBiomeOracle;
 	BiomeForest Forest;
 	BiomeDesert Desert;
+	BiomeMountain Mountain;
 
 
 
