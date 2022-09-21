@@ -41,12 +41,7 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 				column_height = ((noiseOutputForest[index++] + 1) / 2) * 20 + 30;
 				break;
 			case BIOMES::Desert:
-				if (BiomeAtBlock - 0.55 < 0.05)
-				{
-					column_height = (((noiseOutputDesert[index] + 1) / 2) + ((noiseOutputForest[index] + 1) / 2) / 2) * 20 + 30;
-					index++;
-				}
-				else
+
 				column_height = ((noiseOutputDesert[index++] + 1) / 2) * 20 + 30;
 			
 				break;
@@ -56,13 +51,14 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 				break;
 			}
 			
+			chunkptr->column_heights[j][i] = column_height;
 			
 			//
 			//			NOTE TO SELF
 			//		TAKE EXTREME VALUES OF THE NOISE FUNCTIONS (AT 0,0;15,0;0,15;15,15) AND
 			//	INTERPOLATE FOR ALL THE REST AS LERP(0,0,1/16); 
 			//		or something idk 
-			// 
+			// 	https://pl.wikipedia.org/wiki/Interpolacja_dwuliniowa
 			// 
 			//
 			for (int k = 0; k <= column_height; k++) // k = Y coordinate
@@ -72,11 +68,14 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 				{
 				case BIOMES::Forest:
 					chunkptr->setblock(glm::vec3(j, k, i), Forest.GetBlockTypeAt(glm::vec3(j, k, i), k == column_height));
+					if (k == column_height) Forest.GenerateFeatures(Util::LocPosAndChunkPosToWorldPos(glm::vec3(j, k, i),
+						chunkptr->ChunkPos));
 
 					break;
 				case BIOMES::Desert:
 					chunkptr->setblock(glm::vec3(j, k, i), Desert.GetBlockTypeAt(glm::vec3(j, k, i), k == column_height));
-					
+					if (k == column_height) Desert.GenerateFeatures(Util::LocPosAndChunkPosToWorldPos(glm::vec3(j, k, i),
+						chunkptr->ChunkPos));
 
 					break;
 				default:
@@ -200,7 +199,7 @@ void TerrainGenerator::TryToGenerateHouse(glm::vec3 WorldPos)
 	
 
 }
-TerrainGenerator::TerrainGenerator(ChunkMenager* menager) : BaseTerrainGenerator(menager)
+TerrainGenerator::TerrainGenerator(ChunkMenager* menager) : BaseTerrainGenerator(menager), Forest(chunkmenager), Desert(chunkmenager)
 {
 	
 	

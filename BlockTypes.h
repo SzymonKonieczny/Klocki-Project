@@ -12,7 +12,8 @@ enum BlockTypes
 	Sand,
 	Water,
 	Air,
-	ShubiumCrystal
+	ShubiumCrystal,
+	Cactus
 };
 
 #endif // !BLOCKTYPES_H

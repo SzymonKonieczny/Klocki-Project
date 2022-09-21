@@ -96,6 +96,8 @@ void Util::LoadBlocks()
 	BLOCKS[BlockTypes::Sand].name = "Sand";
 	BLOCKS[BlockTypes::Water].name = "Water";
 	BLOCKS[BlockTypes::ShubiumCrystal].name = "Shubium Crystal";
+	BLOCKS[BlockTypes::Cactus].name = "Shubium Crystal";
+
 					
 	BLOCKS[BlockTypes::Grass].drops = BlockTypes::Dirt;
 	BLOCKS[BlockTypes::ShubiumOre].drops = BlockTypes::ShubiumCrystal;
@@ -105,6 +107,8 @@ void Util::LoadBlocks()
 	BLOCKS[BlockTypes::Leaves].drops = BlockTypes::Air;
 	BLOCKS[BlockTypes::Sand].drops = BlockTypes::Sand;
 	BLOCKS[BlockTypes::Water].drops = BlockTypes::Air;
+	BLOCKS[BlockTypes::Cactus].drops = BlockTypes::Air;
+
 	
 }
 
