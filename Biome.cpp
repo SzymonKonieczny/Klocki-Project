@@ -90,6 +90,11 @@ void BiomeDesert::GenerateCactus(glm::vec3 WorldPos)
 
 void BiomeDesert::GeneratePool(glm::vec3 WorldPos)
 {
+	chunkmenager->SetBlockInWorld(WorldPos + glm::vec3(0, -1, 0), BlockTypes::Water);
+	chunkmenager->SetBlockInWorld(WorldPos + glm::vec3(1, -1, 0), BlockTypes::Water);
+	chunkmenager->SetBlockInWorld(WorldPos + glm::vec3(0, -1, 1), BlockTypes::Water);
+	chunkmenager->SetBlockInWorld(WorldPos + glm::vec3(-1,-1, 0), BlockTypes::Water);
+	chunkmenager->SetBlockInWorld(WorldPos + glm::vec3(0, -1, -1),BlockTypes::Water);
 
 }
 
