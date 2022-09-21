@@ -20,7 +20,7 @@ class Player
 	bool isOnGround;
 	float speed = 2.5f;
 	float sensitivity = 100.0f;
-	float jumpForce = 0.17f;
+	float jumpForce = 0.2f;
 	Shader* UsedShader;
 	glm::vec3 LookingAtDir = glm::vec3(0.0f, 0.0f, -1.0f);
 public:
