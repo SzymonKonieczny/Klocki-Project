@@ -107,11 +107,11 @@ void BiomeDesert::GenerateFeatures(glm::vec3 pos)
 
 BlockTypes BiomeMountain::GetBlockTypeAt(glm::vec3 pos, bool isSurfaceBlock)
 {
-	if (isSurfaceBlock) return BlockTypes::Stone;
+	if (isSurfaceBlock) return BlockTypes::Dirt;
 	else return BlockTypes::Stone;
 }
 
-BiomeMountain::BiomeMountain(ChunkMenager* _chunkmenager) : BaseBiome("GQATAI/C9T0NAAcAAACPwoVACQAAAACAPwBSuN4/ALgehT4=", _chunkmenager)
+BiomeMountain::BiomeMountain(ChunkMenager* _chunkmenager) : BaseBiome("HgANAAIAAAAfhas/CQAAAACAPwApXI8+AJqZmb4=", _chunkmenager)
 {
 }
 

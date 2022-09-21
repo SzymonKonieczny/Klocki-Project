@@ -33,10 +33,10 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 			int column_height;
 			float BiomeAtBlock = (noiseOutputBiome[index]+1.f)/2.f;
 			BIOMES Biome;
-			if (BiomeAtBlock < 0.45) Biome = BIOMES::Mountain;
+			if (BiomeAtBlock < 0.5) Biome = BIOMES::Mountain;
 			else 
 			{
-				if (BiomeAtBlock < 0.6)Biome = BIOMES::Forest;
+				if (BiomeAtBlock < 0.55)Biome = BIOMES::Forest;
 					else Biome = BIOMES::Desert;
 			}
 
@@ -48,11 +48,11 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 				break;
 			case BIOMES::Desert:
 
-				column_height = ((noiseOutputDesert[index++] + 1) / 2) * 20 + 30;
+				column_height = ((noiseOutputDesert[index++] + 1) / 2) * 20 + 15;
 			
 				break;
 			case BIOMES::Mountain:
-				column_height = ((noiseOutputMountain[index++] + 1) / 2) * 20 + 30;
+				column_height = ((noiseOutputMountain[index++] + 1)* 70 / 2)  +70;
 
 				break;
 			default:
@@ -221,7 +221,7 @@ TerrainGenerator::TerrainGenerator(ChunkMenager* menager) : BaseTerrainGenerator
 	
 	
 
-	fnGeneratorBiomeOracle = FastNoise::NewFromEncodedNodeTree("DQAQAAAAw/UoPw0ABAAAAK5HYT4JAAAAAIA/AD0K90AAAACAPwAK1yM9");
+	fnGeneratorBiomeOracle = FastNoise::NewFromEncodedNodeTree("EwCPwnU9DQACAAAAAAAAAA0ABgAAAOxROD4JAAAAAIA/AArXIz8AAACAPwDsUfhA");
 	//EwApXA8+DQAQAAAAw/UoPw0AAgAAAAAAAEAJAAAAAIA/AAAAAD8AAACAPwAAAAAA
 	//DQACAAAAzczMPQ0AAgAAAI/CNUAIAAAUrjdBADMzMz8Aj8KBQQBSuB7A
 	//EwCPwnU/DQADAAAAAAAAQA0AAgAAAHE9ikAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI/Cdb0AUrhOQQEIAAAAAAAA
