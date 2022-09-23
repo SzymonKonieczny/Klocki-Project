@@ -33,7 +33,7 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 			int column_height;
 			float BiomeAtBlock = (noiseOutputBiome[index]+1.f)/2.f;
 			BIOMES Biome;
-			if (BiomeAtBlock < 0.5) Biome = BIOMES::Mountain;
+			if (BiomeAtBlock < 0.5) Biome = BIOMES::Desert;
 			else 
 			{
 				if (BiomeAtBlock < 0.55)Biome = BIOMES::Forest;

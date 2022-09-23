@@ -81,6 +81,9 @@ void Util::LoadBlocks()
 		}
 	}
 	//Here load properties of every block.
+	BLOCKS[BlockTypes::Air].Selectable = false;
+
+
 	BLOCKS[BlockTypes::Air].Collidable = false;
 	BLOCKS[BlockTypes::Water].Collidable = false;
 	BLOCKS[BlockTypes::Rose].Collidable = false;

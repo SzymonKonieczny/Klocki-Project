@@ -12,7 +12,7 @@ RayInfo Ray::Cast(glm::vec3 Start, glm::vec3 Direction, World* world, float dist
 	{
 		info.HitFromPos = info.HitPos;
 		info.HitPos = info.HitFromPos + (Direction * 0.1f);
-		if (Collider::CheckPoint(info.HitPos,world))
+		if (Collider::CheckPoint(info.HitPos,world,false))
 		{
 			//info.HitPos = glm::floor(info.HitPos + glm::vec3(1, 0,1));
 			//info.HitFromPos = glm::floor(info.HitFromPos + glm::vec3(1, 0,1));

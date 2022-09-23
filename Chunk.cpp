@@ -104,7 +104,9 @@ void Chunk::UpdateMesh()
 		{
 			if (XPlusChunk != nullptr && XPlusChunk->generated)
 			{
+				XPlusChunk->LockBlockMutex();
 				Block* b = XPlusChunk->vec3ToBlock(glm::vec3(0, Blocks[i].LocalPos.y, Blocks[i].LocalPos.z));
+				XPlusChunk->UnlockBlockMutex();
 				if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Solid)
 				{
 					queuedXplus = true;
@@ -117,7 +119,10 @@ void Chunk::UpdateMesh()
 		{
 			if (XMinusChunk!= nullptr && XMinusChunk->generated)
 			{
+				XMinusChunk->LockBlockMutex();
 				Block* b = XMinusChunk->vec3ToBlock(glm::vec3(15, Blocks[i].LocalPos.y, Blocks[i].LocalPos.z));
+				XMinusChunk->UnlockBlockMutex();
+
 				if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Solid)
 				{	
 					queuedXminus = true;
@@ -131,7 +136,9 @@ void Chunk::UpdateMesh()
 		{
 			if (ZPlusChunk != nullptr && ZPlusChunk->generated)
 			{
+				ZPlusChunk->LockBlockMutex();
 				Block* b = ZPlusChunk->vec3ToBlock(glm::vec3(Blocks[i].LocalPos.x, Blocks[i].LocalPos.y, 0));
+				ZPlusChunk->UnlockBlockMutex();
 			  	if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Solid) 
 				{
 					queuedZplus = true;
@@ -144,7 +151,9 @@ void Chunk::UpdateMesh()
 		{
 			if (ZMinusChunk != nullptr && ZMinusChunk->generated)
 			{
+				ZMinusChunk->LockBlockMutex();
 				Block* b = ZMinusChunk->vec3ToBlock(glm::vec3(Blocks[i].LocalPos.x, Blocks[i].LocalPos.y, 15));
+				ZMinusChunk->UnlockBlockMutex();
 			 	if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Solid)
 				{
 					queuedZminus = true;
