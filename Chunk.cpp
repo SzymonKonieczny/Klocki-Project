@@ -151,28 +151,42 @@ void Chunk::UpdateMesh()
 				}
 			}
 		}
+		Block* neighbour;
+		switch (Util::GetInstance()->BLOCKS[Blocks[i].ID].Shape)
+		{
+		case BlockShape:
+				neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 1.0f, 0.0f));
 
-		Block* neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 1.0f, 0.0f));
-		if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid)
-																					   FaceBuilder::BuildFace(mesh, Faces::Up, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
-		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, -1.0f, 0.0f));
-	    if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::Down, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
+				if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid)
+					FaceBuilder::BuildFace(mesh, Faces::Up, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
+				neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, -1.0f, 0.0f));
+				if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::Down, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
+
+
+				neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 0.0f, 1.0f));
+				if (meshZplus)if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::North, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
+
+				neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 0.0f, -1.0f));
+				if (meshZminus) if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::South, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
+
+
+				neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(-1.0f, 0.0f, 0.0f));
+				if (meshXminus) if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::West, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
+
+
+				neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(1.0f, 0.0f, 0.0f));
+				if (meshXplus) if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::East, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
+		break;
 		
-	
-		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 0.0f, 1.0f));
-		if (meshZplus)if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::North, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
-	
-		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 0.0f, -1.0f));
-		if (meshZminus) if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::South, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
+		case CrossShape:
+			FaceBuilder::BuildFace(mesh, Faces::ACross, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::CrossShape);
+			FaceBuilder::BuildFace(mesh, Faces::BCross, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::CrossShape);
 
+		break;
 
-		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(-1.0f, 0.0f, 0.0f));
-		if (meshXminus) if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::West, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
+		}
 
 		
-		neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(1.0f, 0.0f, 0.0f));
-		if (meshXplus) if ( neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::East, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID);
-
 
 
 	}

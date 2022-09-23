@@ -8,7 +8,9 @@ int map_seed = 73425352;
 
 
 const float texturedimention = 0.2f;
-const int amoutOfBlocks = 11; // actual amount  +1
+const int amoutOfBlocks = 12;  
+
+    
 
 
 // std::vector<BlockTemplate> BLOCKS;

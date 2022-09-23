@@ -75,7 +75,7 @@ void Util::LoadBlocks()
 			glm::vec2 testingX = glm::vec2(texturedimention * k, texturedimention * k + texturedimention);
 			glm::vec2 testingY = glm::vec2(texturedimention * i, texturedimention * i + texturedimention);
 
-			BLOCKS.push_back(BlockTemplate({ testingX,testingY ,true,true , "Unnamed", BlockTypes::Air }));
+			BLOCKS.push_back(BlockTemplate({ testingX,testingY ,true,true , "Unnamed", BlockTypes::Air, BlockShapes::BlockShape }));
 			loadedAmout++;
 			if (loadedAmout >= amoutOfBlocks) break;
 		}
@@ -83,8 +83,11 @@ void Util::LoadBlocks()
 	//Here load properties of every block.
 	BLOCKS[BlockTypes::Air].Collidable = false;
 	BLOCKS[BlockTypes::Water].Collidable = false;
+	BLOCKS[BlockTypes::Rose].Collidable = false;
+
 	BLOCKS[BlockTypes::Water].Solid = false;
 	BLOCKS[BlockTypes::Leaves].Solid = false;
+	BLOCKS[BlockTypes::Rose].Solid = false;
 
 
 	BLOCKS[BlockTypes::Grass].name = "Grass Block";
@@ -109,6 +112,7 @@ void Util::LoadBlocks()
 	BLOCKS[BlockTypes::Water].drops = BlockTypes::Air;
 	BLOCKS[BlockTypes::Cactus].drops = BlockTypes::Air;
 
-	
+	BLOCKS[BlockTypes::Rose].Shape = BlockShapes::CrossShape;
+
 }
 

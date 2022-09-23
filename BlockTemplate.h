@@ -13,7 +13,11 @@
 
 
 
-
+enum BlockShapes
+{
+	BlockShape,
+	CrossShape
+};
 enum Faces
 {
 	Up, //+y
@@ -21,7 +25,9 @@ enum Faces
 	North,//+z
 	East,//+x
 	South,//-z
-	West//-x
+	West,//-x
+	ACross,
+	BCross
 };
 struct BlockTemplate
 {
@@ -33,6 +39,8 @@ struct BlockTemplate
 	bool Collidable;
 	std::string name;
 	BlockTypes drops;
+
+	BlockShapes Shape;
 
 };
 

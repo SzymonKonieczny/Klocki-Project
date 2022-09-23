@@ -64,8 +64,11 @@ void BiomeForest::GenerateFeatures(glm::vec3 pos)
 {
 	if(Util::GetInstance()->random(0,1000)<5)
 		GenerateTree(pos);
-	
+	else {
+		if ((Util::GetInstance()->random(0, 100) < 5))
+			chunkmenager->SetBlockInWorld(pos + glm::vec3(0, 1, 0), BlockTypes::Rose);
 
+	}
 
 
 }

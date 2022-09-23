@@ -13,7 +13,8 @@ enum BlockTypes
 	Water,
 	Air,
 	ShubiumCrystal,
-	Cactus
+	Cactus,
+	Rose
 };
 
 #endif // !BLOCKTYPES_H
