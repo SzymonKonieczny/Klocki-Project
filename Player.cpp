@@ -4,7 +4,7 @@
 /*glm::vec3(0.0f, 0.0, 0.0f),
 		glm::vec3(1.0f, 1.0f, 1.0f),
 		glm::vec2(0, 1)*/
-Player::Player(): Cam(Position), collider(glm::vec3(-0.25,-2,-0.25), glm::vec3(0.25, 0, 0.25))
+Player::Player(): Cam(Position), collider(glm::vec3(-0.25,-1.8,-0.25), glm::vec3(0.25, 0, 0.25))
 {
 	
 }
