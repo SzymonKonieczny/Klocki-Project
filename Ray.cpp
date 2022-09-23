@@ -2,7 +2,7 @@
 #include "World.h"
 RayInfo Ray::Cast(glm::vec3 Start, glm::vec3 Direction, World* world, float distance)
 {
-	//Direction = glm::normalize(Direction);
+	Direction = glm::normalize(Direction);
 	RayInfo info;
 	info.Miss = true;
 	info.HitFromPos = Start;//glm::floor(Start);
@@ -14,8 +14,8 @@ RayInfo Ray::Cast(glm::vec3 Start, glm::vec3 Direction, World* world, float dist
 		info.HitPos = info.HitFromPos + (Direction * 0.1f);
 		if (Collider::CheckPoint(info.HitPos,world))
 		{
-		//	info.HitPos = glm::floor(RayCastResult.HitPos + glm::vec3(0, 1));
-		//	info.HitFromPos = glm::floor(RayCastResult.HitFromPos + glm::vec3(0, 1));
+			//info.HitPos = glm::floor(info.HitPos + glm::vec3(1, 0,1));
+			//info.HitFromPos = glm::floor(info.HitFromPos + glm::vec3(1, 0,1));
 			info.HitPos = glm::floor(info.HitPos);
 			info.HitFromPos = glm::floor(info.HitFromPos);
 			info.Miss = false;
