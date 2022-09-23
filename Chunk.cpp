@@ -74,16 +74,16 @@ void Chunk::UpdateMesh()
 	std::shared_ptr<Chunk> ZMinusChunk;
 	std::shared_ptr<Chunk> ZPlusChunk;
 	auto temp = chunkMenager->GetChunkAt(ChunkPos + glm::vec2(-1, 0));
-	(temp != chunkMenager->ChunkMap.end()) ? XMinusChunk = temp : XMinusChunk = nullptr;
+	(temp != nullptr) ? XMinusChunk = temp : XMinusChunk = nullptr;
 
 	temp = chunkMenager->GetChunkAt(ChunkPos + glm::vec2(1, 0));
-	(temp != chunkMenager->ChunkMap.end()) ? XPlusChunk = temp : XPlusChunk = nullptr;
+	(temp != nullptr) ? XPlusChunk = temp : XPlusChunk = nullptr;
 
 	temp = chunkMenager->GetChunkAt(ChunkPos + glm::vec2(0, -1));
-	(temp != chunkMenager->ChunkMap.end()) ? ZMinusChunk = temp : ZMinusChunk = nullptr;
+	(temp != nullptr) ? ZMinusChunk = temp : ZMinusChunk = nullptr;
 
 	temp = chunkMenager->GetChunkAt(ChunkPos + glm::vec2(0, 1));
-	(temp != chunkMenager->ChunkMap.end()) ? ZPlusChunk = temp : ZPlusChunk = nullptr;
+	(temp != nullptr) ? ZPlusChunk = temp : ZPlusChunk = nullptr;
 
 	bool queuedXminus = false;
 	bool queuedXplus = false;
