@@ -54,8 +54,13 @@ bool Collider::CheckPoint(glm::vec3 OffsetPosition, World* world, bool Collidabl
 		Block* b = chunkptr->vec3ToBlock(Util::WorldPosToLocalPos(OffsetPosition));
 		chunkptr->UnlockBlockMutex();
 
-		if (b != nullptr && CollidableOnly && Util::GetInstance()->BLOCKS[b->ID].Collidable) return true;
-		else if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Selectable) return true;
+		if (b != nullptr)
+		{
+			if(CollidableOnly && Util::GetInstance()->BLOCKS[b->ID].Collidable) return true;
+			else if (!CollidableOnly && Util::GetInstance()->BLOCKS[b->ID].Selectable) return true;
+		}
+		//if (b != nullptr && CollidableOnly && Util::GetInstance()->BLOCKS[b->ID].Collidable) return true;
+		//else if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Selectable) return true;
 	}
 
 	return false;
