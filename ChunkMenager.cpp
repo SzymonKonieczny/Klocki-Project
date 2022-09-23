@@ -47,8 +47,8 @@ void ChunkMenager::HandleWorldLoadingPositionChangeBased(Player& player)
 		{
 			glm::vec2 NewChunkPos = (toGenerate + CurrentCenter) + glm::vec2(Dir.y * i, Dir.x * i);//swap is important here AND CORRECT
 
-			auto it = ChunkMap.find(NewChunkPos);
-			if (it == ChunkMap.end()) // if NOT in the world already
+			auto it = GetChunkAt(NewChunkPos);	//	ChunkMap.find(NewChunkPos);
+			if (it == nullptr) // if NOT in the world already
 			{
 				NewChunk(NewChunkPos);
 				//world->ChunkGenQueue.push(NewChunkPos);
@@ -59,11 +59,11 @@ void ChunkMenager::HandleWorldLoadingPositionChangeBased(Player& player)
 		for (int i = -RenderDelete ; i <= RenderDelete; i++)
 		{
 			glm::vec2 DeleteChunkPos = (toDelete + CurrentCenter) + glm::vec2(Dir.y * i, Dir.x * i);//swap is important here AND CORRECT
-			auto it = ChunkMap.find(DeleteChunkPos);
-			if (it != ChunkMap.end())
+			auto it = GetChunkAt(DeleteChunkPos); // ChunkMap.find(DeleteChunkPos);
+			if (it != nullptr)
 			{
-				ChunkMap.erase(DeleteChunkPos);
-
+				//ChunkMap.erase(DeleteChunkPos);
+				EraseChunkAt(DeleteChunkPos);
 			}
 		}
 
@@ -115,10 +115,14 @@ void ChunkMenager::SetBlockInWorld(glm::vec3 WorldPos, int ID)
 
 void ChunkMenager::SetBlockInWorld(glm::vec3 LocalPos, glm::vec2 ChunkPos, int ID)
 {
-	auto existingChunksIterator = ChunkMap.find(ChunkPos);
-	if (existingChunksIterator != ChunkMap.end())
+	//auto existingChunksIterator = ChunkMap.find(ChunkPos);
+	auto existingChunksIterator = GetChunkAt(ChunkPos);
+	if (existingChunksIterator != nullptr)
 	{
-		existingChunksIterator->second->setblock(LocalPos, ID);
+		//existingChunksIterator->second->setblock(LocalPos, ID);
+		existingChunksIterator->setblock(LocalPos, ID);
+
+
 		//std::cout << "Adding to an existing chunk" << std::endl;
 		//existingChunksIterator->second->UpdateMeshOnlyAddSingleBlock(Block(LocalPos, ID));
 	//	existingChunksIterator->second->UpdateMesh();
@@ -177,10 +181,12 @@ Block* ChunkMenager::GetBlockInWorld(glm::vec3 WorldPos )
 
 Block* ChunkMenager::GetBlockInWorld(glm::vec3 LocalPos, glm::vec2 ChunkPos)
 {
-	auto existingChunksIterator = ChunkMap.find(ChunkPos);
-	if (existingChunksIterator != ChunkMap.end())
+	//auto existingChunksIterator = ChunkMap.find(ChunkPos);
+	auto existingChunksIterator = GetChunkAt(ChunkPos);
+
+	if (existingChunksIterator != nullptr)
 	{
-		return existingChunksIterator->second->vec3ToBlock(LocalPos);
+		return existingChunksIterator->vec3ToBlock(LocalPos);
 
 	}
 }
@@ -188,7 +194,8 @@ Block* ChunkMenager::GetBlockInWorld(glm::vec3 LocalPos, glm::vec2 ChunkPos)
 void ChunkMenager::NewChunk(glm::vec2 ChunkPos)
 {
 
-
+	WorldMapMutex.lock();
 	ChunkMap.try_emplace(ChunkPos, std::make_shared<Chunk>(ChunkPos,this));
+	WorldMapMutex.unlock();
 
 }
