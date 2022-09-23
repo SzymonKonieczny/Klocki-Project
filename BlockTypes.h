@@ -17,7 +17,8 @@ enum BlockTypes
 	Rose,
 	Flower,
 	DeadBush,
-	Lavender
+	Lavender,
+	Cobble
 };
 
 #endif // !BLOCKTYPES_H

@@ -75,7 +75,7 @@ void Util::LoadBlocks()
 			glm::vec2 testingX = glm::vec2(texturedimention * k, texturedimention * k + texturedimention);
 			glm::vec2 testingY = glm::vec2(texturedimention * i, texturedimention * i + texturedimention);
 
-			BLOCKS.push_back(BlockTemplate({ testingX,testingY ,true,true , "Unnamed", BlockTypes::Air, BlockShapes::BlockShape }));
+			BLOCKS.push_back(BlockTemplate({ testingX,testingY ,true,true,true , "Unnamed", BlockTypes::Air, BlockShapes::BlockShape }));
 			loadedAmout++;
 			if (loadedAmout >= amoutOfBlocks) break;
 		}
@@ -89,6 +89,7 @@ void Util::LoadBlocks()
 	BLOCKS[BlockTypes::Lavender].Collidable = false;
 
 
+	BLOCKS[BlockTypes::Air].Solid = false;
 	BLOCKS[BlockTypes::Water].Solid = false;
 	BLOCKS[BlockTypes::Leaves].Solid = false;
 	BLOCKS[BlockTypes::Rose].Solid = false;

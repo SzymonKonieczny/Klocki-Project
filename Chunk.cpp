@@ -93,6 +93,7 @@ void Chunk::UpdateMesh()
 	for (int i =0; i < Blocks.size(); i++)
 	{
 		
+		if (Blocks[i].ID == BlockTypes::Air) continue;
 	//	glm::vec3 Pos((ChunkPos.x*ChunkSize) + Blocks[i].LocalPos.x, Blocks[i].LocalPos.y, (ChunkPos.y * ChunkSize) + Blocks[i].LocalPos.z);
 		bool meshXminus = true;
 		bool meshXplus = true;

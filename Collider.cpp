@@ -50,8 +50,10 @@ bool Collider::CheckPoint(glm::vec3 OffsetPosition, World* world)
 	auto chunkptr = world->chunkMenager.GetChunkAt(Util::WorldPosToChunkPos(OffsetPosition));
 	if (chunkptr != nullptr)
 	{
+		chunkptr->LockBlockMutex();
 		Block* b = chunkptr->vec3ToBlock(Util::WorldPosToLocalPos(OffsetPosition));
-		if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Collidable) return true;
+		chunkptr->UnlockBlockMutex();
+		if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Selectable) return true;
 
 	}
 

@@ -6,12 +6,16 @@
 #include "Mesh.h"
 #include "FaceBuilder.h"
 #include "Collider.h"
+#include "Ray.h"
 class World;
 class Player
 {
 	bool CheckCollisionSide(glm::vec3 Velocity);
+	RayInfo Rayinfo;
 	Collider collider;
 	Mesh* Compass;
+	Mesh* BlockSelect;
+	bool isBlockSelectMade = false;
 	float crntTime;
 	float F3Cooldown=0;
 	float RCooldown = 0;

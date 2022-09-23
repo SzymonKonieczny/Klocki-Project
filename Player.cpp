@@ -1,12 +1,12 @@
 #include "Player.h"
 #include "World.h"
-
+#include "Ray.h"
 /*glm::vec3(0.0f, 0.0, 0.0f),
 		glm::vec3(1.0f, 1.0f, 1.0f),
 		glm::vec2(0, 1)*/
 Player::Player(): Cam(Position), collider(glm::vec3(-0.25,-2,-0.25), glm::vec3(0.25, 0, 0.25))
 {
-
+	
 }
 bool Player::CheckCollisionSide(glm::vec3 dir)
 {
@@ -51,7 +51,16 @@ bool Player::HandleCollisions(glm::vec3& Velocity) // returns if the position co
 
 void Player::Update(float dt)
 {
-	
+	if (!isBlockSelectMade) { //very dirty, very temporary
+		BlockSelect = new Mesh();
+		FaceBuilder::BuildFace(*BlockSelect, Faces::Up, glm::vec3(0, 0, 0), BlockTypes::Cactus, BlockShapes::BlockShape);
+		isBlockSelectMade = true;
+		BlockSelect->verticiesSetReady();
+	}
+
+	Rayinfo = Ray::Cast(Position, LookingAtDir, world, 4);
+
+	if (!Rayinfo.Miss)BlockSelect->Draw(*UsedShader, Rayinfo.HitPos, true);
 	isOnGround = CheckCollisionSide(glm::vec3(0, -0.2, 0));
 
 	HandleInput(dt);
@@ -69,6 +78,7 @@ void Player::Update(float dt)
 	//Cam.Position.y += 2;
 	Cam.LookingAtDir = LookingAtDir;
 
+	
 	if (isCompassOn)
 	{
 		
@@ -243,6 +253,17 @@ void Player::HandleInput(float dt)
 		glfwSetCursorPos(Window::GetInstance()->window, (Window::GetInstance()->WinHeight / 2), (Window::GetInstance()->WinWidth / 2));
 		firstClick = false;
 		glfwSetInputMode(Window::GetInstance()->window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	}
+	else
+	{
+		if (!firstClick && glfwGetMouseButton(Window::GetInstance()->window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+		{
+			world->chunkMenager.SetBlockInWorld(Rayinfo.HitPos, BlockTypes::Air);
+		}
+		if (!firstClick && glfwGetMouseButton(Window::GetInstance()->window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
+		{
+			world->chunkMenager.SetBlockInWorld(Rayinfo.HitFromPos, BlockTypes::Cobble);
+		}
 	}
 
 

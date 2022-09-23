@@ -31,7 +31,7 @@ public:
 
 	Collider(glm::vec3 MinBounds_, glm::vec3 MaxBounds_);
 	bool checkCollision(glm::vec3 Position, World* world );
-	bool CheckPoint(glm::vec3 OffsetPosition, World* world);
+	static bool CheckPoint(glm::vec3 OffsetPosition, World* world);
 
 };
 
