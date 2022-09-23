@@ -14,7 +14,10 @@ enum BlockTypes
 	Air,
 	ShubiumCrystal,
 	Cactus,
-	Rose
+	Rose,
+	Flower,
+	DeadBush,
+	Lavender
 };
 
 #endif // !BLOCKTYPES_H

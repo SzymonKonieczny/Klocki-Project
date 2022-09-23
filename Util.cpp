@@ -84,10 +84,18 @@ void Util::LoadBlocks()
 	BLOCKS[BlockTypes::Air].Collidable = false;
 	BLOCKS[BlockTypes::Water].Collidable = false;
 	BLOCKS[BlockTypes::Rose].Collidable = false;
+	BLOCKS[BlockTypes::Flower].Collidable = false;
+	BLOCKS[BlockTypes::DeadBush].Collidable = false;
+	BLOCKS[BlockTypes::Lavender].Collidable = false;
+
 
 	BLOCKS[BlockTypes::Water].Solid = false;
 	BLOCKS[BlockTypes::Leaves].Solid = false;
 	BLOCKS[BlockTypes::Rose].Solid = false;
+	BLOCKS[BlockTypes::Flower].Solid = false;
+	BLOCKS[BlockTypes::DeadBush].Solid = false;
+	BLOCKS[BlockTypes::Lavender].Solid = false;
+
 
 
 	BLOCKS[BlockTypes::Grass].name = "Grass Block";
@@ -113,6 +121,9 @@ void Util::LoadBlocks()
 	BLOCKS[BlockTypes::Cactus].drops = BlockTypes::Air;
 
 	BLOCKS[BlockTypes::Rose].Shape = BlockShapes::CrossShape;
+	BLOCKS[BlockTypes::Flower].Shape = BlockShapes::CrossShape;
+	BLOCKS[BlockTypes::DeadBush].Shape = BlockShapes::CrossShape;
+	BLOCKS[BlockTypes::Lavender].Shape = BlockShapes::CrossShape;
 
 }
 

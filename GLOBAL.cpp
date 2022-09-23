@@ -8,7 +8,7 @@ int map_seed = 73425352;
 
 
 const float texturedimention = 0.2f;
-const int amoutOfBlocks = 12;  
+const int amoutOfBlocks = 15;  
 
     
 

@@ -65,8 +65,10 @@ void BiomeForest::GenerateFeatures(glm::vec3 pos)
 	if(Util::GetInstance()->random(0,1000)<5)
 		GenerateTree(pos);
 	else {
-		if ((Util::GetInstance()->random(0, 100) < 5))
+		if ((Util::GetInstance()->random(0, 100) < 2))
 			chunkmenager->SetBlockInWorld(pos + glm::vec3(0, 1, 0), BlockTypes::Rose);
+		else if ((Util::GetInstance()->random(0, 100) < 2))
+			chunkmenager->SetBlockInWorld(pos + glm::vec3(0, 1, 0), BlockTypes::Flower);
 
 	}
 
@@ -104,8 +106,14 @@ void BiomeDesert::GeneratePool(glm::vec3 WorldPos)
 void BiomeDesert::GenerateFeatures(glm::vec3 pos)
 {
 	if (Util::GetInstance()->random(0, 400) < 1)	GeneratePool(pos);
-	else if (Util::GetInstance()->random(0, 100) < 1)
-		GenerateCactus(pos);
+	else
+	{
+		if (Util::GetInstance()->random(0, 100) < 1)
+			GenerateCactus(pos);
+		else if (Util::GetInstance()->random(0, 100) < 1)
+			chunkmenager->SetBlockInWorld(pos + glm::vec3(0, 1, 0), BlockTypes::DeadBush);
+
+	}
 }
 
 BlockTypes BiomeMountain::GetBlockTypeAt(glm::vec3 pos, bool isSurfaceBlock)
@@ -120,4 +128,6 @@ BiomeMountain::BiomeMountain(ChunkMenager* _chunkmenager) : BaseBiome("HgANAAIAA
 
 void BiomeMountain::GenerateFeatures(glm::vec3 pos)
 {
+	if (Util::GetInstance()->random(0, 100) < 1)
+		chunkmenager->SetBlockInWorld(pos + glm::vec3(0, 1, 0), BlockTypes::Lavender);
 }
