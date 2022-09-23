@@ -4,14 +4,16 @@
 /*glm::vec3(0.0f, 0.0, 0.0f),
 		glm::vec3(1.0f, 1.0f, 1.0f),
 		glm::vec2(0, 1)*/
-Player::Player(): Cam(Position)
+Player::Player(): Cam(Position), collider(glm::vec3(-0.25,-2,-0.25), glm::vec3(0.25, 0, 0.25))
 {
 
 }
 bool Player::CheckCollisionSide(glm::vec3 dir)
 {
-	bool ret = false;
-	auto chunk = world->chunkMenager.ChunkMap.find(Util::WorldPosToChunkPos(Position + dir));
+	bool ret = collider.checkCollision(Position + dir,world);
+
+	// VVVVV POINT COLLISION VVVVV
+	/*auto chunk = world->chunkMenager.ChunkMap.find(Util::WorldPosToChunkPos(Position + dir));
 	if (chunk != world->chunkMenager.ChunkMap.end())
 	{	
 		if (!chunk->second->generated) return ret;
@@ -20,7 +22,7 @@ bool Player::CheckCollisionSide(glm::vec3 dir)
 		if (b != nullptr )
 			if(Util::GetInstance()->BLOCKS[b->ID].Collidable)	ret = true;
 
-	}
+	}*/
 
 	return ret;
 }
@@ -64,7 +66,7 @@ void Player::Update(float dt)
 
 	Cam.UpdateView(*UsedShader);
 	Cam.Position = Position;
-	Cam.Position.y += 2;
+	//Cam.Position.y += 2;
 	Cam.LookingAtDir = LookingAtDir;
 
 	if (isCompassOn)

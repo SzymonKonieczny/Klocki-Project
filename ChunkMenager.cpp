@@ -149,6 +149,11 @@ void ChunkMenager::SetBlockInWorld(glm::vec3 LocalPos, glm::vec2 ChunkPos, int I
 	}
 }
 
+std::shared_ptr<Chunk> ChunkMenager::GetChunkAt(glm::vec2 ChunkPos)
+{  
+	return ChunkMap.find(ChunkPos)->second;
+}
+
 Block* ChunkMenager::GetBlockInWorld(glm::vec3 WorldPos )
 {
 	glm::vec2 ChunkPos = Util::WorldPosToChunkPos(WorldPos);

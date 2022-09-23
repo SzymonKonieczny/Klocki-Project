@@ -30,6 +30,8 @@ public:
 	void SetBlockInWorld(glm::vec3 WorldPos, int ID);
 	void SetBlockInWorld(glm::vec3 LocalPos, glm::vec2 ChunkPos, int ID);
 
+	std::shared_ptr<Chunk> GetChunkAt(glm::vec2 ChunkPos);
+
 	Block* GetBlockInWorld(glm::vec3 WorldPos);
 	Block* GetBlockInWorld(glm::vec3 LocalPos, glm::vec2 ChunkPos);
 

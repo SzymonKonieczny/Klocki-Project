@@ -44,6 +44,7 @@ public:
 	std::queue<glm::vec2> ChunkGenQueue;
 
 
+
 	void NewChunk(glm::vec2 ChunkPos);
 	void GenChunksFromQueue(int amount);
 	void AddChunksToGen(glm::vec2 ChunkPos);

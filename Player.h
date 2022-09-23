@@ -5,11 +5,12 @@
 #include "Camera.h"
 #include "Mesh.h"
 #include "FaceBuilder.h"
+#include "Collider.h"
 class World;
 class Player
 {
 	bool CheckCollisionSide(glm::vec3 Velocity);
-
+	Collider collider;
 	Mesh* Compass;
 	float crntTime;
 	float F3Cooldown=0;
