@@ -73,17 +73,17 @@ void Chunk::UpdateMesh()
 	std::shared_ptr<Chunk> XPlusChunk;
 	std::shared_ptr<Chunk> ZMinusChunk;
 	std::shared_ptr<Chunk> ZPlusChunk;
-	auto temp = chunkMenager->ChunkMap.find(ChunkPos + glm::vec2(-1, 0));
-	(temp != chunkMenager->ChunkMap.end()) ? XMinusChunk = temp->second : XMinusChunk = nullptr;
+	auto temp = chunkMenager->GetChunkAt(ChunkPos + glm::vec2(-1, 0));
+	(temp != chunkMenager->ChunkMap.end()) ? XMinusChunk = temp : XMinusChunk = nullptr;
 
-	temp = chunkMenager->ChunkMap.find(ChunkPos + glm::vec2(1, 0));
-	(temp != chunkMenager->ChunkMap.end()) ? XPlusChunk = temp->second : XPlusChunk = nullptr;
+	temp = chunkMenager->GetChunkAt(ChunkPos + glm::vec2(1, 0));
+	(temp != chunkMenager->ChunkMap.end()) ? XPlusChunk = temp : XPlusChunk = nullptr;
 
-	temp = chunkMenager->ChunkMap.find(ChunkPos + glm::vec2(0, -1));
-	(temp != chunkMenager->ChunkMap.end()) ? ZMinusChunk = temp->second : ZMinusChunk = nullptr;
+	temp = chunkMenager->GetChunkAt(ChunkPos + glm::vec2(0, -1));
+	(temp != chunkMenager->ChunkMap.end()) ? ZMinusChunk = temp : ZMinusChunk = nullptr;
 
-	temp = chunkMenager->ChunkMap.find(ChunkPos + glm::vec2(0, 1));
-	(temp != chunkMenager->ChunkMap.end()) ? ZPlusChunk = temp->second : ZPlusChunk = nullptr;
+	temp = chunkMenager->GetChunkAt(ChunkPos + glm::vec2(0, 1));
+	(temp != chunkMenager->ChunkMap.end()) ? ZPlusChunk = temp : ZPlusChunk = nullptr;
 
 	bool queuedXminus = false;
 	bool queuedXplus = false;
