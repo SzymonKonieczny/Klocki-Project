@@ -33,7 +33,7 @@ public:
 	glm::vec3 velocity;
 	float drag = 0.2f;
 	glm::vec2 LastFrameChunkPos;
-	glm::vec3 Position = glm::vec3(100.0f, 70.0f, 100.0f);
+	glm::vec3 Position = glm::vec3(1000.0f, 70.0f, 1000.0f);
 
 	Camera Cam;
 
