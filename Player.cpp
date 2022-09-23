@@ -256,13 +256,17 @@ void Player::HandleInput(float dt)
 	}
 	else
 	{
-		if (!firstClick && glfwGetMouseButton(Window::GetInstance()->window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+		if (!firstClick && !Rayinfo.Miss && (crntTime - BLocksCooldown) > 0.2f && glfwGetMouseButton(Window::GetInstance()->window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
 		{
 			world->chunkMenager.SetBlockInWorld(Rayinfo.HitPos, BlockTypes::Air);
+			BLocksCooldown = glfwGetTime();
+
 		}
-		if (!firstClick && glfwGetMouseButton(Window::GetInstance()->window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
+		if (!firstClick && !Rayinfo.Miss && (crntTime - BLocksCooldown) > 0.2f && glfwGetMouseButton(Window::GetInstance()->window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
 		{
 			world->chunkMenager.SetBlockInWorld(Rayinfo.HitFromPos, BlockTypes::Cobble);
+			BLocksCooldown = glfwGetTime();
+
 		}
 	}
 
