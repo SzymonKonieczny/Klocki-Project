@@ -11,7 +11,6 @@
 
 #include "World.h" //has all the includes, idgaf 
 
-
 class Game {
 public:
 	Shader* shaderProgram;
@@ -19,7 +18,6 @@ public:
 	Texture* PlayerTxt;
 	Player player;
 	World world;
-
 		Game();
 		void ShaderAndTextureStuff();
 		static void framebuffer_size_callback(GLFWwindow* window, int width, int height);

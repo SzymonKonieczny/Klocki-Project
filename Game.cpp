@@ -187,10 +187,14 @@ void Game::ShaderAndTextureStuff()
 	 TextureAtlas = new Texture("textures/textureatlas.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 	 PlayerTxt = new Texture("textures/Player.png", GL_TEXTURE_2D, GL_TEXTURE1, GL_RGBA, GL_UNSIGNED_BYTE);
 
+	world.renderer.ChunkShader = shaderProgram;
+
 	TextureAtlas->texUnit(*shaderProgram, "tex0", 0);
 	PlayerTxt->texUnit(*shaderProgram, "tex0", 1);
-	
-	TextureAtlas->Bind();
+
+
+	world.renderer.TextureAtlas = TextureAtlas;
+	//TextureAtlas->Bind();
 
 	player.SetShader(shaderProgram);
 	player.Cam.GetUniformLocations(*shaderProgram);

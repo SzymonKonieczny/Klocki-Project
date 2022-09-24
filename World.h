@@ -26,6 +26,7 @@
 #include <thread>
 #include "CustomTerrainGenerator.h"
 #include "FlatTerrainGenerator.h"
+#include "Renderer.h"
 
 class World
 {
@@ -34,6 +35,8 @@ class World
 	std::queue<glm::vec2> ChunkMeshAddQueue;
 	std::unordered_set<glm::vec2> ChunkMeshQMembers;
 public:
+	Renderer renderer;
+
 	//void AsyncMesh(std::vector< std::unordered_map<glm::vec2, Chunk>::iterator> vec);
 	bool wasShaderSet=false;
 	void SetShader(Shader* prog);
