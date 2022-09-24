@@ -62,12 +62,15 @@ void Chunk::UpdateMesh()
 	
 	meshed = false;
 	Solidmesh.verticiesSetNotReady();
+	Translucentmesh.verticiesSetNotReady();
+
 
 	VertexMutex.lock();
 	BlocksMutex.lock();
 	std::cout << "Meshing chunk Pos:" << ChunkPos.x << ' ' << ChunkPos.y << std::endl;
 
 	Solidmesh.ClearVerticies();
+	Translucentmesh.ClearVerticies();
 
 	std::shared_ptr<Chunk> XMinusChunk;
 	std::shared_ptr<Chunk> XPlusChunk;
@@ -233,7 +236,8 @@ void Chunk::UpdateMesh()
 	VertexMutex.unlock();
 	meshed = true;
 	Solidmesh.verticiesSetReady();
-		
+	Translucentmesh.verticiesSetReady();
+
 
 			// causes a cascade of remeshes
 	//if (queuedXminus)chunkMenager->world->AddChunksMeshToUpdate(XMinusChunk->ChunkPos);
@@ -289,7 +293,7 @@ void Chunk::DrawTranslucent(Shader& shader)
 	{
 		if (VertexMutex.try_lock())
 		{
-			Solidmesh.Draw(shader, glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize), true);
+			Translucentmesh.Draw(shader, glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize), true);
 			VertexMutex.unlock();
 		}
 

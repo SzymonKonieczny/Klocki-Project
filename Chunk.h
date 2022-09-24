@@ -27,6 +27,8 @@ class ChunkMenager;
 class Chunk
 {
 	std::mutex VertexMutex;
+
+
 	std::vector<Block> Blocks{1000}; //Vector of block IDs that make up teh chunk
 	std::mutex BlocksMutex;
 public:
