@@ -11,9 +11,14 @@ void Renderer::DrawChunks()
 	TextureAtlas->Bind();
 	for (auto it : ChunkSet)
 	{
-		it->Draw(*ChunkShader);
+		it->DrawSolid(*ChunkShader);
 	}
-	ChunkSet.clear();
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	for (auto it : ChunkSet)
+	{
+		it->DrawTranslucent(*TransparentBlockShader);
+	}
+	ChunkSet.clear();
+
 }

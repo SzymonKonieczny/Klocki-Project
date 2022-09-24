@@ -36,7 +36,9 @@ public:
 	ChunkMenager* chunkMenager;
 
 	glm::vec2 ChunkPos; // ChunkPos.y = Z coordinate in the world
-	ChunkMesh mesh;
+	ChunkMesh Solidmesh;
+	ChunkMesh Translucentmesh;
+
 	std::unordered_map<glm::vec3, int> block_map;
 
 	int column_heights[16][16];
@@ -50,7 +52,9 @@ public:
 	void UpdateMesh(); //clear the mesh, and rebuild
 	bool CheckIfSolidBlock(glm::vec3 Pos);
 	void UpdateMeshOnlyAdd(std::vector<Block>& BlocksToAdd); //only add to the existing mesh
-	void Draw(Shader& shader);
+	void DrawSolid(Shader& shader);
+	void DrawTranslucent(Shader& shader);
+
 	bool setblock(glm::vec3 LocPos, int ID);
 	void deleteblock(glm::vec3 LocPos);
 	void setWorldBlock(glm::vec3 LocPos);

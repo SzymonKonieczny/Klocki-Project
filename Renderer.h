@@ -8,6 +8,7 @@ class Renderer
 public :
 	Shader* ChunkShader;
 	Shader* EntityShader;
+	Shader* TransparentBlockShader;
 
 	Texture* TextureAtlas;
 

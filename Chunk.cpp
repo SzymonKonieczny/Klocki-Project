@@ -61,13 +61,13 @@ void Chunk::UpdateMesh()
 {
 	
 	meshed = false;
-	mesh.verticiesSetNotReady();
+	Solidmesh.verticiesSetNotReady();
 
 	VertexMutex.lock();
 	BlocksMutex.lock();
 	std::cout << "Meshing chunk Pos:" << ChunkPos.x << ' ' << ChunkPos.y << std::endl;
 
-	mesh.ClearVerticies();
+	Solidmesh.ClearVerticies();
 
 	std::shared_ptr<Chunk> XMinusChunk;
 	std::shared_ptr<Chunk> XPlusChunk;
@@ -94,6 +94,31 @@ void Chunk::UpdateMesh()
 	{
 		
 		if (Blocks[i].ID == BlockTypes::Air) continue;
+		Block* neighbour;
+		Mesh* MeshForThisBlock;
+		switch (Util::GetInstance()->BLOCKS[Blocks[i].ID].RenderMethod)
+		{
+		case BlockRenderMethod::Solid:
+			MeshForThisBlock = &Solidmesh;
+			break;
+		case BlockRenderMethod::Translucent:
+			MeshForThisBlock = &Translucentmesh;
+
+			break;
+		default:
+			MeshForThisBlock = &Solidmesh;
+
+			break;
+		}
+		if (Blocks[i].ID == BlockTypes::Water)
+		{
+			neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 1.0f, 0.0f));
+
+			if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid)
+				FaceBuilder::BuildFace(*MeshForThisBlock, Faces::Up, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
+
+		}
+
 	//	glm::vec3 Pos((ChunkPos.x*ChunkSize) + Blocks[i].LocalPos.x, Blocks[i].LocalPos.y, (ChunkPos.y * ChunkSize) + Blocks[i].LocalPos.z);
 		bool meshXminus = true;
 		bool meshXplus = true;
@@ -161,36 +186,38 @@ void Chunk::UpdateMesh()
 				}
 			}
 		}
-		Block* neighbour;
+		
+
+
 		switch (Util::GetInstance()->BLOCKS[Blocks[i].ID].Shape)
 		{
 		case BlockShape:
 				neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 1.0f, 0.0f));
 
 				if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid)
-					FaceBuilder::BuildFace(mesh, Faces::Up, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
+					FaceBuilder::BuildFace(*MeshForThisBlock, Faces::Up, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
 				neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, -1.0f, 0.0f));
-				if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::Down, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
+				if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(*MeshForThisBlock, Faces::Down, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
 
 
 				neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 0.0f, 1.0f));
-				if (meshZplus)if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::North, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
+				if (meshZplus)if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(*MeshForThisBlock, Faces::North, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
 
 				neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 0.0f, -1.0f));
-				if (meshZminus) if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::South, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
+				if (meshZminus) if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(*MeshForThisBlock, Faces::South, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
 
 
 				neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(-1.0f, 0.0f, 0.0f));
-				if (meshXminus) if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::West, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
+				if (meshXminus) if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(*MeshForThisBlock, Faces::West, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
 
 
 				neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(1.0f, 0.0f, 0.0f));
-				if (meshXplus) if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(mesh, Faces::East, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
+				if (meshXplus) if (neighbour == nullptr || !Util::GetInstance()->BLOCKS[neighbour->ID].Solid) FaceBuilder::BuildFace(*MeshForThisBlock, Faces::East, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
 		break;
 		
 		case CrossShape:
-			FaceBuilder::BuildFace(mesh, Faces::ACross, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::CrossShape);
-			FaceBuilder::BuildFace(mesh, Faces::BCross, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::CrossShape);
+			FaceBuilder::BuildFace(Solidmesh, Faces::ACross, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::CrossShape);
+			FaceBuilder::BuildFace(Solidmesh, Faces::BCross, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::CrossShape);
 
 		break;
 
@@ -205,7 +232,7 @@ void Chunk::UpdateMesh()
 
 	VertexMutex.unlock();
 	meshed = true;
-	mesh.verticiesSetReady();
+	Solidmesh.verticiesSetReady();
 		
 
 			// causes a cascade of remeshes
@@ -242,13 +269,13 @@ bool Chunk::CheckIfSolidBlock(glm::vec3 Pos)
 
 
 
-void Chunk::Draw(Shader& shader)
+void Chunk::DrawSolid(Shader& shader)
 {
 	if (meshed)
 	{
 		if (VertexMutex.try_lock())
 		{
-		mesh.Draw(shader, glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),true);
+		Solidmesh.Draw(shader, glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize),true);
 		VertexMutex.unlock();	
 		}
 
@@ -256,7 +283,19 @@ void Chunk::Draw(Shader& shader)
 
 }
 
-	
+void Chunk::DrawTranslucent(Shader& shader)
+{
+	if (meshed)
+	{
+		if (VertexMutex.try_lock())
+		{
+			Solidmesh.Draw(shader, glm::vec3(ChunkPos.x * ChunkSize, 0, ChunkPos.y * ChunkSize), true);
+			VertexMutex.unlock();
+		}
+
+	}
+
+}
 
 bool Chunk::setblock(glm::vec3 LocPos, int ID)
 {// returns true if the placement was succesful

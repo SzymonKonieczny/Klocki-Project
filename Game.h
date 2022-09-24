@@ -14,6 +14,7 @@
 class Game {
 public:
 	Shader* shaderProgram;
+	Shader* TranslucentShader;
 	Texture* TextureAtlas;
 	Texture* PlayerTxt;
 	Player player;

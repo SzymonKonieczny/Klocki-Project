@@ -11,7 +11,11 @@
 #include "VBO.h" //For Vertex struct
 
 
+enum BlockRenderMethod {
+	Solid,
+	Translucent
 
+};
 
 enum BlockShapes
 {
@@ -42,7 +46,7 @@ struct BlockTemplate
 	BlockTypes drops;
 
 	BlockShapes Shape;
-
+	BlockRenderMethod RenderMethod;
 };
 
 #endif // !BLOCK_TEMPLATE_H

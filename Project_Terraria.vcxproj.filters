@@ -223,6 +223,7 @@
     <None Include="ChunkShader.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="TransparentBlock.frag" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\grass.png">

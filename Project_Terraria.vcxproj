@@ -230,6 +230,7 @@
     <CopyFileToFolders Include="Libraries\FastNoiseD.dll">
       <FileType>Document</FileType>
     </CopyFileToFolders>
+    <None Include="TransparentBlock.frag" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\grass.png" />
