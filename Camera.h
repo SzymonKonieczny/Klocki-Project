@@ -17,7 +17,11 @@ class Camera
 		
 	int projLoc;
 
+	int TranslucentmodelLoc;
 
+	int TranslucentviewLoc;
+
+	int TranslucentprojLoc;
 
 public:
 	glm::mat4 model = glm::mat4(1.0);
@@ -28,9 +32,14 @@ public:
 	glm::vec3 Position;
 	glm::vec3 LookingAtDir = glm::vec3(0.0f, 0.0f, -1.0f);
 	Camera(glm::vec3 position);
-	void UpdateView(Shader& shaderProgram);
+	void UpdateView();
 
 	void GetUniformLocations(Shader& shaderProgram);
+
+	void UpdateUniformsTransparent();
+
+	void GetUniformLocationsForTransparent(Shader& shaderProgram);
+
 
 	int GetModelUniformLocation();
 

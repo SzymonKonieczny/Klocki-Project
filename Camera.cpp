@@ -4,7 +4,7 @@ Camera::Camera(glm::vec3 position) {
 
 
 }
-void Camera::UpdateView(Shader& shaderProgram)
+void Camera::UpdateView()
 {
 	view = glm::lookAt(Position, Position + LookingAtDir, glm::vec3(0.0f, 1.0f, 0.0f));
 	
@@ -14,7 +14,7 @@ void Camera::UpdateView(Shader& shaderProgram)
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
-
+	UpdateUniformsTransparent();
 }
 void Camera::GetUniformLocations(Shader & shaderProgram)
 {
@@ -24,6 +24,25 @@ void Camera::GetUniformLocations(Shader & shaderProgram)
 	 viewLoc = glGetUniformLocation(shaderProgram.ID, "view");
 	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 	 projLoc = glGetUniformLocation(shaderProgram.ID, "projection");
+	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
+	std::cout << "proj : " << projLoc << "view: " << viewLoc << "model: " << modelLoc << std::endl;
+
+}
+void Camera::UpdateUniformsTransparent()
+{
+	glUniformMatrix4fv(TranslucentmodelLoc, 1, GL_FALSE, glm::value_ptr(model));
+	glUniformMatrix4fv(TranslucentviewLoc, 1, GL_FALSE, glm::value_ptr(view));
+	glUniformMatrix4fv(TranslucentprojLoc, 1, GL_FALSE, glm::value_ptr(proj));
+
+}
+void Camera::GetUniformLocationsForTransparent(Shader& shaderProgram)
+{
+	shaderProgram.Activate();
+	TranslucentmodelLoc = glGetUniformLocation(shaderProgram.ID, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+	TranslucentviewLoc = glGetUniformLocation(shaderProgram.ID, "view");
+	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+	TranslucentprojLoc = glGetUniformLocation(shaderProgram.ID, "projection");
 	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
 	std::cout << "proj : " << projLoc << "view: " << viewLoc << "model: " << modelLoc << std::endl;
 

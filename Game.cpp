@@ -203,5 +203,8 @@ void Game::ShaderAndTextureStuff()
 
 	player.SetShader(shaderProgram);
 	player.Cam.GetUniformLocations(*shaderProgram);
-	player.Cam.UpdateView(*shaderProgram);
+	player.Cam.GetUniformLocationsForTransparent(*TranslucentShader);
+
+	player.Cam.UpdateView();
+	player.Cam.UpdateUniformsTransparent();
 }
