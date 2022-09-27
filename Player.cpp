@@ -74,7 +74,7 @@ void Player::Update(float dt)
 	if (noClip) velocity.y *= drag * dt;
 
 	Cam.UpdateView();
-	Cam.UpdateUniformsTransparent();
+	//Cam.UpdateUniformsTransparent();
 
 	Cam.Position = Position;
 	//Cam.Position.y += 2;

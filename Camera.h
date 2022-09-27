@@ -29,6 +29,7 @@ public:
 	glm::mat4 proj = glm::mat4(1.0);
 	
 
+
 	glm::vec3 Position;
 	glm::vec3 LookingAtDir = glm::vec3(0.0f, 0.0f, -1.0f);
 	Camera(glm::vec3 position);

@@ -173,7 +173,7 @@ void World::IdkWhatToCallThatForNow(Player& player, float dt)
 		if (glm::distance(Util::WorldPosToChunkPos(player.Position), it->first) < RenderDistance)
 			renderer.AddToSet(it->second);
 	}
-	renderer.DrawChunks();
+	renderer.DrawChunks(&player.Cam);
 	GenChunksFromQueue(3);
 	MeshUpdateFromQueue(3);
 

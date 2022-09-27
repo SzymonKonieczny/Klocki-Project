@@ -53,7 +53,7 @@ Mesh::~Mesh()
 void Mesh::Draw(Shader& shader, glm::vec3 Position, bool UseModelMatrix)  {
 
 
-	shader.Activate();
+	//shader.Activate(); UNUSED. CAN DELETE
 
 
 	if (mingledWith && verticiesReady)
