@@ -16,6 +16,8 @@ public:
 	Shader* shaderProgram;
 	Shader* TranslucentShader;
 	Texture* TextureAtlas;
+	Texture* TextureAtlasTransparent;
+
 	Texture* PlayerTxt;
 	Player player;
 	World world;

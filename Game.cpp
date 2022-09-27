@@ -187,13 +187,15 @@ void Game::ShaderAndTextureStuff()
 	TranslucentShader = new Shader("ChunkShader.vert", "TransparentBlock.frag");
 
 	 TextureAtlas = new Texture("textures/textureatlas.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	 TextureAtlasTransparent = new Texture("textures/textureatlas.png", GL_TEXTURE_2D, GL_TEXTURE2, GL_RGBA, GL_UNSIGNED_BYTE);
+
 	 PlayerTxt = new Texture("textures/Player.png", GL_TEXTURE_2D, GL_TEXTURE1, GL_RGBA, GL_UNSIGNED_BYTE);
 
 	world.renderer.ChunkShader = shaderProgram;
 	world.renderer.TransparentBlockShader = TranslucentShader;
 
 	TextureAtlas->texUnit(*shaderProgram, "tex0", 0);
-	TextureAtlas->texUnit(*TranslucentShader, "tex0", 0);
+	TextureAtlasTransparent->texUnit(*TranslucentShader, "tex0", 0);
 
 	PlayerTxt->texUnit(*shaderProgram, "tex0", 1);
 
