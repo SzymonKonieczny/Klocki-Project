@@ -77,7 +77,7 @@ void World::GenChunksFromQueue(int amount)
 	for (int i = 0; i < amount; i++)
 	{
 		if (ChunkGenQueue.empty()) {
-			std::cout << "Generating Q empty, last batch ready \n";
+			//std::cout << "Generating Q empty, last batch ready \n";
 			return;
 		}
 		glm::vec2 GenChunkOnPos = ChunkGenQueue.front();
