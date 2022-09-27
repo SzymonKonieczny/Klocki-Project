@@ -48,7 +48,7 @@ bool Collider::checkCollision(glm::vec3 Position, World* world)
 bool Collider::CheckPoint(glm::vec3 OffsetPosition, World* world, bool CollidableOnly)
 {
 	auto chunkptr = world->chunkMenager.GetChunkAt(Util::WorldPosToChunkPos(OffsetPosition));
-	if (chunkptr != nullptr)
+	if (chunkptr != nullptr && chunkptr->generated)
 	{
 		chunkptr->LockBlockMutex();
 		Block* b = chunkptr->vec3ToBlock(Util::WorldPosToLocalPos(OffsetPosition));

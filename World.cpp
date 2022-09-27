@@ -66,15 +66,20 @@ void World::NewChunk(glm::vec2 ChunkPos)
 
 void World::GenChunksFromQueue(int amount)
 {
-
+	static glm::vec2 LastChunkPos = glm::vec2(69,6999);
 	if (!LastGenMeshBatchReady)
 	{
+		std::cout << "Stil Generating : "<<LastChunkPos.x << ' '<<LastChunkPos.y<<" last batch NOT ready \n";
+
 		return;
 	}
 	std::shared_ptr < std::vector< std::shared_ptr<Chunk>>> GenChunkOnPosVec = std::make_shared< std::vector< std::shared_ptr<Chunk>>>();
 	for (int i = 0; i < amount; i++)
 	{
-		if (ChunkGenQueue.empty()) return;
+		if (ChunkGenQueue.empty()) {
+			std::cout << "Generating Q empty, last batch ready \n";
+			return;
+		}
 		glm::vec2 GenChunkOnPos = ChunkGenQueue.front();
 		
 		ChunkGenQueue.pop();
@@ -87,6 +92,7 @@ void World::GenChunksFromQueue(int amount)
 			
 			std::shared_ptr<Chunk> s= it->second;
 			GenChunkOnPosVec->push_back(s);
+			LastChunkPos = it->second->ChunkPos;
 			//GenChunkOnPosVec->push_back(it->second);
 		}
 
@@ -108,17 +114,23 @@ void World::AddChunksToGen(glm::vec2 ChunkPos)
 
 void World::MeshUpdateFromQueue(int amount)
 {
+	static glm::vec2 LastChunkPos = glm::vec2(69,6999);
 	if (!LastMeshBatchReady)
 	{
-	//	std::cout << "Meshing Q empty" << std::endl;
-		return;
+		std::cout << "Meshing :  last batch NOT ready \n";
+		std::cout << "Stil Meshing : " << LastChunkPos.x << ' ' << LastChunkPos.y << " last batch NOT ready \n";
 
+		return;
 	}
 	std::shared_ptr < std::vector< std::shared_ptr<Chunk>>> UpdateChunkMeshOnPosVec = std::make_shared< std::vector< std::shared_ptr<Chunk>>>();
 	for (int i = 0; i < amount; i++)
 	{
 
-		if (ChunkMeshAddQueue.empty()) continue;
+		if (ChunkMeshAddQueue.empty()) {
+
+			std::cout << "Meshing Q empty, last batch ready \n";
+			continue;
+		}
 		glm::vec2 GenChunkOnPos = ChunkMeshAddQueue.front();
 
 		ChunkMeshAddQueue.pop();
@@ -133,6 +145,7 @@ void World::MeshUpdateFromQueue(int amount)
 
 			std::shared_ptr<Chunk> s = it->second;
 			UpdateChunkMeshOnPosVec->push_back(s);
+			LastChunkPos = s->ChunkPos;
 			//GenChunkOnPosVec->push_back(it->second);
 		}
 
@@ -174,7 +187,7 @@ void World::IdkWhatToCallThatForNow(Player& player, float dt)
 			renderer.AddToSet(it->second);
 	}
 	renderer.DrawChunks(&player.Cam);
-	GenChunksFromQueue(3);
-	MeshUpdateFromQueue(3);
+	GenChunksFromQueue(1);
+	MeshUpdateFromQueue(1);
 
 }
