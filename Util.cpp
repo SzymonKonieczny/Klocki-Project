@@ -93,7 +93,7 @@ void Util::LoadBlocks()
 
 
 	BLOCKS[BlockTypes::Air].Solid = false;
-	BLOCKS[BlockTypes::Water].Solid = false;
+//	BLOCKS[BlockTypes::Water].Solid = false;
 	BLOCKS[BlockTypes::Leaves].Solid = false;
 	BLOCKS[BlockTypes::Rose].Solid = false;
 	BLOCKS[BlockTypes::Flower].Solid = false;

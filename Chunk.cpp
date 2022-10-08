@@ -113,14 +113,14 @@ void Chunk::UpdateMesh()
 
 			break;
 		}
-		if (Blocks[i].ID == BlockTypes::Water)
+	/*	if (Blocks[i].ID == BlockTypes::Water)
 		{
 			neighbour = vec3ToBlock(Blocks[i].LocalPos + glm::vec3(0.0f, 1.0f, 0.0f));
 
 			if (neighbour == nullptr || neighbour->ID != BlockTypes::Water)
 				FaceBuilder::BuildFace(*MeshForThisBlock, Faces::Up, Blocks[i].LocalPos, (BlockTypes)Blocks[i].ID, BlockShapes::BlockShape);
 
-		}
+		}*/
 
 	//	glm::vec3 Pos((ChunkPos.x*ChunkSize) + Blocks[i].LocalPos.x, Blocks[i].LocalPos.y, (ChunkPos.y * ChunkSize) + Blocks[i].LocalPos.z);
 		bool meshXminus = true;

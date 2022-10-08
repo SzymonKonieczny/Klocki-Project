@@ -52,7 +52,7 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 			
 				break;
 			case BIOMES::Mountain:
-				column_height = ((noiseOutputMountain[index++] + 1)* 70 / 2)  +70;
+				column_height = ((noiseOutputMountain[index++] + 1)* 70 / 2)  +20;
 
 				break;
 			default:
