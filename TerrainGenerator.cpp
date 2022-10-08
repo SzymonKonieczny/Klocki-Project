@@ -3,7 +3,7 @@
 void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 {
 
-	//chunkptr->LockBlockMutex(); SetBlock locks it anyways
+	
 
 	//std::cout << "Generating chunk Pos:" << chunkptr->ChunkPos.x << ' ' << chunkptr->ChunkPos.y << std::endl;
 	
@@ -136,8 +136,10 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 
 		}
 	}
-	//chunkptr->UnlockBlockMutex();
-
+	
+	//std::cout << "Amount of uses of the mutex " << chunkptr->Amount_of_Blockmutex_Uses << '\n';
+	if(chunkptr->Amount_of_Blockmutex_Uses< 9999)std::cout << "Amount of uses of the mutex " << chunkptr->Amount_of_Blockmutex_Uses << '\n';
+	else std::cout << "BIG Amount of uses of the mutex " << chunkptr->Amount_of_Blockmutex_Uses << " At chunk : " << chunkptr->ChunkPos.x << ' ' << chunkptr->ChunkPos.y << std::endl;;
 	chunkptr->UpdateBlocksFromBlockQueueMap(true);
 
 }

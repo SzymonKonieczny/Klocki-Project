@@ -66,7 +66,8 @@ void Chunk::UpdateMesh()
 
 
 	VertexMutex.lock();
-	BlocksMutex.lock();
+	LockBlockMutex("Chunk locking blockmutex");
+
 	std::cout << "Meshing chunk Pos:" << ChunkPos.x << ' ' << ChunkPos.y << std::endl;
 
 	Solidmesh.ClearVerticies();
@@ -132,9 +133,9 @@ void Chunk::UpdateMesh()
 		{
 			if (XPlusChunk != nullptr && XPlusChunk->generated)
 			{
-				XPlusChunk->LockBlockMutex();
+				XPlusChunk->LockBlockMutex("Chunk locking blockmutex");
 				Block* b = XPlusChunk->vec3ToBlock(glm::vec3(0, Blocks[i].LocalPos.y, Blocks[i].LocalPos.z));
-				XPlusChunk->UnlockBlockMutex();
+				XPlusChunk->UnlockBlockMutex("Chunk unlockinig blockmutex");
 				if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Solid)
 				{
 					queuedXplus = true;
@@ -147,9 +148,9 @@ void Chunk::UpdateMesh()
 		{
 			if (XMinusChunk!= nullptr && XMinusChunk->generated)
 			{
-				XMinusChunk->LockBlockMutex();
+				XMinusChunk->LockBlockMutex("Chunk locking blockmutex");
 				Block* b = XMinusChunk->vec3ToBlock(glm::vec3(15, Blocks[i].LocalPos.y, Blocks[i].LocalPos.z));
-				XMinusChunk->UnlockBlockMutex();
+				XMinusChunk->UnlockBlockMutex("Chunk unlocking blockmutex");
 
 				if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Solid)
 				{	
@@ -164,9 +165,9 @@ void Chunk::UpdateMesh()
 		{
 			if (ZPlusChunk != nullptr && ZPlusChunk->generated)
 			{
-				ZPlusChunk->LockBlockMutex();
+				ZPlusChunk->LockBlockMutex("Chunk  locking blockmutex");
 				Block* b = ZPlusChunk->vec3ToBlock(glm::vec3(Blocks[i].LocalPos.x, Blocks[i].LocalPos.y, 0));
-				ZPlusChunk->UnlockBlockMutex();
+				ZPlusChunk->UnlockBlockMutex("Chunk unlocking blockmutex");
 			  	if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Solid) 
 				{
 					queuedZplus = true;
@@ -179,9 +180,9 @@ void Chunk::UpdateMesh()
 		{
 			if (ZMinusChunk != nullptr && ZMinusChunk->generated)
 			{
-				ZMinusChunk->LockBlockMutex();
+				ZMinusChunk->LockBlockMutex("Chunk  locking blockmutex");
 				Block* b = ZMinusChunk->vec3ToBlock(glm::vec3(Blocks[i].LocalPos.x, Blocks[i].LocalPos.y, 15));
-				ZMinusChunk->UnlockBlockMutex();
+				ZMinusChunk->UnlockBlockMutex("Chunk unlocking blockmutex");
 			 	if (b != nullptr && Util::GetInstance()->BLOCKS[b->ID].Solid)
 				{
 					queuedZminus = true;
@@ -230,8 +231,8 @@ void Chunk::UpdateMesh()
 
 
 	}
+	UnlockBlockMutex("Chunk unlocking blockmutex");
 	
-	BlocksMutex.unlock();
 
 	VertexMutex.unlock();
 	meshed = true;
@@ -322,7 +323,7 @@ bool Chunk::setblock(glm::vec3 LocPos, int ID)
 			return false;
 			
 		}
-		LockBlockMutex();
+		LockBlockMutex("Chunk  locking blockmutex");
 		LocPos = glm::floor(LocPos);
 		if (block_map.find(glm::vec3(LocPos.x, LocPos.y, LocPos.z)) != block_map.end())
 		{
@@ -336,7 +337,7 @@ bool Chunk::setblock(glm::vec3 LocPos, int ID)
 
 		}
 
-		UnlockBlockMutex();
+		UnlockBlockMutex("Chunk unlocking blockmutex");
 
 	return true;
 }
@@ -458,11 +459,14 @@ Chunk::~Chunk()
 	
 }
 
-void Chunk::LockBlockMutex()
+void Chunk::LockBlockMutex(std::string debugMessage)
 {
+	//if(!generated) std::cout << debugMessage << +'\n';
+	Amount_of_Blockmutex_Uses++;
 	BlocksMutex.lock();
 }
-void Chunk::UnlockBlockMutex()
+void Chunk::UnlockBlockMutex(std::string debugMessage)
 {
+	//if (!generated) std::cout << debugMessage << +'\n';
 	BlocksMutex.unlock();
 }

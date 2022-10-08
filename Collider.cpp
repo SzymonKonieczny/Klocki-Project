@@ -50,9 +50,9 @@ bool Collider::CheckPoint(glm::vec3 OffsetPosition, World* world, bool Collidabl
 	auto chunkptr = world->chunkMenager.GetChunkAt(Util::WorldPosToChunkPos(OffsetPosition));
 	if (chunkptr != nullptr && chunkptr->generated)
 	{
-		chunkptr->LockBlockMutex();
+		chunkptr->LockBlockMutex("Chunk unlocking blockmutex");
 		Block* b = chunkptr->vec3ToBlock(Util::WorldPosToLocalPos(OffsetPosition));
-		chunkptr->UnlockBlockMutex();
+		chunkptr->UnlockBlockMutex("Chunk  locking blockmutex");
 
 		if (b != nullptr)
 		{

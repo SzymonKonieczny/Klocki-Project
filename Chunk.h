@@ -28,10 +28,10 @@ class Chunk
 {
 	std::mutex VertexMutex;
 
-
 	std::vector<Block> Blocks{1000}; //Vector of block IDs that make up teh chunk
 	std::mutex BlocksMutex;
 public:
+	int Amount_of_Blockmutex_Uses;
 
 	bool generated = false;
 	bool meshed = false;
@@ -65,8 +65,8 @@ public:
 	bool isPositionViable(glm::vec3 LocPos);
 	void UpdateBlocksFromBlockQueueMap(bool JustNewBlocks);
 	Block* vec3ToBlock(glm::vec3 LocPos);
-	void LockBlockMutex();
-	void UnlockBlockMutex();
+	void LockBlockMutex(std::string debugMessage);
+	void UnlockBlockMutex(std::string debugMessage);
 
 
 	~Chunk();
