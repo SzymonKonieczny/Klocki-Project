@@ -152,7 +152,7 @@ void World::MeshUpdateFromQueue(int amount)
 	}
 	if (UpdateChunkMeshOnPosVec->empty()) return;
 	MeshThread=std::make_unique< std::thread>(AsyncMeshOnly, UpdateChunkMeshOnPosVec, std::ref(LastMeshBatchReady));
-	MeshThread->join();
+	MeshThread->detach();
 }
 
 void World::AddChunksMeshToUpdate(glm::vec2 ChunkPos)
@@ -182,7 +182,7 @@ void World::IdkWhatToCallThatForNow(Player& player, float dt)
 			renderer.AddToSet(it->second);
 	}
 	renderer.DrawChunks(&player.Cam);
-	GenChunksFromQueue(1);
+	GenChunksFromQueue(4);
 	MeshUpdateFromQueue(4);
 
 }
