@@ -7,8 +7,9 @@ void Renderer::AddToSet(std::shared_ptr<Chunk> ch)
 
 void Renderer::DrawChunks(Camera* cam)
 {
-	cam->UpdateView();
 	ChunkShader->Activate();
+
+	cam->UpdateView();
 	TextureAtlas->Bind();
 	glDisable(GL_BLEND);
 	for (auto it : ChunkSet)

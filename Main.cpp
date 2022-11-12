@@ -53,7 +53,7 @@ int main()
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-		game.shaderProgram->Activate();
+		//game.shaderProgram->Activate();
 		
 		//MeshC.model =  MeshC.model * Rotation;
 		//camera.LookingAtDir = glm::vec3(Rotation * glm::vec4(camera.LookingAtDir, 1.0));

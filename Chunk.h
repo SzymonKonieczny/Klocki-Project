@@ -50,9 +50,9 @@ public:
 
 	bool isDirty = false;
 	Chunk(glm::vec2 ChunkCoords, ChunkMenager* ChunkMenager_);
-	void Generate(int height_);
+	void Generate(int height_);///DEPRICATED
 	void UpdateMesh(); //clear the mesh, and rebuild
-	bool CheckIfSolidBlock(glm::vec3 Pos);
+	bool CheckIfSolidBlock(glm::vec3 Pos); 
 	void UpdateMeshOnlyAdd(std::vector<Block>& BlocksToAdd); //only add to the existing mesh
 	void DrawSolid(Shader& shader);
 	void DrawTranslucent(Shader& shader);

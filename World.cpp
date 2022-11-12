@@ -28,7 +28,7 @@ void AsyncGenerateAndMesh(std::shared_ptr <std::vector<std::shared_ptr<Chunk>>> 
 
 		tg->Generate((*vec)[i]);
 		
-		//(*vec)[i]->UpdateMesh();
+	//	(*vec)[i]->UpdateMesh();
 	}
 	vec->clear();
 	LastBatchReady = true;
@@ -153,7 +153,7 @@ void World::MeshUpdateFromQueue(int amount)
 	if (UpdateChunkMeshOnPosVec->empty()) return;
 	std::thread f(AsyncMeshOnly, UpdateChunkMeshOnPosVec, std::ref(LastMeshBatchReady));
 	//std::thread f([this, UpdateChunkMeshOnPosVec] { this->AsyncMeshOnly(UpdateChunkMeshOnPosVec, LastMeshBatchReady); });
-
+	
 
 	f.detach();
 	//std::cout << "MeshUpdateQ Members : " << ChunkMeshAddQueue.size() << " \n";
@@ -165,7 +165,7 @@ void World::AddChunksMeshToUpdate(glm::vec2 ChunkPos)
 	if (!ChunkMeshQMembers.contains(ChunkPos))
 	{
 		ChunkMeshQMembers.emplace(ChunkPos);
-		ChunkMeshAddQueue.push(ChunkPos);
+		ChunkMeshAddQueue.push(ChunkPos); 
 	}
 
 }
@@ -188,6 +188,6 @@ void World::IdkWhatToCallThatForNow(Player& player, float dt)
 	}
 	renderer.DrawChunks(&player.Cam);
 	GenChunksFromQueue(1);
-	MeshUpdateFromQueue(1);
+	MeshUpdateFromQueue(4);
 
 }

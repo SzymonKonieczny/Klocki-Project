@@ -32,6 +32,8 @@ class World
 {
 	bool LastGenMeshBatchReady = true;
 	bool LastMeshBatchReady = true;
+	std::thread MeshThread;
+	std::thread GenerationThread;
 	std::queue<glm::vec2> ChunkMeshAddQueue;
 	std::unordered_set<glm::vec2> ChunkMeshQMembers;
 public:

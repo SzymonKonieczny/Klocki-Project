@@ -426,7 +426,7 @@ void Chunk::UpdateBlocksFromBlockQueueMap(bool JustNewBlocks)
 
 	}
 	generated = true; // here coz Generator calls it
-	chunkMenager->world->AddChunksMeshToUpdate(ChunkPos);
+	chunkMenager->world->AddChunksMeshToUpdate(ChunkPos); //Should be here, if commented out, then its for debugging puroses
 
 }
 
@@ -462,8 +462,8 @@ Chunk::~Chunk()
 void Chunk::LockBlockMutex(std::string debugMessage)
 {
 	//if(!generated) std::cout << debugMessage << +'\n';
-	Amount_of_Blockmutex_Uses++;
 	BlocksMutex.lock();
+	Amount_of_Blockmutex_Uses++;
 }
 void Chunk::UnlockBlockMutex(std::string debugMessage)
 {
