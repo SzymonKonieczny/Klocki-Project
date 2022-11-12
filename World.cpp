@@ -151,13 +151,8 @@ void World::MeshUpdateFromQueue(int amount)
 
 	}
 	if (UpdateChunkMeshOnPosVec->empty()) return;
-	std::thread f(AsyncMeshOnly, UpdateChunkMeshOnPosVec, std::ref(LastMeshBatchReady));
-	//std::thread f([this, UpdateChunkMeshOnPosVec] { this->AsyncMeshOnly(UpdateChunkMeshOnPosVec, LastMeshBatchReady); });
-	
-
-	f.detach();
-	//std::cout << "MeshUpdateQ Members : " << ChunkMeshAddQueue.size() << " \n";
-
+	MeshThread=std::make_unique< std::thread>(AsyncMeshOnly, UpdateChunkMeshOnPosVec, std::ref(LastMeshBatchReady));
+	MeshThread->join();
 }
 
 void World::AddChunksMeshToUpdate(glm::vec2 ChunkPos)
