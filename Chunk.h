@@ -31,7 +31,7 @@ class Chunk
 	std::vector<Block> Blocks{1000}; //Vector of block IDs that make up teh chunk
 	std::mutex BlocksMutex;
 public:
-	int Amount_of_Blockmutex_Uses;
+	int Amount_of_Blockmutex_Uses = 0;
 
 	bool generated = false;
 	bool meshed = false;
