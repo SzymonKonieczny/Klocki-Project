@@ -1,10 +1,10 @@
 #pragma once
 #ifndef BLOCKSELECTMESH
 #define BLOCKSELECTMESH
-#include "Mesh.h"
+#include "ChunkMesh.h"
 
 
-class BlockSelectMesh : public Mesh
+class BlockSelectMesh : public ChunkMesh
 {
 
 public:

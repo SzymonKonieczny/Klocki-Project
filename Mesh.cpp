@@ -106,14 +106,14 @@ void  Mesh<T>::verticiesSetReady()
 {
 	verticiesReady = true;
 }
-template<typename T>
+/*template<typename T>
 void  Mesh<T>::AddToVerticies(T vert)
 {
 	VerticiesMutex.lock();
 	mingledWith = true;
 	vertices.push_back(vert);
 	VerticiesMutex.unlock();
-}
+}*/
 template<typename T>
 void  Mesh<T>::ClearVerticies()
 {

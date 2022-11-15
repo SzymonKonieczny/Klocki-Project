@@ -26,12 +26,14 @@ void VBO<T>::Rebuffer(std::vector<T>& vertices)
 {
 
 	glBindBuffer(GL_ARRAY_BUFFER, ID);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(T), vertices.data(), GL_STATIC_DRAW);
 
 }
 
 // Deletes the VBO
-void VBO::Delete()
+template <typename T>
+
+void VBO<T>::Delete()
 {
 	glDeleteBuffers(1, &ID);
 }

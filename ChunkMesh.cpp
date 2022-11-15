@@ -8,6 +8,6 @@ ChunkMesh::ChunkMesh()
 void ChunkMesh::LinkVBOAttributes()
 {
 
-	VAO.LinkAttrib(VBO1, 0, 1, GL_UNSIGNED_INT, sizeof(Vertex), (void*)0);
+	VAO.LinkAttrib(VBO1, 0, 1, GL_UNSIGNED_INT, sizeof(CompressedVertex), (void*)0);
 
 }

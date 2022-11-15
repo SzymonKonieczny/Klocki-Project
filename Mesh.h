@@ -34,14 +34,20 @@ public:
 	~Mesh();
 	//void Generate(const std::vector<std::vector<Block>>& BlockColumns,const glm::ivec2 ChunkPos );
 	void Draw(Shader& shader, glm::vec3 Position, bool UseModelMatrix = false);
-	VAO VAO;
-	VBO VBO1;
+	VAO<T> VAO;
+	VBO<T> VBO1;
 	std::vector<T>& GetVertexVector();
 	void verticiesSetNotReady();
 	void verticiesSetReady();
-	virtual void LinkVBOAttributes() = 0;
+	virtual void LinkVBOAttributes()=0;
 	void MarkDirty();
-	void AddToVerticies(T vert);
+	void AddToVerticies(T vert)
+	{
+		VerticiesMutex.lock();
+		mingledWith = true;
+		vertices.push_back(vert);
+		VerticiesMutex.unlock();
+	};
 	void ClearVerticies();
 };
 

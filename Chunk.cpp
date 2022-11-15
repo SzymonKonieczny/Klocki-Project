@@ -2,6 +2,7 @@
 #include "ChunkMenager.h"
 #include "World.h"
 #include "Util.h"
+#include "VBO.h"
 Chunk::Chunk(glm::vec2 ChunkCoords, ChunkMenager* ChunkMenager_)
 {
 	ChunkPos = ChunkCoords;
@@ -99,7 +100,7 @@ void Chunk::UpdateMesh()
 		
 		if (Blocks[i].ID == BlockTypes::Air) continue;
 		Block* neighbour;
-		Mesh<Vertex>* MeshForThisBlock;
+		ChunkMesh* MeshForThisBlock;
 		switch (Util::GetInstance()->BLOCKS[Blocks[i].ID].RenderMethod)
 		{
 		case BlockRenderMethod::Solid:

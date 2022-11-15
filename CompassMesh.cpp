@@ -1,5 +1,5 @@
 #include "CompassMesh.h"
-
+/*
 CompassMesh::CompassMesh()
 {
 	LinkVBOAttributes();
@@ -13,4 +13,4 @@ void CompassMesh::LinkVBOAttributes()
 		VAO.LinkAttrib(VBO1, 2, 2, GL_FLOAT, sizeof(CompressedVertex), (void*)(6 * sizeof(float)));
 	
 
-}
+}*/

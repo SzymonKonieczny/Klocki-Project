@@ -11,14 +11,10 @@ struct CompressedVertex
 	unsigned int CompressedData1;
 	//unsigned int CompressedData2;
 
-	/*glm::vec3 position;
-	glm::vec3 color;
-	glm::vec2 texturePos;*/
 }; 
 
 struct UncompressedVertex
 {
-
 	glm::vec3 position;
 	glm::vec3 color;
 	glm::vec2 texturePos;
