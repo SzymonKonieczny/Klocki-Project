@@ -3,7 +3,7 @@
 
 void World::AsyncGenerate(std::shared_ptr < std::vector< std::shared_ptr<Chunk>>> vec, bool* LastBatchReady)
 {
-	*LastBatchReady = false;
+	//*LastBatchReady = false; Done before starting the thread
 
 
 	for (int i = 0; i < vec->size(); i++)
@@ -98,8 +98,8 @@ void World::GenChunksFromQueue(int amount)
 		}
 
 	}
+	LastGenMeshBatchReady = false;
 	std::thread f(AsyncGenerateAndMesh, GenChunkOnPosVec, std::ref(LastGenMeshBatchReady), (BaseTerrainGenerator*)&terrainGenerator);
-	//std::thread f([this, GenChunkOnPosVec] { this->AsyncGenerateAndMesh(GenChunkOnPosVec, LastMeshBatchReady, &terrainGenerator); });
 
 	f.detach();
 
@@ -194,6 +194,6 @@ void World::IdkWhatToCallThatForNow(Player& player, float dt)
 	}
 	renderer.DrawChunks(&player.Cam);
 	GenChunksFromQueue(1);
-	MeshUpdateFromQueue(1);
+	MeshUpdateFromQueue(5);
 
 }

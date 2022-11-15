@@ -37,7 +37,7 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 			else 
 			{
 				if (BiomeAtBlock < 0.55)Biome = BIOMES::Forest;
-					else Biome = BIOMES::Desert;
+					else Biome = BIOMES::Mountain;
 			}
 
 			switch (Biome)
