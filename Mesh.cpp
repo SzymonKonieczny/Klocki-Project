@@ -1,10 +1,10 @@
 #include "Mesh.h"
 
-/*Mesh::Mesh(std::vector<Vertex>& vertices_, std::vector < GLuint>& indices_)
+/*template<typename T> Mesh<T>::Mesh(std::vector<Vertex>& vertices_, std::vector < GLuint>& indices_)
 {
-	Mesh::vertices = vertices_;
-	Mesh::indices = indices_;
-	Mesh::model = glm::mat4(1.0);
+	template<typename T> Mesh<T>::vertices = vertices_;
+	template<typename T> Mesh<T>::indices = indices_;
+	template<typename T> Mesh<T>::model = glm::mat4(1.0);
 	// Generates Vertex Array Object and binds it
 	VAO.Bind();
 	// Generates Vertex Buffer Object and links it to vertices
@@ -23,7 +23,8 @@
 	//EBO1->Unbind();
 
 }*/
-Mesh::Mesh(): VBO1(vertices)
+template<typename T>
+Mesh<T>::Mesh(): VBO1(vertices)
 {
 
 	// Generates Vertex Array Object and binds it
@@ -43,11 +44,13 @@ Mesh::Mesh(): VBO1(vertices)
 
 }
 
-Mesh::~Mesh()
+template<typename T>
+Mesh<T>::~Mesh()
 {
 
 }
-void Mesh::Draw(Shader& shader, glm::vec3 Position, bool UseModelMatrix)  {
+template<typename T>
+void  Mesh<T>::Draw(Shader& shader, glm::vec3 Position, bool UseModelMatrix)  {
 
 
 	//shader.Activate(); UNUSED. CAN DELETE
@@ -87,32 +90,32 @@ void Mesh::Draw(Shader& shader, glm::vec3 Position, bool UseModelMatrix)  {
 	VAO.Unbind();
 
 }
-
-std::vector<Vertex>& Mesh::GetVertexVector()
+template<typename T>
+std::vector<T>& Mesh<T>::GetVertexVector()
 {
 	mingledWith = true;
 	return vertices;
 }
-
-void Mesh::verticiesSetNotReady()
+template<typename T>
+void Mesh<T>::verticiesSetNotReady()
 {
 	verticiesReady = false;
 }
-
-void Mesh::verticiesSetReady()
+template<typename T>
+void  Mesh<T>::verticiesSetReady()
 {
 	verticiesReady = true;
 }
-
-void Mesh::AddToVerticies(Vertex vert)
+template<typename T>
+void  Mesh<T>::AddToVerticies(T vert)
 {
 	VerticiesMutex.lock();
 	mingledWith = true;
 	vertices.push_back(vert);
 	VerticiesMutex.unlock();
 }
-
-void Mesh::ClearVerticies()
+template<typename T>
+void  Mesh<T>::ClearVerticies()
 {
 	VerticiesMutex.lock();
 	mingledWith = true;

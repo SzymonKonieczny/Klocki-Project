@@ -1,6 +1,6 @@
 #pragma once
 #include "Mesh.h"
-class CompassMesh : public Mesh
+class CompassMesh : public Mesh<Vertex>
 {
 
 public:

@@ -18,9 +18,9 @@
 #include "Camera.h"
 
 
-
+template <typename T>
 class Mesh{
-	std::vector<Vertex> vertices;
+	std::vector<T> vertices;
 	std::mutex VerticiesMutex;
 public:
 	
@@ -36,12 +36,12 @@ public:
 	void Draw(Shader& shader, glm::vec3 Position, bool UseModelMatrix = false);
 	VAO VAO;
 	VBO VBO1;
-	std::vector<Vertex>& GetVertexVector();
+	std::vector<T>& GetVertexVector();
 	void verticiesSetNotReady();
 	void verticiesSetReady();
 	virtual void LinkVBOAttributes() = 0;
 	void MarkDirty();
-	void AddToVerticies(Vertex vert);
+	void AddToVerticies(T vert);
 	void ClearVerticies();
 };
 

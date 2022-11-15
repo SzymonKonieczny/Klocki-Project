@@ -99,7 +99,7 @@ void Chunk::UpdateMesh()
 		
 		if (Blocks[i].ID == BlockTypes::Air) continue;
 		Block* neighbour;
-		Mesh* MeshForThisBlock;
+		Mesh<Vertex>* MeshForThisBlock;
 		switch (Util::GetInstance()->BLOCKS[Blocks[i].ID].RenderMethod)
 		{
 		case BlockRenderMethod::Solid:

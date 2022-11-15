@@ -1,12 +1,13 @@
 #pragma once
 #include "BlockTemplate.h"
 #include "Util.h"
-class Mesh;
+template<typename T>
+class Mesh<T>;
 
-
+template<typename T>
 class FaceBuilder
 {
 public:
-	static void BuildFace(Mesh& verticies, Faces Direction, glm::vec3 Pos, BlockTypes block, BlockShapes Shape);
+	static void BuildFace(Mesh<T>& verticies, Faces Direction, glm::vec3 Pos, BlockTypes block, BlockShapes Shape);
 
 };

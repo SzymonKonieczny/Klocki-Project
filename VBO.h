@@ -6,7 +6,7 @@
 
 #include <vector>
 
-struct Vertex
+struct CompressedVertex
 {
 	unsigned int CompressedData1;
 	//unsigned int CompressedData2;
@@ -16,21 +16,29 @@ struct Vertex
 	glm::vec2 texturePos;*/
 }; 
 
+struct UncompressedVertex
+{
 
+	glm::vec3 position;
+	glm::vec3 color;
+	glm::vec2 texturePos;
+};
+
+template<typename T>
 class VBO
 {
 public:
 
 	GLuint ID;
 
-	VBO(std::vector<Vertex>& vertices);
+	VBO(std::vector<T>& vertices);
 
 
 	void Bind();
 
 	void Unbind();
 
-	void Rebuffer(std::vector<Vertex>& vertices);
+	void Rebuffer(std::vector<T>& vertices);
 
 	void Delete();
 };
