@@ -1,7 +1,7 @@
 #pragma once
 #include "Mesh.h"
 
-class ChunkMesh : public Mesh<Vertex>
+class ChunkMesh : public Mesh<CompressedVertex>
 {public:
 	ChunkMesh();
 
