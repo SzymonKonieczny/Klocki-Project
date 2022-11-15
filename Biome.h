@@ -24,7 +24,7 @@ class BiomeForest : public BaseBiome
 public:
 	BlockTypes GetBlockTypeAt(glm::vec3 pos, bool isSurfaceBlock);
 	BiomeForest(ChunkMenager* _chunkmenager);
-	void GenerateTree(glm::vec3 WorldPos, glm::vec3 Dir = glm::vec3(0, 0, 1), int branches = 4);
+	void GenerateTree(glm::vec3 WorldPos, glm::vec3 Dir = glm::vec3(0, 0, 1), int branches = 2);
 	void GenerateFeatures(glm::vec3 pos);
 };
 class BiomeDesert : public BaseBiome

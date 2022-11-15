@@ -36,7 +36,7 @@ void AsyncGenerateAndMesh(std::shared_ptr <std::vector<std::shared_ptr<Chunk>>> 
 }
 void AsyncMeshOnly(std::shared_ptr <std::vector<std::shared_ptr<Chunk>>> vec, bool& LastBatchReady)
 {
-	LastBatchReady = false;
+	//LastBatchReady = false; Done before invoking the thread
 
 
 	for (int i = 0; i < vec->size(); i++)
@@ -46,6 +46,7 @@ void AsyncMeshOnly(std::shared_ptr <std::vector<std::shared_ptr<Chunk>>> vec, bo
 	}
 	vec->clear();
 	LastBatchReady = true;
+
 
 }
 World::World() :chunkMenager(this), terrainGenerator(&chunkMenager)
@@ -114,7 +115,7 @@ void World::AddChunksToGen(glm::vec2 ChunkPos)
 
 void World::MeshUpdateFromQueue(int amount)
 {
-	static glm::vec2 LastChunkPos = glm::vec2(69,6999);
+	static glm::vec2 LastChunkPos = glm::vec2(69, 6999);
 	if (!LastMeshBatchReady)
 	{
 		//std::cout << "Meshing :  last batch NOT ready \n";
@@ -128,7 +129,7 @@ void World::MeshUpdateFromQueue(int amount)
 
 		if (ChunkMeshAddQueue.empty()) {
 
-		//	std::cout << "Meshing Q empty, last batch ready \n";
+			//	std::cout << "Meshing Q empty, last batch ready \n";
 			continue;
 		}
 		glm::vec2 GenChunkOnPos = ChunkMeshAddQueue.front();
@@ -151,12 +152,22 @@ void World::MeshUpdateFromQueue(int amount)
 
 	}
 	if (UpdateChunkMeshOnPosVec->empty()) return;
-	MeshThread=std::make_unique< std::thread>(AsyncMeshOnly, UpdateChunkMeshOnPosVec, std::ref(LastMeshBatchReady));
-	MeshThread->detach();
-}
+	if (MeshThread == nullptr)
+	{
+		LastMeshBatchReady = false;
+		MeshThread = std::make_shared< std::thread>(AsyncMeshOnly, UpdateChunkMeshOnPosVec, std::ref(LastMeshBatchReady));
+		MeshThread->detach();
+	}
+	if ( LastMeshBatchReady&& MeshThread != nullptr)
+	{
 
+		LastMeshBatchReady = false;
+		MeshThread = std::make_shared< std::thread>(AsyncMeshOnly, UpdateChunkMeshOnPosVec, std::ref(LastMeshBatchReady));
+		MeshThread->detach();
+	}
+}
 void World::AddChunksMeshToUpdate(glm::vec2 ChunkPos)
-{
+{	
 	if (!ChunkMeshQMembers.contains(ChunkPos))
 	{
 		ChunkMeshQMembers.emplace(ChunkPos);
@@ -182,7 +193,7 @@ void World::IdkWhatToCallThatForNow(Player& player, float dt)
 			renderer.AddToSet(it->second);
 	}
 	renderer.DrawChunks(&player.Cam);
-	GenChunksFromQueue(4);
-	MeshUpdateFromQueue(4);
+	GenChunksFromQueue(1);
+	MeshUpdateFromQueue(1);
 
 }

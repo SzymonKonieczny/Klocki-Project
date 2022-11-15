@@ -461,8 +461,14 @@ Chunk::~Chunk()
 
 void Chunk::LockBlockMutex(std::string debugMessage)
 {
-	//if(!generated) std::cout << debugMessage << +'\n';
+
+	//if (!BlocksMutex.try_lock())
+	{
+
+	//std::cout << "Unable to lock in chunk" << ChunkPos.x << "  " <<ChunkPos.y << +'\n';
 	BlocksMutex.lock();
+
+	}
 	Amount_of_Blockmutex_Uses++;
 }
 void Chunk::UnlockBlockMutex(std::string debugMessage)
