@@ -16,6 +16,7 @@ struct Vertex
 	glm::vec2 texturePos;*/
 }; 
 
+
 class VBO
 {
 public:

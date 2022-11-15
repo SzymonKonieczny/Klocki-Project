@@ -28,24 +28,21 @@ Mesh::Mesh(): VBO1(vertices)
 
 	// Generates Vertex Array Object and binds it
 
-	VAO.Bind();
 
 
+	//New
+	//VAO.LinkAttrib(VBO1, 0, 1, GL_UNSIGNED_INT, sizeof(Vertex), (void*)0);
 
-	// Links VBO to VAO
-	VAO.LinkAttrib(VBO1, 0, 1, GL_UNSIGNED_INT, sizeof(Vertex), (void*)0);
-	//VAO.LinkAttrib(VBO1, 1, 1, GL_UNSIGNED_INT, sizeof(Vertex), (void*)(sizeof(unsigned int)));
-
+	//Old
 	//VAO.LinkAttrib(VBO1, 0, 3, GL_FLOAT, sizeof(Vertex), (void*)0);
 	//VAO.LinkAttrib(VBO1, 1, 3, GL_FLOAT, sizeof(Vertex), (void*)(3 * sizeof(float)));
 	//VAO.LinkAttrib(VBO1, 2, 2, GL_FLOAT, sizeof(Vertex), (void*)(6 * sizeof(float)));
 
 	// Unbind all to prevent accidentally modifying them
-	VAO.Unbind();
-	VBO1.Unbind();
 	//EBO1->Unbind();
 
 }
+
 Mesh::~Mesh()
 {
 

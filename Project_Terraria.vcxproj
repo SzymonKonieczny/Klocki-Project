@@ -162,7 +162,9 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="ChunkMenager.cpp" />
+    <ClCompile Include="ChunkMesh.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="CompassMesh.cpp" />
     <ClCompile Include="CustomTerrainGenerator.cpp" />
     <ClCompile Include="EBO.cpp" />
     <ClCompile Include="FaceBuilder.cpp" />
@@ -198,6 +200,7 @@
     <ClInclude Include="ChunkMenager.h" />
     <ClInclude Include="ChunkMesh.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="CompassMesh.h" />
     <ClInclude Include="CustomTerrainGenerator.h" />
     <ClInclude Include="EBO.h" />
     <ClInclude Include="FaceBuilder.h" />

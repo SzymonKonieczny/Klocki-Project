@@ -16,11 +16,14 @@
 #include "Block.h"
 #include "GLOBAL.h"
 #include "Camera.h"
+
+
+
 class Mesh{
 	std::vector<Vertex> vertices;
 	std::mutex VerticiesMutex;
 public:
-
+	
 	glm::mat4 model = glm::mat4(1.0f);
 	bool verticiesReady = false;
 
@@ -36,7 +39,7 @@ public:
 	std::vector<Vertex>& GetVertexVector();
 	void verticiesSetNotReady();
 	void verticiesSetReady();
-
+	virtual void LinkVBOAttributes() = 0;
 	void MarkDirty();
 	void AddToVerticies(Vertex vert);
 	void ClearVerticies();

@@ -3,18 +3,22 @@
 #define PLAYER_H
 
 #include "Camera.h"
-#include "Mesh.h"
+#include "CompassMesh.h"
+#include "ChunkMesh.h"
 #include "FaceBuilder.h"
 #include "Collider.h"
 #include "Ray.h"
 class World;
+//class CompassMesh;
+//class ChunkMesh;
+
 class Player
 {
 	bool CheckCollisionSide(glm::vec3 Velocity);
 	RayInfo Rayinfo;
 	Collider collider;
-	Mesh* Compass;
-	Mesh* BlockSelect;
+	CompassMesh* Compass;
+	ChunkMesh* BlockSelect;
 	bool isBlockSelectMade = false;
 	float crntTime;
 	float F3Cooldown=0;

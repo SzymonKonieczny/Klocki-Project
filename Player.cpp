@@ -52,7 +52,7 @@ bool Player::HandleCollisions(glm::vec3& Velocity) // returns if the position co
 void Player::Update(float dt)
 {
 	if (!isBlockSelectMade) { //very dirty, very temporary
-		BlockSelect = new Mesh();
+		BlockSelect = new ChunkMesh();
 		FaceBuilder::BuildFace(*BlockSelect, Faces::Up, glm::vec3(0, 0, 0), BlockTypes::Cactus, BlockShapes::BlockShape);
 		isBlockSelectMade = true;
 		BlockSelect->verticiesSetReady();
@@ -95,7 +95,7 @@ void Player::SwitchCompassOnOff()
 {
 	if (Compass == nullptr)
 	{
-		Compass = new Mesh();
+		Compass = new CompassMesh();
 		
 		/*Compass->GetVertexVector().push_back(
 			Vertex(glm::vec3(0.0f, 0.0, 0.0f),
