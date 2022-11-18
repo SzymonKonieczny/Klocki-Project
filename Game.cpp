@@ -189,7 +189,7 @@ void Game::ShaderAndTextureStuff()
 
 
 	 TextureAtlas = new Texture("textures/textureatlas.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
-	 TextureAtlasTransparent = new Texture("textures/textureatlas.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	 //TextureAtlasTransparent = new Texture("textures/textureatlas.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 
 	 PlayerTxt = new Texture("textures/Player.png", GL_TEXTURE_2D, GL_TEXTURE2, GL_RGBA, GL_UNSIGNED_BYTE);
 
@@ -199,8 +199,7 @@ void Game::ShaderAndTextureStuff()
 
 
 	TextureAtlas->texUnit(*shaderProgram, "tex0", 0);
-	TextureAtlas->texUnit(*TranslucentShader, "tex0", 0);
-	TextureAtlas->texUnit(*EntityShader, "tex0", 0);
+	TextureAtlas->texUnit(*TranslucentShader, "tex0", 2); //values different than 2 just refuse to work, 0 idea why
 
 	PlayerTxt->texUnit(*shaderProgram, "tex0", 2);
 
