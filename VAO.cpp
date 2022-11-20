@@ -1,4 +1,4 @@
-#include"VAO.h"
+/*#include"VAO.h"
 
 // Constructor that generates a VAO ID
 template <typename T>
@@ -44,4 +44,4 @@ template <typename T>
 void VAO<T>::Delete()
 {
 	glDeleteVertexArrays(1, &ID);
-}
+}*/

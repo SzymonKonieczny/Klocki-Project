@@ -1,28 +1,6 @@
 #include "Mesh.h"
+/*
 
-/*template<typename T> Mesh<T>::Mesh(std::vector<Vertex>& vertices_, std::vector < GLuint>& indices_)
-{
-	template<typename T> Mesh<T>::vertices = vertices_;
-	template<typename T> Mesh<T>::indices = indices_;
-	template<typename T> Mesh<T>::model = glm::mat4(1.0);
-	// Generates Vertex Array Object and binds it
-	VAO.Bind();
-	// Generates Vertex Buffer Object and links it to vertices
-	VBO1 = new VBO(vertices);
-	// Generates Element Buffer Object and links it to indices
-	//EBO1 = new EBO(indices);
-
-	// Links VBO to VAO
-	VAO.LinkAttrib(*VBO1, 0, 3, GL_FLOAT,  sizeof(Vertex), (void*)0);
-	VAO.LinkAttrib(*VBO1, 1, 3, GL_FLOAT,  sizeof(Vertex), (void*)(3 * sizeof(float)));
-	VAO.LinkAttrib(*VBO1, 2, 2, GL_FLOAT,  sizeof(Vertex), (void*)(6 * sizeof(float)));
-
-	// Unbind all to prevent accidentally modifying them
-	VAO.Unbind();
-	VBO1->Unbind();
-	//EBO1->Unbind();
-
-}*/
 template<typename T>
 Mesh<T>::Mesh(): VBO1(vertices)
 {
@@ -106,14 +84,14 @@ void  Mesh<T>::verticiesSetReady()
 {
 	verticiesReady = true;
 }
-/*template<typename T>
+template<typename T>
 void  Mesh<T>::AddToVerticies(T vert)
 {
 	VerticiesMutex.lock();
 	mingledWith = true;
 	vertices.push_back(vert);
 	VerticiesMutex.unlock();
-}*/
+}
 template<typename T>
 void  Mesh<T>::ClearVerticies()
 {
@@ -122,3 +100,4 @@ void  Mesh<T>::ClearVerticies()
 	vertices.clear();
 	VerticiesMutex.unlock();
 }
+*/

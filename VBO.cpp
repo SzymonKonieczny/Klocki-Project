@@ -1,4 +1,4 @@
-#include"VBO.h"
+/*#include"VBO.h"
 template <typename T>
 
 VBO<T>::VBO(std::vector<T>& vertices)
@@ -36,4 +36,4 @@ template <typename T>
 void VBO<T>::Delete()
 {
 	glDeleteBuffers(1, &ID);
-}
+}*/
