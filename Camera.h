@@ -23,6 +23,12 @@ class Camera
 
 	int TranslucentprojLoc;
 
+	int EntitymodelLoc;
+
+	int EntityviewLoc;
+
+	int EntityprojLoc;
+
 public:
 	glm::mat4 model = glm::mat4(1.0);
 	glm::mat4 view = glm::mat4(1.0);		//The Camera
@@ -39,8 +45,11 @@ public:
 
 	void UpdateUniformsTransparent();
 
+	void UpdateUniformsEntity();
+
 	void GetUniformLocationsForTransparent(Shader& shaderProgram);
 
+	void GetUniformLocationsForEntity(Shader& shaderProgram);
 
 	int GetModelUniformLocation();
 

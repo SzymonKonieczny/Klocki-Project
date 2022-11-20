@@ -31,7 +31,8 @@ class Player
 	float sensitivity = 100.0f;
 	float jumpForce = 0.2f;
 	float BLocksCooldown = 0.1;
-	Shader* UsedShader;
+	Shader* UsedBlockShader;
+	Shader* UsedEntityShader;
 	glm::vec3 LookingAtDir = glm::vec3(0.0f, 0.0f, -1.0f);
 public:
 	glm::vec3 velocity;
@@ -47,7 +48,7 @@ public:
 
 	void Update(float dt);
 	void SwitchCompassOnOff();
-	void SetShader(Shader* shader);
+	void SetShader(Shader* BlockShader, Shader* EntityShader);
 	void HandleInput(float dt);
 };
 

@@ -207,10 +207,14 @@ void Game::ShaderAndTextureStuff()
 	world.renderer.TextureAtlas = TextureAtlas;
 	//TextureAtlas->Bind();
 
-	player.SetShader(shaderProgram);
+	player.SetShader(shaderProgram, EntityShader);
 	player.Cam.GetUniformLocations(*shaderProgram);
 	player.Cam.GetUniformLocationsForTransparent(*TranslucentShader);
+	player.Cam.GetUniformLocationsForEntity(*EntityShader);
+
 
 	player.Cam.UpdateView();
 	player.Cam.UpdateUniformsTransparent();
+	player.Cam.UpdateUniformsEntity();
+
 }

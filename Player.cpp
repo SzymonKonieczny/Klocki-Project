@@ -60,7 +60,7 @@ void Player::Update(float dt)
 
 	Rayinfo = Ray::Cast(Position, LookingAtDir, world, 4);
 
-	if (!Rayinfo.Miss)BlockSelect->Draw(*UsedShader, Rayinfo.HitPos, true);
+	if (!Rayinfo.Miss)BlockSelect->Draw(*UsedBlockShader, Rayinfo.HitPos, true);
 	isOnGround = CheckCollisionSide(glm::vec3(0, -0.2, 0));
 
 	HandleInput(dt);
@@ -83,8 +83,8 @@ void Player::Update(float dt)
 	
 	if (isCompassOn)
 	{
-		
-		Compass->Draw(*UsedShader,Position+(LookingAtDir),true);
+		UsedEntityShader->Activate();
+		Compass->Draw(*UsedEntityShader,Position+(LookingAtDir),true);
 
 	}
 	
@@ -97,16 +97,16 @@ void Player::SwitchCompassOnOff()
 	{
 		Compass = new CompassMesh();
 		
-		/*Compass->GetVertexVector().push_back(
-			Vertex(glm::vec3(0.0f, 0.0, 0.0f),
+		Compass->GetVertexVector().push_back(
+			UncompressedVertex(glm::vec3(0.0f, 0.0, 0.0f),
 				glm::vec3(1.0f, 1.0f, 1.0f),
 				glm::vec2(1, 0.99)));
 		Compass->GetVertexVector().push_back(
-			Vertex(glm::vec3(0.0, 0.1, 0.0f),
+			UncompressedVertex(glm::vec3(0.0, 0.1, 0.0f),
 				glm::vec3(1.0f, 1.0f, 1.0f),
 				glm::vec2(0.99, 1)));
 		Compass->GetVertexVector().push_back(
-			Vertex(glm::vec3(0.3, 0, 0.0f),
+			UncompressedVertex(glm::vec3(0.3, 0, 0.0f),
 				glm::vec3(0.6f, 0.0f, 0.0f),
 				glm::vec2(1, 1)));
 		
@@ -114,41 +114,42 @@ void Player::SwitchCompassOnOff()
 
 
 		Compass->GetVertexVector().push_back(
-			Vertex(glm::vec3(0.0f, 0.0, 0.0f),
+			UncompressedVertex(glm::vec3(0.0f, 0.0, 0.0f),
 				glm::vec3(1.0f, 1.0f, 1.0f),
 				glm::vec2(1, 0.99)));
 		Compass->GetVertexVector().push_back(
-			Vertex(glm::vec3(0.0, 0.3, 0.0f),
+			UncompressedVertex(glm::vec3(0.0, 0.3, 0.0f),
 				glm::vec3(1.0f, 1.0f, 1.0f),
 				glm::vec2(0.99, 1)));
 		Compass->GetVertexVector().push_back(
-			Vertex(glm::vec3(0.1, 0, 0.0f),
+			UncompressedVertex(glm::vec3(0.1, 0, 0.0f),
 				glm::vec3(0.0f, 0.6f, 0.0f),
 				glm::vec2(1, 1)));
 
 
 
 		Compass->GetVertexVector().push_back(
-			Vertex(glm::vec3(0.0f, 0.0, 0.0f),
+			UncompressedVertex(glm::vec3(0.0f, 0.0, 0.0f),
 				glm::vec3(1.0f, 1.0f, 1.0f),
 				glm::vec2(1, 0.99)));
 		Compass->GetVertexVector().push_back(
-			Vertex(glm::vec3(0.0, 0.1, 0.0f),
+			UncompressedVertex(glm::vec3(0.0, 0.1, 0.0f),
 				glm::vec3(1.0f, 1.0f, 1.0f),
 				glm::vec2(0.99, 1)));
 		Compass->GetVertexVector().push_back(
-			Vertex(glm::vec3(0.0, 0, 0.3f),
+			UncompressedVertex(glm::vec3(0.0, 0, 0.3f),
 				glm::vec3(0.0f, 0.0f, 0.6f),
 				glm::vec2(1, 1)));
-		*/
+		
 		Compass->verticiesSetReady();
 	}
 	isCompassOn = !isCompassOn;
 }
 
-void Player::SetShader(Shader* shader)
+void Player::SetShader(Shader* BlockShader, Shader* EntityShader)
 {
-	UsedShader = shader;
+	UsedBlockShader = BlockShader;
+	UsedEntityShader = EntityShader;
 }
 
 void Player::HandleInput(float dt)
