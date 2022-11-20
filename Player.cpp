@@ -89,7 +89,7 @@ void Player::Update(float dt)
 	}
 	
 
-}
+} 
 
 void Player::SwitchCompassOnOff()
 {
