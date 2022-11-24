@@ -190,7 +190,7 @@ void World::IdkWhatToCallThatForNow(Player& player, float dt)
 	for (std::unordered_map<glm::vec2, std::shared_ptr<Chunk>>::iterator it = chunkMenager.ChunkMap.begin(); it != chunkMenager.ChunkMap.end(); it++)
 	{
 		if (glm::distance(Util::WorldPosToChunkPos(player.Position), it->first) < RenderDistance)
-			renderer.AddToSet(it->second);
+			renderer.AddToChunkSet(it->second);
 	}
 	renderer.DrawChunks(&player.Cam);
 	GenChunksFromQueue(1);
