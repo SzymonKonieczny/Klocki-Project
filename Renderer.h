@@ -15,7 +15,9 @@ public :
 
 	Texture* TextureAtlas;
 
-	void AddToSet(std::shared_ptr<Chunk> ch);
+	void AddToChunkSet(std::shared_ptr<Chunk> ch);
 	void DrawChunks(Camera* cam);
+	void DrawEntities(Camera* cam);
+
 
 };

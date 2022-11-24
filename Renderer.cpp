@@ -1,6 +1,6 @@
 #include "Renderer.h"
 #include "Camera.h"
-void Renderer::AddToSet(std::shared_ptr<Chunk> ch)
+void Renderer::AddToChunkSet(std::shared_ptr<Chunk> ch)
 {
 	ChunkSet.emplace(ch);
 }
@@ -28,4 +28,8 @@ void Renderer::DrawChunks(Camera* cam)
 	}
 	ChunkSet.clear();
 
+}
+
+void Renderer::DrawEntities(Camera* cam)
+{
 }
