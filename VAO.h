@@ -16,11 +16,13 @@ public:
 	}
 
 	// Links a VBO to the VAO using a certain layout
-	void LinkAttrib(VBO<T>& VBO, GLuint layout,GLuint numComponents, GLenum type, GLsizeiptr stride , void* offset)
+	void LinkAttrib(VBO<T>& VBO, GLuint layout,GLuint numComponents, GLenum type, GLsizeiptr stride , void* offset, bool UseIntAttribs)
 	{
 		Bind();
 		VBO.Bind();
-		glVertexAttribIPointer(layout, numComponents, type, stride, offset);
+		if(UseIntAttribs)glVertexAttribIPointer(layout, numComponents, type, stride, offset);
+		else glVertexAttribPointer(layout, numComponents, type, GL_FALSE, stride, offset);
+		
 		//glVertexAttribIPointer(layout, numComponents, type, GL_FALSE, stride, offset);
 		//glEnableVertexAttribArray(layout);
 		glEnableVertexAttribArray(layout);

@@ -84,6 +84,7 @@ void Player::Update(float dt)
 	if (isCompassOn)
 	{
 		UsedEntityShader->Activate();
+		Cam.UpdateUniformsEntity();
 		Compass->Draw(*UsedEntityShader,Position+(LookingAtDir),true);
 
 	}
