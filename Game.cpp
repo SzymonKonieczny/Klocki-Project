@@ -200,7 +200,7 @@ void Game::ShaderAndTextureStuff()
 
 	TextureAtlas->texUnit(*shaderProgram, "tex0", 0);
 	TextureAtlas->texUnit(*TranslucentShader, "tex0", 2); //values different than 2 just refuse to work, 0 idea why
-	TextureAtlas->texUnit(*EntityShader, "tex0", 0);
+	TextureAtlas->texUnit(*EntityShader, "tex0", 2);
 
 	PlayerTxt->texUnit(*shaderProgram, "tex0", 2);
 

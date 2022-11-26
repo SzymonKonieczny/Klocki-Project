@@ -198,7 +198,7 @@ void Player::HandleInput(float dt)
  		std::cout << "breaking..." << std::endl;
 
 	}
-	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_F3) == GLFW_PRESS)
+	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_O) == GLFW_PRESS)
 	{
 		if (crntTime - F3Cooldown > 0.5f)
 		{
