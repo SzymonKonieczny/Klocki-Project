@@ -439,7 +439,6 @@ Block* Chunk::vec3ToBlock(glm::vec3 LocPos)
 	//std::cout << "search_result: " << LocPos.x << ' ' << LocPos.y << ' ' << LocPos.z << '\n';
 	if (search_result != block_map.end())
 	{
-		
 
 		return &Blocks[(*search_result).second];
 	}

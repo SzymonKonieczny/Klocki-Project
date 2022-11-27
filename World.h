@@ -54,6 +54,8 @@ public:
 	void GenChunksFromQueue(int amount);
 	void AddChunksToGen(glm::vec2 ChunkPos);
 
+
+
 	void MeshUpdateFromQueue(int amount);
 	void AddChunksMeshToUpdate(glm::vec2 ChunkPos);
 

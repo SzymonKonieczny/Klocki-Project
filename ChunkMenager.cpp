@@ -178,7 +178,9 @@ Block* ChunkMenager::GetBlockInWorld(glm::vec3 WorldPos )
 Block* ChunkMenager::GetBlockInWorld(glm::vec3 LocalPos, glm::vec2 ChunkPos)
 {
 	//auto existingChunksIterator = ChunkMap.find(ChunkPos);
+	
 	auto existingChunksIterator = GetChunkAt(ChunkPos);
+
 
 	if (existingChunksIterator != nullptr)
 	{
