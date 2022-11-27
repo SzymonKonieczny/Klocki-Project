@@ -2,6 +2,13 @@
 #include "shaderClass.h"
 #include "Libraries/include/glm/glm.hpp"
 class World;
+
+enum EntityTypes
+{
+	Proto
+
+};
+
 class Entity
 {
 public:

@@ -49,7 +49,7 @@ void AsyncMeshOnly(std::shared_ptr <std::vector<std::shared_ptr<Chunk>>> vec, bo
 
 
 }
-World::World() :chunkMenager(this), terrainGenerator(&chunkMenager)
+World::World() :chunkMenager(this), terrainGenerator(&chunkMenager),entityMenager(this)
 {
 	
 }
@@ -192,6 +192,12 @@ void World::IdkWhatToCallThatForNow(Player& player, float dt)
 		if (glm::distance(Util::WorldPosToChunkPos(player.Position), it->first) < RenderDistance)
 			renderer.AddToChunkSet(it->second);
 	}
+	for (std::unordered_map<unsigned int, std::shared_ptr<Entity>>::iterator it = entityMenager.EntityMap.begin(); it != entityMenager.EntityMap.end(); it++)
+	{
+		if (glm::distance(player.Position, it->second->Position) < RenderDistance/2)
+			renderer.AddToEntitiesSet(it->second);
+	}
+
 	renderer.DrawChunks(&player.Cam);
 	GenChunksFromQueue(1);
 	MeshUpdateFromQueue(5);

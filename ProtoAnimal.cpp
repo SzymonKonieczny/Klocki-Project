@@ -1,6 +1,6 @@
 #include "ProtoAnimal.h"
 #include "World.h"
-ProtoAnimal::ProtoAnimal(int ID, World* wrld, glm::vec3 Pos) :
+ProtoAnimal::ProtoAnimal(unsigned int ID, World* wrld, glm::vec3 Pos) :
 	Collider(glm::vec3(-0.25, 0, -0.25),	glm::vec3(0.25, 0.9, 0.25)), Entity( Pos, wrld), id(ID)
 {
 	mesh.AddToVerticies(

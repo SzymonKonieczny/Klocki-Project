@@ -5,6 +5,11 @@ void Renderer::AddToChunkSet(std::shared_ptr<Chunk> ch)
 	ChunkSet.emplace(ch);
 }
 
+void Renderer::AddToEntitiesSet(std::shared_ptr<Entity> e)
+{
+	EntitySet.emplace(e);
+}
+
 void Renderer::DrawChunks(Camera* cam)
 {
 	ChunkShader->Activate();
@@ -19,7 +24,7 @@ void Renderer::DrawChunks(Camera* cam)
 	
 	TransparentBlockShader->Activate();
 	cam->UpdateUniformsTransparent();
-	TextureAtlas->Bind();
+	//TextureAtlas->Bind();
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	for (auto it : ChunkSet)
@@ -27,9 +32,15 @@ void Renderer::DrawChunks(Camera* cam)
 		it->DrawTranslucent(*TransparentBlockShader);
 	}
 	ChunkSet.clear();
+	DrawEntities(cam);
 
 }
 
 void Renderer::DrawEntities(Camera* cam)
 {
+	EntityShader->Activate();
+	for (auto it : EntitySet)
+	{
+		it->Draw(*EntityShader);
+	}
 }

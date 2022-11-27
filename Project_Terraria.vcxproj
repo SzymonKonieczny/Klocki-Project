@@ -168,6 +168,7 @@
     <ClCompile Include="CustomTerrainGenerator.cpp" />
     <ClCompile Include="EBO.cpp" />
     <ClCompile Include="Enitity.cpp" />
+    <ClCompile Include="EntityMenager.cpp" />
     <ClCompile Include="FaceBuilder.cpp" />
     <ClCompile Include="FlatTerrainGenerator.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="CustomTerrainGenerator.h" />
     <ClInclude Include="EBO.h" />
     <ClInclude Include="Enitity.h" />
+    <ClInclude Include="EntityMenager.h" />
     <ClInclude Include="EntityMesh.h" />
     <ClInclude Include="FaceBuilder.h" />
     <ClInclude Include="FlatTerrainGenerator.h" />

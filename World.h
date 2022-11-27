@@ -27,6 +27,7 @@
 #include "CustomTerrainGenerator.h"
 #include "FlatTerrainGenerator.h"
 #include "Renderer.h"
+#include "EntityMenager.h"
 
 class World
 {
@@ -46,6 +47,7 @@ public:
 	Shader* shaderProgram;
 	TerrainGenerator terrainGenerator;
 	ChunkMenager chunkMenager;
+	EntityMenager entityMenager;
 	std::queue<glm::vec2> ChunkGenQueue;
 
 

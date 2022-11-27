@@ -13,7 +13,10 @@ void Game::RenderChunksInFrustum()
 void Game::tickEntities()
 {
 	player.Update(timeDiff);
-	
+	for (auto it : world.entityMenager.EntityMap)
+	{
+		it.second->Tick(timeDiff);
+	}
 
 
 }

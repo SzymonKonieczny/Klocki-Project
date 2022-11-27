@@ -205,9 +205,16 @@ void Player::HandleInput(float dt)
 				SwitchCompassOnOff();
 				F3Cooldown = glfwGetTime();
 		}
-	
-
 	}
+
+	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_K) == GLFW_PRESS)
+	{
+		if (crntTime - F3Cooldown > 0.5f)
+		{
+			world->entityMenager.SpawnEntity(Position, EntityTypes::Proto);
+		}
+	}
+
 	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_W) == GLFW_PRESS)
 	{
 		velocity += dt * speed * glm::normalize( glm::vec3(LookingAtDir.x, 0, LookingAtDir.z));
