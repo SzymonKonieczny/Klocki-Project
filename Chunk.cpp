@@ -439,8 +439,15 @@ Block* Chunk::vec3ToBlock(glm::vec3 LocPos)
 	//std::cout << "search_result: " << LocPos.x << ' ' << LocPos.y << ' ' << LocPos.z << '\n';
 	if (search_result != block_map.end())
 	{
-
-		return &Blocks[(*search_result).second];
+		if (!isBlockMutexLocked) //I know, its bad, i sinicerly apologise
+		{
+			LockBlockMutex(" "); 
+			Block* b = &Blocks[(*search_result).second]; 
+			UnlockBlockMutex(" ");
+			return b;
+		}
+			else return &Blocks[(*search_result).second];
+		
 	}
 	else return nullptr;
 
@@ -467,12 +474,14 @@ void Chunk::LockBlockMutex(std::string debugMessage)
 
 	//std::cout << "Unable to lock in chunk" << ChunkPos.x << "  " <<ChunkPos.y << +'\n';
 	BlocksMutex.lock();
-
+	isBlockMutexLocked = true;
 	}
 	Amount_of_Blockmutex_Uses++;
 }
 void Chunk::UnlockBlockMutex(std::string debugMessage)
 {
 	//if (!generated) std::cout << debugMessage << +'\n';
+	isBlockMutexLocked = false;
+
 	BlocksMutex.unlock();
 }

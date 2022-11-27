@@ -167,6 +167,7 @@
     <ClCompile Include="CompassMesh.cpp" />
     <ClCompile Include="CustomTerrainGenerator.cpp" />
     <ClCompile Include="EBO.cpp" />
+    <ClCompile Include="Enitity.cpp" />
     <ClCompile Include="FaceBuilder.cpp" />
     <ClCompile Include="FlatTerrainGenerator.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -175,6 +176,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="ProtoAnimal.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="shaderClass.cpp" />
@@ -203,6 +205,8 @@
     <ClInclude Include="CompassMesh.h" />
     <ClInclude Include="CustomTerrainGenerator.h" />
     <ClInclude Include="EBO.h" />
+    <ClInclude Include="Enitity.h" />
+    <ClInclude Include="EntityMesh.h" />
     <ClInclude Include="FaceBuilder.h" />
     <ClInclude Include="FlatTerrainGenerator.h" />
     <ClInclude Include="Game.h" />
@@ -210,6 +214,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PriorityQueueCustom.h" />
+    <ClInclude Include="ProtoAnimal.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="shaderClass.h" />
