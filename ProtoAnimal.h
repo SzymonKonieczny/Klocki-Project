@@ -13,7 +13,7 @@ public:
 	unsigned int id;
 	glm::vec3 TargetPos;
 	glm::vec3 PrevPosition[2];
-	glm::vec3 velocity;
+	glm::vec3 velocity = glm::vec3(0.f,0.f,0.f);
 	bool reacherdTarget = true;
 	ProtoAnimal(unsigned int ID, World* wrld, glm::vec3 Pos);
 	void Draw(Shader& shader);
@@ -25,5 +25,6 @@ public:
 
 private:
 	bool comparePrevPositions();
+	void FindTargetSpot();
 
 };
