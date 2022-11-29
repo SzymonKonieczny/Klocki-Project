@@ -187,6 +187,7 @@ Block* ChunkMenager::GetBlockInWorld(glm::vec3 LocalPos, glm::vec2 ChunkPos)
 		return existingChunksIterator->vec3ToBlock(LocalPos);
 
 	}
+	return nullptr;
 }
 
 void ChunkMenager::NewChunk(glm::vec2 ChunkPos)

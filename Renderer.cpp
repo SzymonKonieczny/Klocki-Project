@@ -38,6 +38,7 @@ void Renderer::DrawChunks(Camera* cam)
 
 void Renderer::DrawEntities(Camera* cam)
 {
+	cam->UpdateUniformsEntity();
 	EntityShader->Activate();
 	for (auto it : EntitySet)
 	{

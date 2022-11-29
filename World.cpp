@@ -194,7 +194,7 @@ void World::IdkWhatToCallThatForNow(Player& player, float dt)
 	}
 	for (std::unordered_map<unsigned int, std::shared_ptr<Entity>>::iterator it = entityMenager.EntityMap.begin(); it != entityMenager.EntityMap.end(); it++)
 	{
-		if (glm::distance(player.Position, it->second->Position) < RenderDistance/2)
+	//	if (glm::distance(player.Position, it->second->Position) < RenderDistance/2)
 			renderer.AddToEntitiesSet(it->second);
 	}
 

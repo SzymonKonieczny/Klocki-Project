@@ -6,15 +6,16 @@ ProtoAnimal::ProtoAnimal(unsigned int ID, World* wrld, glm::vec3 Pos) :
 	mesh.AddToVerticies(
 		UncompressedVertex(glm::vec3(-0.3f, 0.0, -0.3f),
 			glm::vec3(0.1f, 0.2f, 0.3f),
-			glm::vec2(1, 0.99)));
+			glm::vec2(1, 0)));
 	mesh.AddToVerticies(
 		UncompressedVertex(glm::vec3(0.3f, 0.0, -0.3f),
 			glm::vec3(0.1f, 0.2f, 0.3f),
-			glm::vec2(1, 0.99)));
+			glm::vec2(1, 1)));
 	mesh.AddToVerticies(
 		UncompressedVertex(glm::vec3(0.3f, 0.0, 0.3f),
 			glm::vec3(0.1f, 0.2f, 0.3f),
-			glm::vec2(1, 0.99)));
+			glm::vec2(0, 0)));
+	mesh.verticiesSetReady();
 
 }
 void ProtoAnimal::Draw(Shader& shader)
