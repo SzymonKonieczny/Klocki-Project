@@ -19,7 +19,7 @@ public:
 	Shader* TranslucentShader;
 	Texture* TextureAtlas;
 	Texture* TextureAtlasTransparent;
-
+	Texture* ProtoAnimalTexture;
 	Texture* PlayerTxt;
 	Player player;
 	World world;

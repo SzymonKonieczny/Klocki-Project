@@ -212,6 +212,8 @@ void Player::HandleInput(float dt)
 		if (crntTime - F3Cooldown > 0.5f)
 		{
 			world->entityMenager.SpawnEntity(Position, EntityTypes::Proto);
+			F3Cooldown = glfwGetTime();
+
 		}
 	}
 

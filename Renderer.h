@@ -14,6 +14,8 @@ public :
 	Shader* TransparentBlockShader;
 
 	Texture* TextureAtlas;
+	Texture* ProtoAnimalTexture;
+
 
 	void AddToChunkSet(std::shared_ptr<Chunk> ch);
 	void AddToEntitiesSet(std::shared_ptr<Entity> e);
