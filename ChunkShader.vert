@@ -59,8 +59,8 @@ void main()
 	}
 
 
-
-	gl_Position = projection * view * model * vec4(x,y,z,1.0) ;
+	if(TextureNr==7)	gl_Position = projection * view * model * vec4(x,y-0.1,z,1.0) ;
+	else gl_Position = projection * view * model * vec4(x,y,z,1.0) ;
     texCoord = vec2(texx,texy);
 
 
