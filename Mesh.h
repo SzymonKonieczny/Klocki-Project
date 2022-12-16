@@ -28,6 +28,7 @@ public:
 	bool verticiesReady = false;
 
 	bool mingledWith = false;
+	bool UseElementsBuffer = false;
 	std::vector < GLuint> indices;
 	//Mesh(std::vector<Vertex>& vertices_, std::vector < GLuint>& indices_);
 	Mesh() : VBO1(vertices), EBO1(indices)
@@ -84,6 +85,16 @@ public:
 		vertices.clear();
 		VerticiesMutex.unlock();
 	}
+	void AddToElements(GLuint e)
+	{
+		mingledWith = true;
+		indices.push_back(e);
+	}
+	void ClearElements()
+	{
+		mingledWith = true;
+		indices.clear();
+	}
 
 
 	void Draw(Shader& shader, glm::vec3 Position, bool UseModelMatrix = false)
@@ -91,6 +102,7 @@ public:
 		if (mingledWith && verticiesReady)
 		{
 			VBO1.Rebuffer(vertices);
+			EBO1.Rebuffer(indices);
 			glFinish();
 
 			mingledWith = false;
@@ -102,7 +114,12 @@ public:
 			glUniformMatrix4fv(glGetUniformLocation(shader.ID, "model"), 1, GL_FALSE, glm::value_ptr(glm::translate(glm::vec3(Position))));
 		}
 		else glUniformMatrix4fv(glGetUniformLocation(shader.ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+		if (!UseElementsBuffer)glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+		else glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+	
+			
+		
+
 		VAO.Unbind();
 
 	}

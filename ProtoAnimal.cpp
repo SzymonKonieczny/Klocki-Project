@@ -116,6 +116,16 @@ ProtoAnimal::ProtoAnimal(unsigned int ID, World* wrld, glm::vec3 Pos) :
 			UncompressedVertex(glm::vec3(-0.2f, 0.7, 0.3f),
 				glm::vec3(0.1f, 0.2f, 0.3f),
 				glm::vec2(1, 0)));	}
+	mesh.AddToElements(0);
+	mesh.AddToElements(1);
+	mesh.AddToElements(2);
+	mesh.AddToElements(3);
+	mesh.AddToElements(4);
+	mesh.AddToElements(5);
+
+
+
+
 	mesh.verticiesSetReady();
 	FindTargetSpot();
 
