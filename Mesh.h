@@ -54,6 +54,7 @@ public:
 	
 	VAO<T> VAO;
 	VBO<T> VBO1;
+	EBO EBO1;
 	std::vector<T>& GetVertexVector()
 	{
 		mingledWith = true;
