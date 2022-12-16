@@ -30,7 +30,7 @@ public:
 	bool mingledWith = false;
 	std::vector < GLuint> indices;
 	//Mesh(std::vector<Vertex>& vertices_, std::vector < GLuint>& indices_);
-	Mesh() : VBO1(vertices)
+	Mesh() : VBO1(vertices), EBO1(indices)
 	{
 		// Generates Vertex Array Object and binds it
 
