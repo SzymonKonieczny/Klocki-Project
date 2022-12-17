@@ -214,6 +214,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GLOBAL.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="OBJModelLoader.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PriorityQueueCustom.h" />
     <ClInclude Include="ProtoAnimal.h" />

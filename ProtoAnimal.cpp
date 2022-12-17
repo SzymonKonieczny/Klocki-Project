@@ -1,8 +1,10 @@
 #include "ProtoAnimal.h"
 #include "World.h"
+#include "OBJModelLoader.h"
 ProtoAnimal::ProtoAnimal(unsigned int ID, World* wrld, glm::vec3 Pos) :
 	Collider(glm::vec3(-0.2, 0, -0.2),	glm::vec3(0.2, 0.9, 0.2)), Entity( Pos, wrld), id(ID)
 {
+	/*
 	//Belly
 	{ 
 		mesh.AddToVerticies(
@@ -122,8 +124,9 @@ ProtoAnimal::ProtoAnimal(unsigned int ID, World* wrld, glm::vec3 Pos) :
 	mesh.AddToElements(3);
 	mesh.AddToElements(4);
 	mesh.AddToElements(5);
+	*/
 
-
+	OBJModelLoader::LoadModelToMesh(mesh,"models/teapot.obj");
 
 
 	mesh.verticiesSetReady();
