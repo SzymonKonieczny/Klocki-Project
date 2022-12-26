@@ -80,11 +80,29 @@ public:
 		//vertices.resize(vertex_position_indicies.size(), Vertex());
 		mesh.ClearVerticies();
 		//Load in all indices
+	
+		for (size_t i = 0; i < positions.size(); i++)
+		{
+			UncompressedVertex temp_vert;
+			temp_vert.position = positions[i]; //in the .OBJ format, they start indexing with 1 (xD)
+
+			temp_vert.texturePos = glm::vec2(1, 1);//UV_coords[UV_indicies[i]-1];
+			temp_vert.color = glm::vec3(1.0f, 1.0f, 1.0f);
+
+			mesh.AddToVerticies(temp_vert);
+
+		}
 		for (size_t i = 0; i < positions_indicies.size(); ++i)
+		{
+			mesh.AddToElements(positions_indicies[i]-1);
+		}
+		// OLD FOR
+		/*
+		* 		for (size_t i = 0; i < positions_indicies.size(); ++i)
 		{
 			UncompressedVertex temp_vert;
 			temp_vert.position = positions[positions_indicies[i]-1]; //in the .OBJ format, they start indexing with 1 (xD)
-			
+
 			temp_vert.texturePos = glm::vec2(1, 1);//UV_coords[UV_indicies[i]-1];
 			temp_vert.color = glm::vec3(1.0f, 1.0f, 1.0f);
 			
@@ -92,6 +110,8 @@ public:
 			mesh.AddToElements(positions_indicies[i]-1);
 
 		}
+		*/
+
 		std::cout << " Loaded " << positions_indicies.size() << "verticies for " + fileName + '\n';
 
 	}
