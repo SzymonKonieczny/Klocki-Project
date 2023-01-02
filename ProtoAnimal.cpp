@@ -126,7 +126,7 @@ ProtoAnimal::ProtoAnimal(unsigned int ID, World* wrld, glm::vec3 Pos) :
 	mesh.AddToElements(5);
 	*/
 
-	OBJModelLoader::LoadModelToMesh(mesh,"models/sword2.obj");
+	OBJModelLoader::LoadModelToMesh(mesh,"models/pig.obj");
 
 
 	mesh.verticiesSetReady();
