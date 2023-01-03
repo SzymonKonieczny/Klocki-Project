@@ -192,7 +192,7 @@ void Game::ShaderAndTextureStuff()
 
 
 	 TextureAtlas = new Texture("textures/textureatlas.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
-	 /// For some reason its being save to texture slot 2, not 0
+	 /// For some reason its being saved to texture slot 2, not 0
 
 
 	 ProtoAnimalTexture= new Texture("textures/ProtoAnimal.png", GL_TEXTURE_2D, GL_TEXTURE2, GL_RGBA, GL_UNSIGNED_BYTE);
@@ -204,7 +204,7 @@ void Game::ShaderAndTextureStuff()
 
 	TextureAtlas->texUnit(*shaderProgram, "tex0", 2);
 	TextureAtlas->texUnit(*TranslucentShader, "tex0", 2); //values different than 2 just refuse to work, 0 idea why
-	ProtoAnimalTexture->texUnit(*EntityShader, "tex0", 0);
+	ProtoAnimalTexture->texUnit(*EntityShader, "tex0", 2);
 
 
 
