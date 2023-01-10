@@ -3,7 +3,12 @@
 
 void World::AsyncGenerate(std::shared_ptr < std::vector< std::shared_ptr<Chunk>>> vec, bool* LastBatchReady)
 {
-	//*LastBatchReady = false; Done before starting the thread
+	return;
+
+	//UNUSED
+	// 
+	// 
+
 
 
 	for (int i = 0; i < vec->size(); i++)
@@ -18,7 +23,7 @@ void World::AsyncGenerate(std::shared_ptr < std::vector< std::shared_ptr<Chunk>>
 }
 void AsyncGenerateAndMesh(std::shared_ptr <std::vector<std::shared_ptr<Chunk>>> vec, bool& LastBatchReady, BaseTerrainGenerator* tg)
 {
-	LastBatchReady = false;
+//	LastBatchReady = false;
 
 
 	for (int i = 0; i < vec->size(); i++)
