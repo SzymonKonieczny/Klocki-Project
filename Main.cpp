@@ -49,8 +49,9 @@ int main()
 
 	while (!glfwWindowShouldClose(Window::GetInstance()->window))
 	{
-		glClearColor(0.5f, 0.5f, 0.7f, 1.0f);
-
+		//glClearColor(0.5f, 0.5f, 0.7f, 1.0f);
+		
+			glClearColor(164/255.0f, 196 / 255.0f, 252 / 255.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 		//game.shaderProgram->Activate();

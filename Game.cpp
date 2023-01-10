@@ -204,7 +204,7 @@ void Game::ShaderAndTextureStuff()
 
 	TextureAtlas->texUnit(*shaderProgram, "tex0", 2);
 	TextureAtlas->texUnit(*TranslucentShader, "tex0", 2); //values different than 2 just refuse to work, 0 idea why
-	ProtoAnimalTexture->texUnit(*EntityShader, "tex0", 2);
+	ProtoAnimalTexture->texUnit(*EntityShader, "tex0", 0);
 
 
 
