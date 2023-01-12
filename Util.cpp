@@ -134,3 +134,18 @@ void Util::LoadBlocks()
 
 }
 
+float Util::LinearInterpolation(float p1, float p2, float t)
+{
+
+	return p1 + (t * (p2 - p1));
+}
+
+float Util::BilinearInterpolation( float q11, float p12, float q21, float q22, float tx, float ty)
+{
+	
+
+	return Util::LinearInterpolation(Util::LinearInterpolation(q11, q21, tx), Util::LinearInterpolation(q21, q22, tx), ty);
+}
+
+
+

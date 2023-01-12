@@ -13,17 +13,42 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 	fnGeneratorBiomeOracle->GenUniformGrid2D(noiseOutputBiome.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
 
 
-	std::vector<float> noiseOutputForest(ChunkSize * ChunkSize);
-	Forest.NoiseFunc->GenUniformGrid2D(noiseOutputForest.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
+	std::vector<float> noiseOutputForest(4);
+	Forest.NoiseFunc->GenUniformGrid2D(noiseOutputForest.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, 2, 2, 0.02, map_seed);
 
 
-	std::vector<float> noiseOutputDesert(ChunkSize * ChunkSize);
-	Desert.NoiseFunc->GenUniformGrid2D(noiseOutputDesert.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
+	std::vector<float> noiseOutputDesert(4);
+	Desert.NoiseFunc->GenUniformGrid2D(noiseOutputDesert.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, 2, 2, 0.02, map_seed);
 
-	std::vector<float> noiseOutputMountain(ChunkSize * ChunkSize);
-	Mountain.NoiseFunc->GenUniformGrid2D(noiseOutputMountain.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
+	std::vector<float> noiseOutputMountain(4);
+	Mountain.NoiseFunc->GenUniformGrid2D(noiseOutputMountain.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, 2, 2, 0.02, map_seed);
+
+	std::vector<float> ColumnHeightFromNoises(4);
+
+
+	for (int i = 0; i < 4; i++)
+	{
+		switch (DecideBiome(noiseOutputBiome[i*ChunkSize]))
+		{
+		case BIOMES::Forest:
+
+			break;
+
+		case BIOMES::Desert:
+
+			break;
+
+		case BIOMES::Mountain:
+
+			break;
+		}
+		ColumnHeightFromNoises[i] = 
+	}
+
 
 	int index = 0;
+
+
 	for (int i = 0; i < ChunkSize; i++) //i = Z coordinate
 	{
 
@@ -31,20 +56,25 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 		for (int j = 0; j < ChunkSize; j++) // j = X coordinate
 		{
 			int column_height;
-			float BiomeAtBlock = (noiseOutputBiome[index]+1.f)/2.f;
-			BIOMES Biome;
-			if (BiomeAtBlock < 0.5) Biome = BIOMES::Desert;
-			else 
-			{
-				if (BiomeAtBlock < 0.55)Biome = BIOMES::Forest;
-					else Biome = BIOMES::Mountain; //Moiuntain
-			}
+			BIOMES Biome = DecideBiome(noiseOutputBiome[index]);
+	
+
+			float q11 = ColumnHeightFromNoises[0];
+			float q12 = ColumnHeightFromNoises[1];
+			float q21 = ColumnHeightFromNoises[2];
+			float q22 = ColumnHeightFromNoises[3];
 
 			switch (Biome)
 			{
 			case BIOMES::Forest:
 
-				column_height = ((noiseOutputForest[index++] + 1) / 2) * 20 + 30;
+
+
+
+				column_height = ((Util::BilinearInterpolation(q11,q12,q21,q22,j/ChunkSize,i/ChunkSize) + 1) / 2) * 20 + 30;
+
+
+				index++;
 				break;
 			case BIOMES::Desert:
 
@@ -52,7 +82,7 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 			
 				break;
 			case BIOMES::Mountain:
-				column_height = ((noiseOutputMountain[index++] + 1)* 70 / 2)  +20;
+				column_height = ((noiseOutputMountain[index++] + 1) / 2) * 70 +20;
 
 				break;
 			default:
@@ -71,6 +101,7 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 			// 	https://pl.wikipedia.org/wiki/Interpolacja_dwuliniowa
 			// 
 			//
+
 			for (int k = 0; k <= column_height; k++) // k = Y coordinate
 			{
 
@@ -143,6 +174,20 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 	//	std::cout << "BIG Amount of uses of the mutex " << chunkptr->Amount_of_Blockmutex_Uses << " At chunk : " << chunkptr->ChunkPos.x << ' ' << chunkptr->ChunkPos.y << std::endl;;
 	chunkptr->UpdateBlocksFromBlockQueueMap(true);
 
+}
+BIOMES TerrainGenerator::DecideBiome(float BiomeNoiseOutput)
+{
+	float BiomeAtBlock = (BiomeNoiseOutput + 1.f) / 2.f;
+
+	BIOMES Biome;
+	if (BiomeAtBlock < 0.5) Biome = BIOMES::Desert;
+	else
+	{
+		if (BiomeAtBlock < 0.55)Biome = BIOMES::Forest;
+		else Biome = BIOMES::Mountain; //Moiuntain
+	}
+
+	return Biome;
 }
 void TerrainGenerator::GenerateTree(glm::vec3 WorldPos, glm::vec3 Dir, int branches)
 {

@@ -23,6 +23,11 @@ class Util
 		static glm::vec3 WorldPosToLocalPos(glm::vec3 WorldPos);
 		static float lerp(float v0, float v1, float t);
 		void LoadBlocks();
+		static float LinearInterpolation(float p1, float p2, float t);
+		static float BilinearInterpolation(float q11, float p12, float q21, float q22, float tx, float ty);
+
+		
+
 		Util(Util& other) = delete;
 		void operator=(const Util&) = delete;
 		static	Util* GetInstance();
