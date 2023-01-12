@@ -13,15 +13,15 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 	fnGeneratorBiomeOracle->GenUniformGrid2D(noiseOutputBiome.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
 
 
-	std::vector<float> noiseOutputForest(4);
-	Forest.NoiseFunc->GenUniformGrid2D(noiseOutputForest.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, 2, 2, 0.02, map_seed);
+	std::vector<float> noiseOutputForest(ChunkSize * ChunkSize);
+	Forest.NoiseFunc->GenUniformGrid2D(noiseOutputForest.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
 
 
-	std::vector<float> noiseOutputDesert(4);
-	Desert.NoiseFunc->GenUniformGrid2D(noiseOutputDesert.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, 2, 2, 0.02, map_seed);
+	std::vector<float> noiseOutputDesert(ChunkSize * ChunkSize);
+	Desert.NoiseFunc->GenUniformGrid2D(noiseOutputDesert.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
 
-	std::vector<float> noiseOutputMountain(4);
-	Mountain.NoiseFunc->GenUniformGrid2D(noiseOutputMountain.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, 2, 2, 0.02, map_seed);
+	std::vector<float> noiseOutputMountain(ChunkSize * ChunkSize);
+	Mountain.NoiseFunc->GenUniformGrid2D(noiseOutputMountain.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
 
 	std::vector<float> ColumnHeightFromNoises(4);
 
