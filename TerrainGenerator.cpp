@@ -31,18 +31,19 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 		switch (DecideBiome(noiseOutputBiome[i*ChunkSize]))
 		{
 		case BIOMES::Forest:
-
+			ColumnHeightFromNoises[i] = noiseOutputForest[i];
 			break;
 
 		case BIOMES::Desert:
+			ColumnHeightFromNoises[i] = noiseOutputDesert[i];
 
 			break;
 
 		case BIOMES::Mountain:
+			ColumnHeightFromNoises[i] = noiseOutputMountain[i];
 
 			break;
 		}
-		ColumnHeightFromNoises[i] = 
 	}
 
 
@@ -77,12 +78,15 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 				index++;
 				break;
 			case BIOMES::Desert:
+				column_height = ((Util::BilinearInterpolation(q11, q12, q21, q22, j / ChunkSize, i / ChunkSize) + 1) / 2) * 20 + 30;
+				index++;
 
-				column_height = ((noiseOutputDesert[index++] + 1) / 2) * 20 + 15;
 			
 				break;
 			case BIOMES::Mountain:
-				column_height = ((noiseOutputMountain[index++] + 1) / 2) * 70 +20;
+				column_height = ((Util::BilinearInterpolation(q11, q12, q21, q22, j / ChunkSize, i / ChunkSize) + 1) / 2) * 20 + 30;
+				index++;
+
 
 				break;
 			default:
