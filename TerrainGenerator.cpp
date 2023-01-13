@@ -26,21 +26,23 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 	std::vector<float> ColumnHeightFromNoises(4);
 
 
+	int indiciesWeAreInterestedIn[] = { 0,15,240,255 };
 	for (int i = 0; i < 4; i++)
 	{
-		switch (DecideBiome(noiseOutputBiome[i*ChunkSize]))
+		switch (DecideBiome(noiseOutputBiome[indiciesWeAreInterestedIn[i]]))
 		{
 		case BIOMES::Forest:
-			ColumnHeightFromNoises[i] = noiseOutputForest[i];
+			ColumnHeightFromNoises[i] = noiseOutputForest[indiciesWeAreInterestedIn[i]];
+
 			break;
 
 		case BIOMES::Desert:
-			ColumnHeightFromNoises[i] = noiseOutputDesert[i];
+			ColumnHeightFromNoises[i] = noiseOutputDesert[indiciesWeAreInterestedIn[i]];
 
 			break;
 
 		case BIOMES::Mountain:
-			ColumnHeightFromNoises[i] = noiseOutputMountain[i];
+			ColumnHeightFromNoises[i] = noiseOutputMountain[indiciesWeAreInterestedIn[i]];
 
 			break;
 		}
@@ -49,6 +51,10 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 
 	int index = 0;
 
+	float q11 = ((ColumnHeightFromNoises[0] + 1) / 2) * 20;
+	float q12 = ((ColumnHeightFromNoises[1] + 1) / 2) * 20;
+	float q21 = ((ColumnHeightFromNoises[2] + 1) / 2) * 20;
+	float q22 = ((ColumnHeightFromNoises[3] + 1) / 2) * 20;
 
 	for (int i = 0; i < ChunkSize; i++) //i = Z coordinate
 	{
@@ -60,11 +66,7 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 			BIOMES Biome = DecideBiome(noiseOutputBiome[index]);
 	
 
-			float q11 = ((noiseOutputBiome[0]  +1)/2)  * 20;
-			float q12 = ((noiseOutputBiome[15] +1)/2) * 20;
-			float q21 = ((noiseOutputBiome[240]+1)/2) * 20;
-			float q22 = ((noiseOutputBiome[255]+1)/2) * 20;
-
+			
 			switch (Biome)
 			{
 			case BIOMES::Forest:
@@ -72,7 +74,7 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 
 
 
-				column_height = (Util::BilinearInterpolation(q11,q12,q21,q22,j/ChunkSize,i/ChunkSize))  + 30;
+				column_height = (Util::BilinearInterpolation(q11,q12,q21,q22,j/(float)ChunkSize,i/ (float)ChunkSize))  + 30;
 
 
 				index++;
