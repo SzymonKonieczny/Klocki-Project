@@ -40,6 +40,7 @@ void Renderer::DrawEntities(Camera* cam)
 {
 	cam->UpdateUniformsEntity();
 	EntityShader->Activate();
+	ProtoAnimalTexture->Bind();
 	for (auto it : EntitySet)
 	{
 		it->Draw(*EntityShader);

@@ -209,6 +209,8 @@ void Game::ShaderAndTextureStuff()
 
 
 	world.renderer.TextureAtlas = TextureAtlas;
+	world.renderer.ProtoAnimalTexture= ProtoAnimalTexture;
+
 	//TextureAtlas->Bind();
 
 	player.SetShader(shaderProgram, EntityShader);
