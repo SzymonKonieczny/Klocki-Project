@@ -60,10 +60,10 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 			BIOMES Biome = DecideBiome(noiseOutputBiome[index]);
 	
 
-			float q11 = ColumnHeightFromNoises[0];
-			float q12 = ColumnHeightFromNoises[15];
-			float q21 = ColumnHeightFromNoises[240];
-			float q22 = ColumnHeightFromNoises[255];
+			float q11 = ((noiseOutputBiome[0]  +1)/2)  * 20;
+			float q12 = ((noiseOutputBiome[15] +1)/2) * 20;
+			float q21 = ((noiseOutputBiome[240]+1)/2) * 20;
+			float q22 = ((noiseOutputBiome[255]+1)/2) * 20;
 
 			switch (Biome)
 			{
@@ -72,19 +72,19 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 
 
 
-				column_height = ((Util::BilinearInterpolation(q11,q12,q21,q22,j/ChunkSize,i/ChunkSize) + 1) / 2) * 20 + 30;
+				column_height = (Util::BilinearInterpolation(q11,q12,q21,q22,j/ChunkSize,i/ChunkSize))  + 30;
 
 
 				index++;
 				break;
 			case BIOMES::Desert:
-				column_height = ((Util::BilinearInterpolation(q11, q12, q21, q22, j / ChunkSize, i / ChunkSize) + 1) / 2) * 20 + 30;
+				column_height = (Util::BilinearInterpolation(q11, q12, q21, q22, j / ChunkSize, i / ChunkSize))  + 30;
 				index++;
 
 			
 				break;
 			case BIOMES::Mountain:
-				column_height = ((Util::BilinearInterpolation(q11, q12, q21, q22, j / ChunkSize, i / ChunkSize) + 1) / 2) * 20 + 30;
+				column_height = (Util::BilinearInterpolation(q11, q12, q21, q22, j / ChunkSize, i / ChunkSize)) + 30;
 				index++;
 
 
