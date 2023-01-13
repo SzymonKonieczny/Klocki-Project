@@ -61,9 +61,9 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 	
 
 			float q11 = ColumnHeightFromNoises[0];
-			float q12 = ColumnHeightFromNoises[1];
-			float q21 = ColumnHeightFromNoises[2];
-			float q22 = ColumnHeightFromNoises[3];
+			float q12 = ColumnHeightFromNoises[15];
+			float q21 = ColumnHeightFromNoises[240];
+			float q22 = ColumnHeightFromNoises[255];
 
 			switch (Biome)
 			{
