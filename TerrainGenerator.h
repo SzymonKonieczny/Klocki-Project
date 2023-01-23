@@ -12,10 +12,10 @@ class TerrainGenerator : private BaseTerrainGenerator
 
 	struct NoiseMaps
 	{
-		std::vector<float> noiseOutputBiome(ChunkSize* ChunkSize);
-		std::vector<float> noiseOutputDesert(ChunkSize* ChunkSize);
-		std::vector<float> noiseOutputForest(ChunkSize* ChunkSize);
-		std::vector<float> noiseOutputMountain(ChunkSize* ChunkSize);
+		std::vector<float> noiseOutputBiome;
+		std::vector<float> noiseOutputDesert;
+		std::vector<float> noiseOutputForest;
+		std::vector<float> noiseOutputMountain;
 	};
 	void GenerateOnBiomeEdge(NoiseMaps& Noises,std::shared_ptr<Chunk> chunkptr);
 	public:

@@ -164,19 +164,19 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 	
 	NoiseMaps Noises;
 
-	Noises.noiseOutputBiome(ChunkSize * ChunkSize);
-	fnGeneratorBiomeOracle->GenUniformGrid2D(noiseOutputBiome.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
+	Noises.noiseOutputBiome.reserve(ChunkSize * ChunkSize);
+	fnGeneratorBiomeOracle->GenUniformGrid2D(Noises.noiseOutputBiome.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
 
 
-	std::vector<float> noiseOutputForest(ChunkSize * ChunkSize);
-	Forest.NoiseFunc->GenUniformGrid2D(noiseOutputForest.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
+	Noises.noiseOutputForest.reserve(ChunkSize * ChunkSize);
+	Forest.NoiseFunc->GenUniformGrid2D(Noises.noiseOutputForest.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
 
 
-	std::vector<float> noiseOutputDesert(ChunkSize * ChunkSize);
-	Desert.NoiseFunc->GenUniformGrid2D(noiseOutputDesert.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
+	Noises.noiseOutputDesert.reserve(ChunkSize * ChunkSize);
+	Desert.NoiseFunc->GenUniformGrid2D(Noises.noiseOutputDesert.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
 
-	std::vector<float> noiseOutputMountain(ChunkSize * ChunkSize);
-	Mountain.NoiseFunc->GenUniformGrid2D(noiseOutputMountain.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
+	Noises.noiseOutputMountain.reserve(ChunkSize * ChunkSize);
+	Mountain.NoiseFunc->GenUniformGrid2D(Noises.noiseOutputMountain.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
 
 	std::vector<float> ColumnHeightFromNoises(4);
 
@@ -184,20 +184,20 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 	int indiciesWeAreInterestedIn[] = { 0,15,240,255 };
 	for (int i = 0; i < 4; i++)
 	{
-		switch (DecideBiome(noiseOutputBiome[indiciesWeAreInterestedIn[i]]))
+		switch (DecideBiome(Noises.noiseOutputBiome[indiciesWeAreInterestedIn[i]]))
 		{
 		case BIOMES::Forest:
-			ColumnHeightFromNoises[i] = noiseOutputForest[indiciesWeAreInterestedIn[i]];
+			ColumnHeightFromNoises[i] = Noises.noiseOutputForest[indiciesWeAreInterestedIn[i]];
 
 			break;
 
 		case BIOMES::Desert:
-			ColumnHeightFromNoises[i] = noiseOutputDesert[indiciesWeAreInterestedIn[i]];
+			ColumnHeightFromNoises[i] = Noises.noiseOutputDesert[indiciesWeAreInterestedIn[i]];
 
 			break;
 
 		case BIOMES::Mountain:
-			ColumnHeightFromNoises[i] = noiseOutputMountain[indiciesWeAreInterestedIn[i]];
+			ColumnHeightFromNoises[i] = Noises.noiseOutputMountain[indiciesWeAreInterestedIn[i]];
 
 			break;
 		}
@@ -218,7 +218,7 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 		for (int j = 0; j < ChunkSize; j++) // j = X coordinate
 		{
 			int column_height;
-			BIOMES Biome = DecideBiome(noiseOutputBiome[index]);
+			BIOMES Biome = DecideBiome(Noises.noiseOutputBiome[index]);
 	
 
 			
