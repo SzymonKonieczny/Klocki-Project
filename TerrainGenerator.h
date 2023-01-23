@@ -17,6 +17,8 @@ class TerrainGenerator : private BaseTerrainGenerator
 		std::vector<float> noiseOutputForest;
 		std::vector<float> noiseOutputMountain;
 	};
+
+	void GenerateNormally(NoiseMaps& Noises, std::shared_ptr<Chunk> chunkptr);
 	void GenerateOnBiomeEdge(NoiseMaps& Noises,std::shared_ptr<Chunk> chunkptr);
 	public:
 	void Generate(std::shared_ptr<Chunk> chunkptr);
