@@ -1,5 +1,160 @@
 #include "TerrainGenerator.h"
 
+void TerrainGenerator::GenerateOnBiomeEdge(NoiseMaps& Noises, std::shared_ptr<Chunk> chunkptr)
+{
+	std::vector<float> ColumnHeightFromNoises(4);
+
+
+	int indiciesWeAreInterestedIn[] = { 0,15,240,255 };
+	for (int i = 0; i < 4; i++)
+	{
+		switch (DecideBiome(Noises.noiseOutputBiome[indiciesWeAreInterestedIn[i]]))
+		{
+		case BIOMES::Forest:
+			ColumnHeightFromNoises[i] = Noises.noiseOutputForest[indiciesWeAreInterestedIn[i]];
+
+			break;
+
+		case BIOMES::Desert:
+			ColumnHeightFromNoises[i] = Noises.noiseOutputDesert[indiciesWeAreInterestedIn[i]];
+
+			break;
+
+		case BIOMES::Mountain:
+			ColumnHeightFromNoises[i] = Noises.noiseOutputMountain[indiciesWeAreInterestedIn[i]];
+
+			break;
+		}
+	}
+
+
+	int index = 0;
+
+	float q11 = ((ColumnHeightFromNoises[0] + 1) / 2) * 20;
+	float q12 = ((ColumnHeightFromNoises[1] + 1) / 2) * 20;
+	float q21 = ((ColumnHeightFromNoises[2] + 1) / 2) * 20;
+	float q22 = ((ColumnHeightFromNoises[3] + 1) / 2) * 20;
+
+	for (int i = 0; i < ChunkSize; i++) //i = Z coordinate
+	{
+
+
+		for (int j = 0; j < ChunkSize; j++) // j = X coordinate
+		{
+			int column_height;
+			BIOMES Biome = DecideBiome(Noises.noiseOutputBiome[index]);
+
+
+
+			switch (Biome)
+			{
+			case BIOMES::Forest:
+
+
+
+
+				column_height = (Util::BilinearInterpolation(q11, q12, q21, q22, j / (float)ChunkSize, i / (float)ChunkSize)) + 30;
+
+
+				index++;
+				break;
+			case BIOMES::Desert:
+				column_height = (Util::BilinearInterpolation(q11, q12, q21, q22, j / (float)ChunkSize, i / (float)ChunkSize)) + 30;
+				index++;
+
+
+				break;
+			case BIOMES::Mountain:
+
+				column_height = (Util::BilinearInterpolation(q11 + 30, q12 + 30, q21 + 30, q22 + 30, j / (float)ChunkSize, i / (float)ChunkSize)) + 30;
+				index++;
+
+
+				break;
+			default:
+				column_height = 5;
+				index++;
+				break;
+			}
+
+			chunkptr->column_heights[j][i] = column_height;
+
+			//
+			//			NOTE TO SELF
+			//		TAKE EXTREME VALUES OF THE NOISE FUNCTIONS (AT 0,0;15,0;0,15;15,15) AND
+			//	INTERPOLATE FOR ALL THE REST AS LERP(0,0,1/16); 
+			//		or something idk 
+			// 	https://pl.wikipedia.org/wiki/Interpolacja_dwuliniowa
+			// 
+			//
+
+			for (int k = 0; k <= column_height; k++) // k = Y coordinate
+			{
+
+				switch (Biome)
+				{
+				case BIOMES::Forest:
+					chunkptr->setblock(glm::vec3(j, k, i), Forest.GetBlockTypeAt(glm::vec3(j, k, i), k == column_height));
+					if (k == column_height) Forest.GenerateFeatures(Util::LocPosAndChunkPosToWorldPos(glm::vec3(j, k, i),
+						chunkptr->ChunkPos));
+
+					break;
+				case BIOMES::Desert:
+					chunkptr->setblock(glm::vec3(j, k, i), Desert.GetBlockTypeAt(glm::vec3(j, k, i), k == column_height));
+					if (k == column_height) Desert.GenerateFeatures(Util::LocPosAndChunkPosToWorldPos(glm::vec3(j, k, i),
+						chunkptr->ChunkPos));
+
+					break;
+				case BIOMES::Mountain:
+					chunkptr->setblock(glm::vec3(j, k, i), Mountain.GetBlockTypeAt(glm::vec3(j, k, i), k == column_height));
+					if (k == column_height) Mountain.GenerateFeatures(Util::LocPosAndChunkPosToWorldPos(glm::vec3(j, k, i),
+						chunkptr->ChunkPos));
+
+					break;
+				default:
+					chunkptr->setblock(glm::vec3(j, k, i), BlockTypes::Log);
+					break;
+				}
+
+
+
+				/*if (k == column_height)
+				{
+
+					if (k < 20 && k == column_height) chunkptr->setblock(glm::vec3(j, k, i), BlockTypes::Sand);
+					else
+					{
+						if (Util::GetInstance()->random(0, 500) < 1) GenerateTree(Util::LocPosAndChunkPosToWorldPos(glm::vec3(j, k, i), chunkptr->ChunkPos));
+						else
+						{
+							chunkptr->setblock(glm::vec3(j, k, i), BlockTypes::Grass);
+							if (Util::GetInstance()->random(0,1000) < 1)
+							{
+								shoudHouseGenerate = true;
+								HousePos = Util::LocPosAndChunkPosToWorldPos( glm::vec3(j, k, i), chunkptr->ChunkPos);
+							}
+						}
+
+						//setblock(glm::vec3(j, k, i), Util::GetInstance()->random(0, 9));
+
+					}
+
+
+				}
+
+				else
+				{
+					 chunkptr->setblock(glm::vec3(j, k, i), BlockTypes::Stone);
+				}*/
+
+
+			}
+
+
+		}
+	}
+}
+
 void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 {
 
@@ -7,9 +162,9 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 
 	//std::cout << "Generating chunk Pos:" << chunkptr->ChunkPos.x << ' ' << chunkptr->ChunkPos.y << std::endl;
 	
+	NoiseMaps Noises;
 
-
-	std::vector<float> noiseOutputBiome(ChunkSize * ChunkSize);
+	Noises.noiseOutputBiome(ChunkSize * ChunkSize);
 	fnGeneratorBiomeOracle->GenUniformGrid2D(noiseOutputBiome.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
 
 
@@ -80,13 +235,14 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 				index++;
 				break;
 			case BIOMES::Desert:
-				column_height = (Util::BilinearInterpolation(q11, q12, q21, q22, j / ChunkSize, i / ChunkSize))  + 30;
+				column_height = (Util::BilinearInterpolation(q11, q12, q21, q22, j / (float)ChunkSize, i / (float)ChunkSize))  + 30;
 				index++;
 
 			
 				break;
 			case BIOMES::Mountain:
-				column_height = (Util::BilinearInterpolation(q11, q12, q21, q22, j / ChunkSize, i / ChunkSize)) + 30;
+	
+				column_height = (Util::BilinearInterpolation(q11+ 30, q12 + 30, q21 + 30, q22 + 30, j / (float)ChunkSize, i / (float)ChunkSize)) + 30;
 				index++;
 
 

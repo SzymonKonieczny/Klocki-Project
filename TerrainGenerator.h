@@ -1,4 +1,5 @@
 #pragma once
+
 #include "BaseTerrainGenerator.h"
 #include "Biome.h"
 class TerrainGenerator : private BaseTerrainGenerator
@@ -9,8 +10,14 @@ class TerrainGenerator : private BaseTerrainGenerator
 	BiomeMountain Mountain;
 
 
-
-	
+	struct NoiseMaps
+	{
+		std::vector<float> noiseOutputBiome(ChunkSize* ChunkSize);
+		std::vector<float> noiseOutputDesert(ChunkSize* ChunkSize);
+		std::vector<float> noiseOutputForest(ChunkSize* ChunkSize);
+		std::vector<float> noiseOutputMountain(ChunkSize* ChunkSize);
+	};
+	void GenerateOnBiomeEdge(NoiseMaps& Noises,std::shared_ptr<Chunk> chunkptr);
 	public:
 	void Generate(std::shared_ptr<Chunk> chunkptr);
 	BIOMES DecideBiome(float BiomeNoiseOutput);
