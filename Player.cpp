@@ -210,11 +210,11 @@ void Player::HandleInput(float dt)
 				for (int i = 1; i < (int)glm::distance(FirstSel, Position);i++)
 				{
 
-					glm::vec3 diff = glm::normalize(FirstSel - Position);
-					blockPos = FirstSel + glm::vec3(Util::LinearInterpolation(FirstSel.x, Position.x, i / glm::abs((int)FirstSel.x - (int)Position.x)),
-						Util::LinearInterpolation(FirstSel.y, Position.y,  (i/ glm::abs((int)FirstSel.y - (int)Position.y))  )
-						, Util::LinearInterpolation(FirstSel.z, Position.z, i / glm::abs((int)FirstSel.z - (int)Position.z)));
+					blockPos = glm::vec3(Util::LinearInterpolation(FirstSel.x, Position.x, i / glm::abs(Position.x - FirstSel.x)),
+						Util::LinearInterpolation(FirstSel.y, Position.y,  (i/ glm::abs(Position.y - FirstSel.y)))
+						, Util::LinearInterpolation(FirstSel.z, Position.z, i / glm::abs(Position.z - FirstSel.z)));
 					world->chunkMenager.SetBlockInWorld(blockPos, BlockTypes::Cobble);
+					std::cout << " block at  " << blockPos.x << ':' << blockPos.y << ':' << blockPos.z << std::endl;
 				}
 
 				MarkedFirst = false;
