@@ -189,6 +189,10 @@ void Player::HandleInput(float dt)
 			world->AddChunksMeshToUpdate(res2);
 			RCooldown = glfwGetTime();
 
+			std::cout << "q11 = " << world->chunkMenager.GetChunkAt(res2)->q11;
+			std::cout << " q21 = " << world->chunkMenager.GetChunkAt(res2)->q21 << std::endl;
+			std::cout << "q12 = " << world->chunkMenager.GetChunkAt(res2)->q12;
+			std::cout << " q22 = " << world->chunkMenager.GetChunkAt(res2)->q22 << std::endl;
 		}
 
 

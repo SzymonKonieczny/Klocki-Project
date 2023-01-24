@@ -45,9 +45,13 @@ public:
 
 	int column_heights[16][16];
 	bool mutexMakeshift=true;
-
-
-
+		
+	//========Debug stuff
+	float q11= 42069;
+	float q12= 42069;
+	float q21= 42069;
+	float q22= 42069;
+	//========
 	bool isDirty = false;
 	Chunk(glm::vec2 ChunkCoords, ChunkMenager* ChunkMenager_);
 	void Generate(int height_);///DEPRICATED

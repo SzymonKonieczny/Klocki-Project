@@ -153,11 +153,15 @@ void TerrainGenerator::GenerateOnBiomeEdge(NoiseMaps& Noises, std::shared_ptr<Ch
 
 	int index = 0;
 
-	float q11 = ((ColumnHeightFromNoises[0] + 1) / 2) * 20;
-	float q12 = ((ColumnHeightFromNoises[1] + 1) / 2) * 20;
-	float q21 = ((ColumnHeightFromNoises[2] + 1) / 2) * 20;
-	float q22 = ((ColumnHeightFromNoises[3] + 1) / 2) * 20;
+	 chunkptr->q11 = ((ColumnHeightFromNoises[0] + 1) / 2) * 20;
+	 chunkptr->q12 = ((ColumnHeightFromNoises[1] + 1) / 2) * 20;
+	 chunkptr->q21 = ((ColumnHeightFromNoises[2] + 1) / 2) * 20;
+	 chunkptr->q22 = ((ColumnHeightFromNoises[3] + 1) / 2) * 20;
 
+	 float q11 = chunkptr->q11;
+	 float q12 = chunkptr->q12;
+	 float q21 = chunkptr->q21;
+	 float q22 = chunkptr->q22;
 	for (int i = 0; i < ChunkSize; i++) //i = Z coordinate
 	{
 
