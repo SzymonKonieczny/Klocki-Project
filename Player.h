@@ -34,6 +34,8 @@ class Player
 	Shader* UsedBlockShader;
 	Shader* UsedEntityShader;
 	glm::vec3 LookingAtDir = glm::vec3(0.0f, 0.0f, -1.0f);
+	bool MarkedFirst = false; //for line generating
+	glm::vec3 FirstSel;
 public:
 	glm::vec3 velocity;
 	float drag = 0.2f;

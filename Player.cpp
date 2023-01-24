@@ -189,10 +189,41 @@ void Player::HandleInput(float dt)
 			world->AddChunksMeshToUpdate(res2);
 			RCooldown = glfwGetTime();
 
-			std::cout << "q11 = " << world->chunkMenager.GetChunkAt(res2)->q11;
-			std::cout << " q21 = " << world->chunkMenager.GetChunkAt(res2)->q21 << std::endl;
 			std::cout << "q12 = " << world->chunkMenager.GetChunkAt(res2)->q12;
 			std::cout << " q22 = " << world->chunkMenager.GetChunkAt(res2)->q22 << std::endl;
+			std::cout << "q11 = " << world->chunkMenager.GetChunkAt(res2)->q11;
+			std::cout << " q21 = " << world->chunkMenager.GetChunkAt(res2)->q21 << std::endl;
+			
+
+		}
+
+
+	}
+	if (glfwGetKey(Window::GetInstance()->window, GLFW_KEY_U) == GLFW_PRESS)
+	{
+		if (crntTime - RCooldown > 0.5f)
+		{
+			if (MarkedFirst	)
+			{
+
+					glm::vec3 blockPos;
+				for (int i = 1; i < (int)glm::distance(FirstSel, Position);i++)
+				{
+
+					glm::vec3 diff = glm::normalize(FirstSel - Position);
+					blockPos = FirstSel + glm::vec3(Util::LinearInterpolation(FirstSel.x, Position.x, i / glm::abs((int)FirstSel.x - (int)Position.x)),
+						Util::LinearInterpolation(FirstSel.y, Position.y,  (i/ glm::abs((int)FirstSel.y - (int)Position.y))  )
+						, Util::LinearInterpolation(FirstSel.z, Position.z, i / glm::abs((int)FirstSel.z - (int)Position.z)));
+					world->chunkMenager.SetBlockInWorld(blockPos, BlockTypes::Cobble);
+				}
+
+				MarkedFirst = false;
+			}
+			else {
+				MarkedFirst = true;
+				FirstSel = Position;
+			}
+
 		}
 
 
