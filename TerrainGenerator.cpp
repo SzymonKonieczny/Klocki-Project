@@ -180,20 +180,20 @@ void TerrainGenerator::GenerateOnBiomeEdge(NoiseMaps& Noises, std::shared_ptr<Ch
 
 
 
-				column_height = (Util::BilinearInterpolation(q11, q12, q21, q22, j / (float)ChunkSize, i / (float)ChunkSize)) + 30;
+				column_height = (Util::BilinearInterpolation(q11, q12, q21, q22, glm::vec2(15,15), glm::vec2(0, 0), glm::vec2(j,i)));
 
 
 				index++;
 				break;
 			case BIOMES::Desert:
-				column_height = (Util::BilinearInterpolation(q11, q12, q21, q22, j / (float)ChunkSize, i / (float)ChunkSize)) + 30;
+				column_height = (Util::BilinearInterpolation(q11, q12, q21, q22, glm::vec2(0, 0), glm::vec2(15, 15), glm::vec2(j, i)));
 				index++;
 
 
 				break;
 			case BIOMES::Mountain:
 
-				column_height = (Util::BilinearInterpolation(q11 + 30, q12 + 30, q21 + 30, q22 + 30, j / (float)ChunkSize, i / (float)ChunkSize)) + 30;
+				column_height = (Util::BilinearInterpolation(q11, q12, q21, q22, glm::vec2(0, 0), glm::vec2(15, 15), glm::vec2(j, i)));
 				index++;
 
 
