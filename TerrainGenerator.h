@@ -18,6 +18,7 @@ class TerrainGenerator : private BaseTerrainGenerator
 		std::vector<float> noiseOutputMountain;
 	};
 
+	bool isInOneBiome(NoiseMaps& maps);
 	void GenerateNormally(NoiseMaps& Noises, std::shared_ptr<Chunk> chunkptr);
 	void GenerateOnBiomeEdge(NoiseMaps& Noises,std::shared_ptr<Chunk> chunkptr);
 	public:

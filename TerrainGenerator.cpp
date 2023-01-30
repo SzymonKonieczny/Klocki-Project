@@ -1,5 +1,14 @@
 #include "TerrainGenerator.h"
 
+bool TerrainGenerator::isInOneBiome(NoiseMaps& maps)
+{
+
+	return (DecideBiome( maps.noiseOutputBiome[0])==
+		DecideBiome(maps.noiseOutputBiome[1]) == 
+		DecideBiome(maps.noiseOutputBiome[2]) == 
+		DecideBiome(maps.noiseOutputBiome[3]));
+}
+
 void TerrainGenerator::GenerateNormally(NoiseMaps& Noises, std::shared_ptr<Chunk> chunkptr)
 {
 	int index = 0;
@@ -305,7 +314,9 @@ void TerrainGenerator::Generate(std::shared_ptr<Chunk> chunkptr)
 	Noises.noiseOutputMountain.resize(ChunkSize * ChunkSize);
 	Mountain.NoiseFunc->GenUniformGrid2D(Noises.noiseOutputMountain.data(), chunkptr->ChunkPos.x * ChunkSize, chunkptr->ChunkPos.y * ChunkSize, ChunkSize, ChunkSize, 0.02, map_seed);
 
-	GenerateOnBiomeEdge(Noises, chunkptr);
+	if (isInOneBiome(Noises)) GenerateNormally(Noises, chunkptr);
+	else GenerateOnBiomeEdge(Noises, chunkptr);
+	
 	chunkptr->UpdateBlocksFromBlockQueueMap(true);
 
 }
