@@ -140,22 +140,25 @@ void TerrainGenerator::GenerateOnBiomeEdge(NoiseMaps& Noises, std::shared_ptr<Ch
 	int indiciesWeAreInterestedIn[] = { 0,15,240,255 };
 	for (int i = 0; i < 4; i++)
 	{
+		float* Qptrs[4] = { &chunkptr->q11, &chunkptr->q12 ,&chunkptr->q21 ,&chunkptr->q22 }; //stinky cheese
+
+
 		switch (DecideBiome(Noises.noiseOutputBiome[indiciesWeAreInterestedIn[i]]))
 		{
 		case BIOMES::Forest:
 			ColumnHeightFromNoises[i] = Noises.noiseOutputForest[indiciesWeAreInterestedIn[i]];
-			chunkptr->q11 = ((ColumnHeightFromNoises[i] + 1) / 2) * 20 + 30;
+			*Qptrs[i] = ((ColumnHeightFromNoises[i] + 1) / 2) * 20 + 30;
 			break;
 
 		case BIOMES::Desert:
 			ColumnHeightFromNoises[i] = Noises.noiseOutputDesert[indiciesWeAreInterestedIn[i]];
-			chunkptr->q11 = ((ColumnHeightFromNoises[i] + 1) / 2) * 20 + 15;
+			*Qptrs[i] = ((ColumnHeightFromNoises[i] + 1) / 2) * 20 + 15;
 
 			break;
 
 		case BIOMES::Mountain:
 			ColumnHeightFromNoises[i] = Noises.noiseOutputMountain[indiciesWeAreInterestedIn[i]];
-			chunkptr->q11 = ((ColumnHeightFromNoises[i] + 1) / 2) * 20 + 20;
+			*Qptrs[i] = ((ColumnHeightFromNoises[i] + 1) / 2) * 20 + 20;
 
 			break;
 		}
@@ -164,10 +167,10 @@ void TerrainGenerator::GenerateOnBiomeEdge(NoiseMaps& Noises, std::shared_ptr<Ch
 
 	int index = 0;
 
-	 chunkptr->q11 = ((ColumnHeightFromNoises[0] + 1) / 2) * 20;
-	 chunkptr->q12 = ((ColumnHeightFromNoises[1] + 1) / 2) * 20;
-	 chunkptr->q21 = ((ColumnHeightFromNoises[2] + 1) / 2) * 20;
-	 chunkptr->q22 = ((ColumnHeightFromNoises[3] + 1) / 2) * 20;
+	//chunkptr->q11 = ((ColumnHeightFromNoises[0] + 1) / 2) * 20;
+	//chunkptr->q12 = ((ColumnHeightFromNoises[1] + 1) / 2) * 20;
+	//chunkptr->q21 = ((ColumnHeightFromNoises[2] + 1) / 2) * 20;
+	//chunkptr->q22 = ((ColumnHeightFromNoises[3] + 1) / 2) * 20;
 
 	 float q11 = chunkptr->q11;
 	 float q12 = chunkptr->q12;
@@ -191,7 +194,7 @@ void TerrainGenerator::GenerateOnBiomeEdge(NoiseMaps& Noises, std::shared_ptr<Ch
 
 
 
-				column_height = ( Util::BilinearInterpolation(q11, q12, q21, q22, glm::vec2(15,15), glm::vec2(0, 0), glm::vec2(j,i)));
+				column_height = ( Util::BilinearInterpolation(q11, q12, q21, q22, glm::vec2(0,0), glm::vec2(15, 15), glm::vec2(j,i)));
 
 
 				index++;
