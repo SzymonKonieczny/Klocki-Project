@@ -2,11 +2,11 @@
 
 bool TerrainGenerator::isInOneBiome(NoiseMaps& maps)
 {
-
+	
 	return (DecideBiome( maps.noiseOutputBiome[0])==
-		DecideBiome(maps.noiseOutputBiome[1]) == 
-		DecideBiome(maps.noiseOutputBiome[2]) == 
-		DecideBiome(maps.noiseOutputBiome[3]));
+		DecideBiome(maps.noiseOutputBiome[15]) == 
+		DecideBiome(maps.noiseOutputBiome[240]) == 
+		DecideBiome(maps.noiseOutputBiome[255]));
 }
 
 void TerrainGenerator::GenerateNormally(NoiseMaps& Noises, std::shared_ptr<Chunk> chunkptr)
@@ -144,16 +144,18 @@ void TerrainGenerator::GenerateOnBiomeEdge(NoiseMaps& Noises, std::shared_ptr<Ch
 		{
 		case BIOMES::Forest:
 			ColumnHeightFromNoises[i] = Noises.noiseOutputForest[indiciesWeAreInterestedIn[i]];
-
+			chunkptr->q11 = ((ColumnHeightFromNoises[i] + 1) / 2) * 20 + 30;
 			break;
 
 		case BIOMES::Desert:
 			ColumnHeightFromNoises[i] = Noises.noiseOutputDesert[indiciesWeAreInterestedIn[i]];
+			chunkptr->q11 = ((ColumnHeightFromNoises[i] + 1) / 2) * 20 + 15;
 
 			break;
 
 		case BIOMES::Mountain:
 			ColumnHeightFromNoises[i] = Noises.noiseOutputMountain[indiciesWeAreInterestedIn[i]];
+			chunkptr->q11 = ((ColumnHeightFromNoises[i] + 1) / 2) * 20 + 20;
 
 			break;
 		}
@@ -189,13 +191,13 @@ void TerrainGenerator::GenerateOnBiomeEdge(NoiseMaps& Noises, std::shared_ptr<Ch
 
 
 
-				column_height = (Util::BilinearInterpolation(q11, q12, q21, q22, glm::vec2(15,15), glm::vec2(0, 0), glm::vec2(j,i)));
+				column_height = ( Util::BilinearInterpolation(q11, q12, q21, q22, glm::vec2(15,15), glm::vec2(0, 0), glm::vec2(j,i)));
 
 
 				index++;
 				break;
 			case BIOMES::Desert:
-				column_height = (Util::BilinearInterpolation(q11, q12, q21, q22, glm::vec2(0, 0), glm::vec2(15, 15), glm::vec2(j, i)));
+				column_height = ( Util::BilinearInterpolation(q11, q12, q21, q22, glm::vec2(0, 0), glm::vec2(15, 15), glm::vec2(j, i)));
 				index++;
 
 
