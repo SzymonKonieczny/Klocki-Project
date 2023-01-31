@@ -4,7 +4,7 @@ bool TerrainGenerator::isInOneBiome(NoiseMaps& maps)
 {
 	
 	return (DecideBiome( maps.noiseOutputBiome[0])==
-		DecideBiome(maps.noiseOutputBiome[15]) == 
+		DecideBiome(maps.noiseOutputBiome[15]) && DecideBiome(maps.noiseOutputBiome[240]) == DecideBiome(maps.noiseOutputBiome[15]) &&
 		DecideBiome(maps.noiseOutputBiome[240]) == 
 		DecideBiome(maps.noiseOutputBiome[255]));
 }
@@ -137,7 +137,7 @@ void TerrainGenerator::GenerateOnBiomeEdge(NoiseMaps& Noises, std::shared_ptr<Ch
 	std::vector<float> ColumnHeightFromNoises(4);
 
 
-	int indiciesWeAreInterestedIn[] = { 0,15,240,255 };
+	int indiciesWeAreInterestedIn[] = { 0,240,15,255 };
 	for (int i = 0; i < 4; i++)
 	{
 		float* Qptrs[4] = { &chunkptr->q11, &chunkptr->q12 ,&chunkptr->q21 ,&chunkptr->q22 }; //stinky cheese
