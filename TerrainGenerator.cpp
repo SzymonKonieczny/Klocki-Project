@@ -20,13 +20,8 @@ void TerrainGenerator::GenerateNormally(NoiseMaps& Noises, std::shared_ptr<Chunk
 		{
 			int column_height;
 			float BiomeAtBlock = (Noises.noiseOutputBiome[index] + 1.f) / 2.f;
-			BIOMES Biome;
-			if (BiomeAtBlock < 0.5) Biome = BIOMES::Desert;
-			else
-			{
-				if (BiomeAtBlock < 0.55)Biome = BIOMES::Forest;
-				else Biome = BIOMES::Forest; //Moiuntain
-			}
+			BIOMES Biome = DecideBiome(Noises.noiseOutputBiome[index]);
+
 
 			switch (Biome)
 			{
@@ -40,7 +35,7 @@ void TerrainGenerator::GenerateNormally(NoiseMaps& Noises, std::shared_ptr<Chunk
 
 				break;
 			case BIOMES::Mountain:
-				column_height = ((Noises.noiseOutputMountain[index++] + 1) * 70 / 2) + 20;
+				column_height = ((Noises.noiseOutputMountain[index++] + 1) * 20 / 2) + 50;
 
 				break;
 			default:
@@ -158,7 +153,7 @@ void TerrainGenerator::GenerateOnBiomeEdge(NoiseMaps& Noises, std::shared_ptr<Ch
 
 		case BIOMES::Mountain:
 			ColumnHeightFromNoises[i] = Noises.noiseOutputMountain[indiciesWeAreInterestedIn[i]];
-			*Qptrs[i] = ((ColumnHeightFromNoises[i] + 1) / 2) * 20 + 20;
+			*Qptrs[i] = ((ColumnHeightFromNoises[i] + 1) / 2) * 20 + 50;
 
 			break;
 		}
@@ -167,10 +162,6 @@ void TerrainGenerator::GenerateOnBiomeEdge(NoiseMaps& Noises, std::shared_ptr<Ch
 
 	int index = 0;
 
-	//chunkptr->q11 = ((ColumnHeightFromNoises[0] + 1) / 2) * 20;
-	//chunkptr->q12 = ((ColumnHeightFromNoises[1] + 1) / 2) * 20;
-	//chunkptr->q21 = ((ColumnHeightFromNoises[2] + 1) / 2) * 20;
-	//chunkptr->q22 = ((ColumnHeightFromNoises[3] + 1) / 2) * 20;
 
 	 float q11 = chunkptr->q11;
 	 float q12 = chunkptr->q12;
