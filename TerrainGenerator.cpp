@@ -46,14 +46,7 @@ void TerrainGenerator::GenerateNormally(NoiseMaps& Noises, std::shared_ptr<Chunk
 
 			chunkptr->column_heights[j][i] = column_height;
 
-			//
-			//			NOTE TO SELF
-			//		TAKE EXTREME VALUES OF THE NOISE FUNCTIONS (AT 0,0;15,0;0,15;15,15) AND
-			//	INTERPOLATE FOR ALL THE REST AS LERP(0,0,1/16); 
-			//		or something idk 
-			// 	https://pl.wikipedia.org/wiki/Interpolacja_dwuliniowa
-			// 
-			//
+
 			for (int k = 0; k <= column_height; k++) // k = Y coordinate
 			{
 
