@@ -69,7 +69,7 @@ void Chunk::UpdateMesh()
 	VertexMutex.lock();
 	LockBlockMutex("Chunk locking blockmutex");
 
-	std::cout << "Meshing chunk Pos:" << ChunkPos.x << ' ' << ChunkPos.y << std::endl;
+//	std::cout << "Meshing chunk Pos:" << ChunkPos.x << ' ' << ChunkPos.y << std::endl;
 
 	Solidmesh.ClearVerticies();
 	Translucentmesh.ClearVerticies();
