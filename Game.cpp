@@ -26,14 +26,14 @@ void Game::WorldUpdate()
 	timeDiff = crntTime - prevTime;
 	prevTime = crntTime;
 	counter++;
-	//if (timeDiff >= 1.0 / 30.0)
+//	if (timeDiff >= 1.0 / 30.0)
 	{
 		
 		
 			std::string FPS = std::to_string((1.0 / timeDiff) * counter);
 			std::string ms = std::to_string((timeDiff / counter) * 1000);
-			//std::string newTitle = "Prodzekto - " + FPS + "FPS / " + ms + "ms";
-			//glfwSetWindowTitle(Window::GetInstance()->window, newTitle.c_str());
+			std::string newTitle = "Prodzekto - " + FPS + "FPS / " + ms + "ms";
+			glfwSetWindowTitle(Window::GetInstance()->window, newTitle.c_str());
 		
 
 		counter = 0;
@@ -173,7 +173,7 @@ Game::Game()
 
 	glfwSetFramebufferSizeCallback(Window::GetInstance()->window, framebuffer_size_callback);
 	glViewport(0, 0, Window::GetInstance()->WinWidth, -(Window::GetInstance()->WinHeight));
-	glfwSwapInterval(1);
+	//glfwSwapInterval(0);
 
 	ShaderAndTextureStuff();
 	world.SetShader(shaderProgram);
@@ -186,7 +186,7 @@ Game::Game()
 
 void Game::ShaderAndTextureStuff()
 {
-	shaderProgram = new Shader("ChunkShader.vert", "default.frag");
+	shaderProgram = new Shader("ChunkShader.vert", "ChunkShader.frag");
 	TranslucentShader = new Shader("ChunkShader.vert", "TransparentBlock.frag");
 	EntityShader = new Shader("default.vert", "default.frag");
 
