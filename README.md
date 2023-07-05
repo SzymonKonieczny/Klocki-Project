@@ -1,5 +1,6 @@
 # Klocki-Project
 Very simple minecraft clone made mostly for fun.
+Most of the textures were taken from the original game
 
 ![image](https://github.com/SzymonKonieczny/Klocki-Project/assets/72419029/d9e4edd7-adbb-48fe-b26f-5c21be6f3f6f)
 
